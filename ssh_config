@@ -1,0 +1,3 @@
+Host *
+        ControlMaster auto
+        ControlPath /tmp/%r@%h:%p
