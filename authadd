@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Adds your authorization to a host
+#
+# chris mckenzie, http://qaa.ath.cx
+# Dec 11, 2009
+
+doexit () {
+	echo Exiting...
+}
+
+if [ $# -ne 1 ]; then
+  echo "Woops, give me a hostname"
+  doexit
+fi
+
+HOST=$1
+PUBLICKEY=~/.ssh/id_rsa.pub
+
+if [ ! -f "$PUBLICKEY" ]; then
+	echo Looked for a public key in $PUBLICKEY but could not find one... 
+  ssh-keygen -t rsa
+fi
+
+if [ ! -n "$HOST" ]; then
+	echo "No host specified ... exiting"
+	doexit
+fi
+
+# here's the magic
+ssh $HOST 'echo "'`cat $PUBLICKEY`'" >> ~/.ssh/authorized_keys; cat ~/.ssh/authorized_keys | sort | uniq | tee ~/.ssh/authorized_keys > /dev/null'
+
+echo "Hopefully you are now authenticated to $HOST"...
+doexit
