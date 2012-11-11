@@ -1,0 +1,12 @@
+#!/bin/bash
+
+program="${@: -1}"
+pidList=`ps ax | grep "$program" | awk ' { print $1 } ' `
+count=`echo $pidList | wc -w`
+args=""
+while [ $# -gt 1 ]; do
+  args="$args $1"
+  shift
+done
+
+echo $pidList | xargs -n 1 -P $count strace $args -p
