@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 program="${@: -1}"
 pidList=`ps ax | grep "$program" | awk ' { print $1 } ' `
@@ -9,4 +9,4 @@ while [ $# -gt 1 ]; do
   shift
 done
 
-echo $pidList | xargs -n 1 -P $count strace $args -p
+echo $pidList | xargs -d ' ' -n 1 -I%% -P $count strace -p%% -F $args 
