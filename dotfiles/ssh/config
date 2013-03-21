@@ -1,0 +1,6 @@
+host github.com
+  IdentityFile ~/.ssh/id_rsa.github
+
+host *
+  ControlMaster auto
+  ControlPath ~/.ssh/cm_socket/%r@%h:%p

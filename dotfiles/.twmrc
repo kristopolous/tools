@@ -1,0 +1,108 @@
+#NoHighlight
+NoTitle
+#OpaqueMove
+
+NoGrabServer
+SqueezeTitle
+RandomPlacement
+NoTitleHighlight 
+IconifyByUnmapping
+
+ResizeFont 	"-adobe-helvetica-medium-r-normal-*-40-*-*-*-*-*-*-*"
+MenuFont 	"-adobe-helvetica-*-r-*-*-24-*-*-*-*-*-*-*"
+TitleFont	"-*-lucida-medium-r-normal-*-14-*-*-*-*-*-*-*"
+IconManagerFont "-*-uniread v-medium-r-normal-*-*-100-*-*-*-*-*-*"
+
+BorderWidth 4
+
+Color
+{
+    BorderColor			"rgb:4/2/2"
+
+    MenuForeground 		"rgb:b/9/5"
+    MenuBackground 		"rgb:3/1/0"
+
+    TitleForeground		"rgb:b/9/5"
+    TitleBackground		"rgb:0/1/1"
+
+    DefaultForeground 		"rgb:b/9/5"
+    DefaultBackground 		"rgb:3/1/0"
+
+    MenuTitleForeground		"rgb:b/9/5"
+    MenuTitleBackground		"rgb:3/1/0"
+
+    BorderTileForeground 	"rgb:2/1/1"
+    BorderTileBackground 	"rgb:3/2/2"
+
+    IconManagerForeground 	"rgb:b/9/5"
+    IconManagerBackground 	"rgb:3/1/0"
+}
+
+MoveDelta 3
+
+Function "move-or-raise" { f.move  f.deltastop f.raise }
+Function "focus-move"    { f.raise f.deltastop f.move }
+Function "cycle-raise"   { f.lower f.upiconmgr }
+Function "double-raise"  { f.lower }
+
+Button1 = : root : f.menu "TwmWindows"
+Button2 = : root : f.menu "TwmWindows"
+Button3 = : root : f.menu "TwmWindows"
+
+Button1 = : frame | Title : f.function "focus-move"
+Button2 = : frame | Title : f.resize
+Button3 = : frame | Title : f.menu "options"
+
+Button1	= l | m | c     : all : f.function "move-or-raise"
+Button2	= l | m | c     : all : f.resize
+Button3 = l | m | c     : all : f.menu "defops"
+Button1	=     m | c     : all : f.function "move-or-raise"
+Button2	=     m | c     : all : f.resize
+Button3 =     m | c     : all : f.menu "TwmWindows"
+
+Button1 = l | m | c     : root : f.nop
+Button2 = l | m | c     : root : f.nop
+Button1 =     m | c     : root : f.nop
+Button2 =     m | c     : root : f.nop
+
+"w"	= l | m | c     : all : f.function "cycle-raise"
+"w"	=     m | c     : all : f.function "cycle-raise"
+
+"e" = l | m | c     : all : f.function "double-raise" 
+"e" =     m | c     : all : f.function "double-raise" 
+
+"2" = l | m | c     : all : f.fullzoom
+"4"	= l | m | c | s : all : f.delete
+"v"	= l | m | c | s : all : f.destroy
+"2" =     m | c     : all : f.fullzoom
+"4"	=     m | c | s : all : f.delete
+"v"	=     m | c | s : all : f.destroy
+
+"3"	=     m | c     : all : f.iconify 
+"q"	=     m | c     : all : f.exec "acidx xterm +sb -sl 2000 &" 
+"s"	=     m | c     : all : f.showiconmgr
+"s"	=     m | c | s : all : f.hideiconmgr
+
+"w"	= l | m | c     : all : f.function "cycle-raise"
+"w"	=     m | c     : all : f.function "cycle-raise"
+
+"2"     =              	: root : f.fullzoom
+"4"	=          	: root : f.delete
+"v"	=          	: root : f.destroy
+
+"3"	=              	: root : f.iconify 
+"q"	=              	: root : f.exec "acidx xterm +sb -sl 2000 &" 
+"f"	=              	: root : f.exec "/usr/local/bin/firefox &"
+"g"	=              	: root : f.exec "~/.twm.s"
+"r"	=              	: root : f.exec "/usr/local/bin/rdesktop -g 1280x960 -z -x m qaa.ath.cx ||/usr/local/bin/rdesktop -g 1280x960 10.0.0.150 &"
+"s"	=              	: root : f.showiconmgr
+"s"	=          | s 	: root : f.hideiconmgr
+
+"a"	=              	: root : f.function "move-or-raise"
+
+menu "options"
+{
+"Iconify"	f.iconify
+""		f.nop
+"Close"		f.delete
+}
