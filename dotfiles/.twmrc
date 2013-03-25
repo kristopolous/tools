@@ -17,25 +17,25 @@ BorderWidth 4
 
 Color
 {
-    BorderColor			"rgb:4/2/2"
+    BorderColor	"#4f3557"
 
-    MenuForeground 		"rgb:b/9/5"
-    MenuBackground 		"rgb:3/1/0"
+    MenuForeground 		"#b084c2"
+    MenuBackground 		"#190d28"
 
-    TitleForeground		"rgb:b/9/5"
+    TitleForeground		"#b084c2"
     TitleBackground		"rgb:0/1/1"
 
-    DefaultForeground 		"rgb:b/9/5"
-    DefaultBackground 		"rgb:3/1/0"
+    DefaultForeground 		"#b084c2"
+    DefaultBackground 		"#190d28"
 
-    MenuTitleForeground		"rgb:b/9/5"
-    MenuTitleBackground		"rgb:3/1/0"
+    MenuTitleForeground		"#b084c2"
+    MenuTitleBackground		"#190d28"
 
-    BorderTileForeground 	"rgb:2/1/1"
-    BorderTileBackground 	"rgb:3/2/2"
+    BorderTileForeground 	"#190c25"
+    BorderTileBackground 	"#392c55"
 
-    IconManagerForeground 	"rgb:b/9/5"
-    IconManagerBackground 	"rgb:3/1/0"
+    IconManagerForeground 	"#b084c2"
+    IconManagerBackground 	"#190d28"
 }
 
 MoveDelta 3
@@ -54,11 +54,9 @@ Button2 = : frame | Title : f.resize
 Button3 = : frame | Title : f.menu "options"
 
 Button1	= l | m | c     : all : f.function "move-or-raise"
-Button2	= l | m | c     : all : f.resize
-Button3 = l | m | c     : all : f.menu "defops"
+Button3	= l | m | c     : all : f.resize
 Button1	=     m | c     : all : f.function "move-or-raise"
-Button2	=     m | c     : all : f.resize
-Button3 =     m | c     : all : f.menu "TwmWindows"
+Button3	=     m | c     : all : f.resize
 
 Button1 = l | m | c     : root : f.nop
 Button2 = l | m | c     : root : f.nop
