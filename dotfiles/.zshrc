@@ -60,3 +60,4 @@ set implicitcd
 setopt no_check_jobs 
 
 unsetopt correct_all
+export GIT_EDITOR=/home/chris/bin/vim
