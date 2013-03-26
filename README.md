@@ -10,3 +10,4 @@ These are various helper scripts that I use day to day.
  * authadd: similar to ssh-copy-id but seems to work more.
  * ssh_config: Just a base level system with the control master settings that
  * strace-all: This will do a ps and grep for the string that is the last argument, then it will strace the pids of all of them simultaneously with parallelized xargs, following vforks
+  * youtube-dl: From http://rg3.github.com/youtube-dl/download.html
