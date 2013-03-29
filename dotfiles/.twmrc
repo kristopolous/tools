@@ -65,6 +65,7 @@ Button2 =     m | c     : root : f.nop
 
 "w"	= l | m | c     : all : f.function "cycle-raise"
 "w"	=     m | c     : all : f.function "cycle-raise"
+"Tab"	=   m      : all : f.exec "/home/chris/code/alttab/alttab &"
 
 "e" = l | m | c     : all : f.function "double-raise" 
 "e" =     m | c     : all : f.function "double-raise" 
