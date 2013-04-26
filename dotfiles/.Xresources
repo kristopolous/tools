@@ -24,10 +24,10 @@ xterm*color7:            #dddddd
 xterm*color15:           #dddddd
 
 *faceName: Inconsolata
-*VT100.utf8Fonts.font1:	-misc-fixed-medium-r-normal--4-40-75-75-c-50-iso10646-1
-*VT100.utf8Fonts.font2:	-misc-fixed-medium-r-normal--5-50-75-75-c-50-iso10646-1
-*VT100.utf8Fonts.font3:	-misc-fixed-medium-r-normal--6-60-75-75-c-50-iso10646-1
-*VT100.utf8Fonts.font:	-misc-fixed-medium-r-normal--7-70-75-75-c-50-iso10646-1
-*VT100.utf8Fonts.font4:	-misc-fixed-medium-r-normal--9-90-75-75-c-60-iso10646-1
-*VT100.utf8Fonts.font5:	-misc-fixed-medium-r-normal--12-120-75-75-c-70-iso10646-1
-*VT100.utf8Fonts.font6:	-misc-fixed-medium-r-normal--13-130-75-75-c-80-iso10646-1
+xterm*font1:	-misc-fixed-medium-r-normal--2-20-75-75-c-20-iso10646-1
+xterm*font2:	-misc-fixed-medium-r-normal--3-30-75-75-c-30-iso10646-1
+xterm*font3:	-misc-fixed-medium-r-normal--4-40-75-75-c-40-iso10646-1
+xterm*font4:	-misc-fixed-medium-r-normal--5-50-75-75-c-50-iso10646-1
+xterm*font:	-misc-fixed-medium-r-normal--5-50-75-75-c-50-iso10646-1
+xterm*font5:	-misc-fixed-medium-r-normal--6-60-75-75-c-60-iso10646-1
+xterm*font6:	-misc-fixed-medium-r-normal--7-70-75-75-c-70-iso10646-1
