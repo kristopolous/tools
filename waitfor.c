@@ -10,8 +10,6 @@ int main(int argc, char*argv[]) {
     * g_fd = (int*)malloc(sizeof(int) * argc);
 
   fd_set rfds;
-  struct timeval tv;
-
   FD_ZERO(&rfds);
 
   g_fd[fd] = inotify_init();
@@ -40,7 +38,7 @@ int main(int argc, char*argv[]) {
 
   if(fd) {
     fprintf(stderr, "\n");
-    select(g_fd[fd - 1] + 1, &rfds, NULL, NULL, &tv);
+    select(g_fd[fd - 1] + 1, &rfds, NULL, NULL, NULL);
 
     do {
       inotify_rm_watch(g_fd[fd], g_wd[fd]);
