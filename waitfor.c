@@ -1,48 +1,56 @@
-#include <sys/inotify.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <signal.h>
 #include <stdlib.h>
-#include <string.h>
+#include <sys/inotify.h>
 #include <sys/select.h>
 
 int main(int argc, char*argv[]) {
   int 
-    ix,
-    retval,
+    fd = 0,
+    * g_wd = (int*)malloc(sizeof(int) * argc),
     * g_fd = (int*)malloc(sizeof(int) * argc);
 
-  uint32_t * g_wd = (uint32_t*)malloc(sizeof(uint32_t) * argc);
   fd_set rfds;
   struct timeval tv;
 
   FD_ZERO(&rfds);
 
-  argc--;
-  argv++;
+  g_fd[fd] = inotify_init();
 
-  if(argc) {
-    for(ix = 0; ix < argc; ix++) {
-      g_fd[ix] = inotify_init();
+  for(argc--, argv++; argc; argc--, argv++) {
 
-      g_wd[ix] = inotify_add_watch(
-        g_fd[ix],
-        argv[ix], 
-        IN_ONESHOT | IN_MODIFY
-      );
+    // Only add files to the watch that exist
+    g_wd[fd] = inotify_add_watch(
+      g_fd[fd],
 
-      FD_SET(g_fd[ix], &rfds);
+      *argv,
+
+      IN_ONESHOT     | IN_MOVE_SELF  | 
+      IN_MODIFY      | IN_CREATE     | 
+      IN_CLOSE_WRITE | IN_DELETE_SELF
+    );
+
+    if(g_wd[fd] != -1) {
+      FD_SET(g_fd[fd], &rfds);
+      fd++;
+
+      g_fd[fd] = inotify_init();
+      fprintf(stderr, "%s ", *argv);
     }
+  }
 
-    retval = select(g_fd[ix - 1] + 1, &rfds, NULL, NULL, &tv);
+  if(fd) {
+    fprintf(stderr, "\n");
+    select(g_fd[fd - 1] + 1, &rfds, NULL, NULL, &tv);
 
-    for(ix = 0; ix < argc; ix++) {
-      inotify_rm_watch(g_fd[ix], g_wd[ix]);
-    }
+    do {
+      inotify_rm_watch(g_fd[fd], g_wd[fd]);
+    } while(fd--);
+
+    fd = 1;
   }
 
   free(g_fd);
   free(g_wd);
 
-  _exit (0);
+  return (!fd);
 }
