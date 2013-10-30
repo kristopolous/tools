@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/inotify.h>
 #include <sys/select.h>
@@ -32,12 +31,10 @@ int main(int argc, char*argv[]) {
       fd++;
 
       g_fd[fd] = inotify_init();
-      fprintf(stderr, "%s ", *argv);
     }
   }
 
   if(fd) {
-    fprintf(stderr, "\n");
     select(g_fd[fd - 1] + 1, &rfds, NULL, NULL, NULL);
 
     do {
