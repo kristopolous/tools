@@ -5,8 +5,8 @@
 int main(int argc, char*argv[]) {
   int 
     fd = 0,
-    * g_wd = (int*)malloc(sizeof(int) * argc),
-    * g_fd = (int*)malloc(sizeof(int) * argc);
+    *g_wd = (int*)malloc(sizeof(int) * argc),
+    *g_fd = (int*)malloc(sizeof(int) * argc);
 
   fd_set rfds;
   FD_ZERO(&rfds);
@@ -16,14 +16,9 @@ int main(int argc, char*argv[]) {
   for(argc--, argv++; argc; argc--, argv++) {
 
     // Only add files to the watch that exist
-    g_wd[fd] = inotify_add_watch(
-      g_fd[fd],
-
-      *argv,
-
-      IN_ONESHOT     | IN_MOVE_SELF  | 
-      IN_MODIFY      | IN_CREATE     | 
-      IN_CLOSE_WRITE | IN_DELETE_SELF
+    g_wd[fd] = inotify_add_watch( 
+      g_fd[fd], *argv,
+      IN_MOVE_SELF | IN_MODIFY | IN_CREATE | IN_DELETE_SELF
     );
 
     if(g_wd[fd] != -1) {
