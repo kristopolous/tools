@@ -1,3 +1,19 @@
+/*
+ * "waits for" the files specified as arguments to be modified
+ * and then exits.
+ *
+ * This is useful in situations say, where you need modify some source
+ * file and your application uses say, a minified compressed version
+ * of concatenated sources.
+ *
+ * Here you can do something like
+ *
+ * #!/bin/bash
+ * while [ 0 ]; do
+ *  waitfor js/*js && tools/deploy.sh
+ * done
+ *
+ */
 #include <stdlib.h>
 #include <sys/inotify.h>
 #include <sys/select.h>
