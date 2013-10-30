@@ -1,1 +1,1 @@
-inotify: inotify.o
+waitfor: waitfor.o 
