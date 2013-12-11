@@ -51,7 +51,7 @@ int main(int argc, char*argv[]) {
     i,
     iy,
     fd = 0,
-    mapLen = sizeof(map) / (sizeof(int) + sizeof(char*)),
+    mapLen = 12,
     *g_name = (int*)malloc(sizeof(int) * argc),
     *g_wd = (int*)malloc(sizeof(int) * argc),
     *g_fd = (int*)malloc(sizeof(int) * argc);
@@ -118,7 +118,6 @@ int main(int argc, char*argv[]) {
 
     fflush(0);
     FD_ZERO(&rfds);
-    usleep(5000);
   }
 
   free(g_fd);
