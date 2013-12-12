@@ -4,6 +4,8 @@ These are various helper scripts that I use day to day.
 ## Description
 
 =======
+ * inotify: A way to see when a collection of files is accessed
+ * waitfor: a blocking thing of the above (see description in the c file)
  * chooser: an 802.11 scanner and chooser
  * config-all: used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point
  * update-tags: updates ctags and cscope ; useful for emacs and vim code navigation
