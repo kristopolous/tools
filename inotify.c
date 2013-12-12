@@ -18,13 +18,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <linux/limits.h>
 #include <sys/inotify.h>
 #include <sys/select.h>
 
 #define ARGS IN_ONESHOT | IN_ALL_EVENTS
 #define EVENT_SIZE  (sizeof (struct inotify_event))
 #define BUF_LEN        (1024 * (EVENT_SIZE + 16))
-char buf[BUF_LEN];
+char 
+  buf[BUF_LEN],
+  dir[PATH_MAX];
 
 struct {
   int bit;
@@ -55,6 +58,8 @@ int main(int argc, char*argv[]) {
     *g_name = (int*)malloc(sizeof(int) * argc),
     *g_wd = (int*)malloc(sizeof(int) * argc),
     *g_fd = (int*)malloc(sizeof(int) * argc);
+
+  getcwd(dir, PATH_MAX);
 
   fd_set rfds;
   FD_ZERO(&rfds);
@@ -106,7 +111,7 @@ int main(int argc, char*argv[]) {
             // Output type of access by using the map above
             for (iy = 0; iy < mapLen; iy++) {
               if(event->mask & map[iy].bit && map[iy].desc) {
-                printf(" %s %s\n", argv[g_name[ix]], map[iy].desc);
+                printf(" %s/%s %s\n", dir, argv[g_name[ix]], map[iy].desc);
               }
             }
 
@@ -120,6 +125,7 @@ int main(int argc, char*argv[]) {
     FD_ZERO(&rfds);
   }
 
+  free(g_name);
   free(g_fd);
   free(g_wd);
 
