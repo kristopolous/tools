@@ -1,0 +1,15 @@
+#!/bin/sh
+lhs=`mktemp`
+rhs=`mktemp`
+file=$lhs
+while IFS='' read line; do
+  part=`echo "$line" | grep -E '^[<>]+$' | wc -l`
+  if [ $part -eq 1 ]; then
+    file=$rhs
+  else
+    echo "$line" >> $file
+  fi
+done
+xterm -e vimdiff $lhs $rhs
+cat $lhs
+rm $lhs $rhs
