@@ -29,7 +29,7 @@
 lhs=`mktemp`
 rhs=`mktemp`
 
-# Use the lhs as the first block
+# Use the lhs file for the first block to compare against
 file=$lhs
 
 while IFS='' read line; do
@@ -39,10 +39,16 @@ while IFS='' read line; do
   
   # use it to toggle which file is being written to
   if [ $part -eq 1 ]; then
+
+    # if the sentinel is hit, swap the file pointer
     file=$rhs
   else
+
+    # otherwise write to the current pointer
     echo "$line" >> $file
+
   fi
+
 done
 
 # now open a vimdiff of the two files.
