@@ -1,15 +1,56 @@
 #!/bin/sh
+#
+# indiff
+# 
+# visual, inline comparisons of blocks in vim.
+#
+# usage:
+#
+# 1. Make the two blocks you want to compare sequential in a file0
+# 2. Place a line containing only "<" and/or ">" characters
+# 3. Select BOTH blocks in one continuous selection
+# 4. run !indiff
+# 
+# Now a separate xterm window pops up with the two blocks side by side.
+# Edit your changes and make the left-hand one the final implementation.
+#
+# 5. Save the file and exit the separate vim in the xterm window.
+#
+# Your two blocks of code will now be replaced with one merged block
+# that you visually did the diff of.
+#
+# Here's a youtube video: http://www.youtube.com/watch?v=0edgoRDac2M
+# The code is available here: https://github.com/kristopolous/tools/blob/master/indiff
+#
+# MIT Licensed, 2013, chris mckenzie.
+#
+
+# create 2 temp files
 lhs=`mktemp`
 rhs=`mktemp`
+
+# Use the lhs as the first block
 file=$lhs
+
 while IFS='' read line; do
+
+  # keep reading into lhs until the sentinel line is found
   part=`echo "$line" | grep -E '^[<>]+$' | wc -l`
+  
+  # use it to toggle which file is being written to
   if [ $part -eq 1 ]; then
     file=$rhs
   else
     echo "$line" >> $file
   fi
 done
+
+# now open a vimdiff of the two files.
 xterm -e vimdiff $lhs $rhs
+
+# when done, dump the LHS file to stdout
+# making it the replacement for the block
 cat $lhs
+
+# and remove our two temp files.
 rm $lhs $rhs
