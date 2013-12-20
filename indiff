@@ -7,7 +7,7 @@
 # usage:
 #
 # 1. Make the two blocks you want to compare sequential in an existing vim session.
-# 2. Place a line containing only "<" and/or ">" characters between  the two blocks.
+# 2. Place a line containing only "<" and/or ">" characters between the two blocks.
 # 3. Select BOTH blocks in one continuous selection
 # 4. run !indiff
 # 
@@ -19,7 +19,7 @@
 # Your two blocks of code will now be replaced with one merged block
 # that you visually did the diff of.
 #
-# Here's a youtube video: http://www.youtube.com/watch?v=0edgoRDac2M
+# Here's a youtube video: http://www.youtube.com/watch?v=ROlv7IawkeU
 # The code is available here: https://github.com/kristopolous/tools/blob/master/indiff
 #
 # MIT Licensed, 2013, chris mckenzie.
