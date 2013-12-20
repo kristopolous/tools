@@ -7,7 +7,7 @@
 # usage:
 #
 # 1. Make the two blocks you want to compare sequential in an existing vim session.
-# 2. Place a line containing only "<" and/or ">" characters between to the two blocks.
+# 2. Place a line containing only "<" and/or ">" characters between  the two blocks.
 # 3. Select BOTH blocks in one continuous selection
 # 4. run !indiff
 # 
