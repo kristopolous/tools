@@ -4,6 +4,7 @@ These are various helper scripts that I use day to day.
 ## Description
 
 =======
+ * indiff: A tool for comparing code differences
  * inotify: A way to see when a collection of files is accessed
  * waitfor: a blocking thing of the above (see description in the c file)
  * chooser: an 802.11 scanner and chooser
