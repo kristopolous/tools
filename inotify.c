@@ -90,8 +90,6 @@ int main(int argc, char*argv[]) {
     }
 
     select(g_fd[fd - 1] + 1, &rfds, NULL, NULL, NULL);
-    printf("\n");
-    system("date");
 
     for(ix = 0; ix < fd; ix++) {
 
@@ -111,7 +109,7 @@ int main(int argc, char*argv[]) {
             // Output type of access by using the map above
             for (iy = 0; iy < mapLen; iy++) {
               if(event->mask & map[iy].bit && map[iy].desc) {
-                printf(" %s/%s %s\n", dir, argv[g_name[ix]], map[iy].desc);
+                printf("%19s %s/%s\n", map[iy].desc, dir, argv[g_name[ix]]);
               }
             }
 
