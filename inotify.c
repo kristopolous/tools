@@ -1,17 +1,7 @@
 /*
- * "waits for" the files specified as arguments to be modified
- * and then exits.
+ * inotify
  *
- * This is useful in situations say, where you need modify some source
- * file and your application uses say, a minified compressed version
- * of concatenated sources.
- *
- * Here you can do something like
- *
- * #!/bin/bash
- * while [ 0 ]; do
- *  waitfor js/*js && tools/deploy.sh
- * done
+ * Watches all files given to you on the command line
  *
  */
 #include <unistd.h>
@@ -67,6 +57,9 @@ int main(int argc, char*argv[]) {
   for(ix = 0; ix < argc; ix++) {
     g_fd[ix] = inotify_init();
   }
+
+  printf("Watching %d files\n", argc - 1);
+  fflush(0);
 
   while(1) {
     fd = 0;
