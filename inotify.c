@@ -56,9 +56,13 @@ int main(int argc, char*argv[]) {
 
   for(ix = 0; ix < argc; ix++) {
     g_fd[ix] = inotify_init();
+    if(g_fd[ix] == -1) {
+      printf("Ran out of inotify handlers before adding \"%s\"... those are the breaks\n", argv[ix]);
+      break;
+    }
   }
 
-  printf("Watching %d files\n", argc - 1);
+  printf("Watching %d out of %d requested files.\n", ix, argc - 1);
   fflush(0);
 
   while(1) {
