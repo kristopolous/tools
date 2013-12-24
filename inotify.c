@@ -54,15 +54,16 @@ int main(int argc, char*argv[]) {
   fd_set rfds;
   FD_ZERO(&rfds);
 
-  for(ix = 0; ix < argc; ix++) {
+  for(ix = 1; ix < argc; ix++) {
     g_fd[ix] = inotify_init();
     if(g_fd[ix] == -1) {
       printf("Ran out of inotify handlers before adding \"%s\"... those are the breaks\n", argv[ix]);
       break;
     }
+    printf("%s\n", argv[ix]);
   }
 
-  printf("Watching %d out of %d requested files.\n", ix, argc - 1);
+  printf("Watching %d out of %d requested files.\n", ix - 1, argc - 1);
   fflush(0);
 
   while(1) {
