@@ -39,6 +39,7 @@ struct {
 
 int main(int argc, char*argv[]) {
   int 
+    lastError = -1,
     len,
     ix,
     i,
@@ -55,8 +56,8 @@ int main(int argc, char*argv[]) {
   FD_ZERO(&rfds);
 
   for(ix = 1; ix < argc; ix++) {
-    g_fd[ix] = inotify_init();
-    if(g_fd[ix] == -1) {
+    g_fd[ix - 1] = inotify_init();
+    if(g_fd[ix - 1] == -1) {
       printf("Ran out of inotify handlers before adding \"%s\"... those are the breaks\n", argv[ix]);
       break;
     }
@@ -68,19 +69,32 @@ int main(int argc, char*argv[]) {
 
   while(1) {
     fd = 0;
+    lastError = -1;
 
     for(ix = 1; ix < argc; ix++) {
 
-      // Only add files to the watch that exist
-      g_wd[fd] = inotify_add_watch( 
-        g_fd[fd], argv[ix],
-        ARGS
-      );
+      do {
+        // Only add files to the watch that exist
+        g_wd[fd] = inotify_add_watch( 
+          g_fd[fd], argv[ix],
+          ARGS
+        );
 
-      if(g_wd[fd] != -1) {
-        g_name[fd] = ix;
-        fd++;
-      }
+        if(g_wd[fd] != -1) {
+          g_name[fd] = ix;
+          fd++;
+        } else {
+          if(lastError != ix) {
+            lastError = ix;
+            usleep(1000);
+            continue;
+          } else {
+            printf("Failed to place a watch on %s :: ", argv[ix]);
+            fflush(0);
+            perror("Error");
+          }
+        }
+      } while(0);
     }
 
     for(ix = 0; ix < fd; ix++) {
