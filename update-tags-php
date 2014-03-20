@@ -1,7 +1,8 @@
 #!/bin/sh
-echo Updating cscope ... please wait a long time
-cscope -k -U -R -q -s .
 echo Updating ctags ... please wait even longer
 ctags \
+  --exclude='*~' \
+  -h .php \
   --language-force=php \
-  -B --fields=+afikKlmnsSzt --extra=+fq --sort=foldcase -R  .
+  -B --fields=+afikKlmnsSzt \
+  --extra=+fq --sort=foldcase -R  .
