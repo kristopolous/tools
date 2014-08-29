@@ -86,6 +86,8 @@ int main(int argc, char*argv[]) {
         } else {
           if(lastError != ix) {
             lastError = ix;
+            printf("sleeping\n");
+            fflush(0);
             usleep(1000);
             continue;
           } else {

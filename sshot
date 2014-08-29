@@ -1,0 +1,19 @@
+#!/bin/sh
+
+toscreen() {
+  echo "$1" | osd_cat -f '-*-lucida-*-r-*-*-34-*-*-*-*-*-*-*' -s 6 -S black -O 2 -u white -d 1&
+  /bin/sleep 0.3
+  pkill osd_cat
+  /bin/sleep 0.1
+}
+
+toscreen "screen shot!" 
+
+xwd -root |\
+  convert - png:- |\
+  imgur upload /dev/stdin |\
+  grep original |\
+  awk ' { print $2 } ' |\
+  xclip
+
+toscreen "Done!"
