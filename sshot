@@ -1,5 +1,10 @@
 #!/bin/sh
 #
+# (C) 2014, chris mckenzie under the terms of the WTFPL.
+# Available at http://www.wtfpl.net/txt/copying/
+#
+# Latest version at: https://github.com/kristopolous/tools/blob/master/sshot
+#
 # This script:
 #  * Takes a fullscreen screen-shot
 #  * Uploads it to imgur
