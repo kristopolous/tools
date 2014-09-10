@@ -15,6 +15,6 @@ cat > ~/.ctags << END
 --regex-js=/([^= ]+)[ \t]*=[ \t]*[^']"[^"]*/\1/,string/
 END
 
-ctags-exuberant -h ".js" --exclude=".min.js" --totals=yes --tag-relative=yes --fields=+afikKlmnsSzt --extra=+ -R .
+ctags-exuberant -h ".js" --exclude=".min.js" --sort=foldcase --totals=yes --tag-relative=yes --fields=+afikKlmnsSzt --extra=+ -R .
 
 [ -e ~/.ctags-backup ] && mv ~/.ctags-backup ~/.ctags
