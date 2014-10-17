@@ -1,40 +1,106 @@
 #!/bin/bash
 # This will be run when the lid closes.
-# The process will go to sleep here
-sleep 10
 
-# When it comes back online, it will resume with the following:
+# This is gathered through 
+#
+# cpufreq-info -l 
+#
+# They are used tin the cpu_scaling function below
+#max_cpu_freq=2501000
 
-# Start the PM system
-tlp start
+# I'm a man of modest demands so I intentionally underpower my cpu
+# to increase my battery life
+max_cpu_freq=1700000
 
-# Disable the watch dog timer
-echo 0 > /proc/sys/kernel/nmi_watchdog
+#min_cpu_freq=1200000
+min_cpu_freq=1200000
 
-# Enable HD power saving
-echo Y > /sys/module/snd_hda_intel/parameters/power_save_controller
-echo 1 > /sys/module/snd_hda_intel/parameters/power_save
+set -x
 
-# Make the cache busting of the vm very lazy
-echo 120000 > /proc/sys/vm/dirty_writeback_centisecs 
+# There's a kernel setting for this to not be a problem
+# but I don't want to manage my own kernel.
+remount_sd() {
+  #fuser -km /sd
+  umount /sd
+  mount /sd
+}
 
-# Put the PCI devices in power control
-for i in /sys/bus/pci/devices/*/power/control; do 
-  echo auto > $i
-done
+# The trackpoint settings like to get reset
+trackpoint_adjust() {
+  if [ -e /sys/devices/platform/i8042/serio1/serio3 ]; then
+    echo 250 > /sys/devices/platform/i8042/serio1/serio3/sensitivity
+    echo 120 > /sys/devices/platform/i8042/serio1/serio3/speed
+  else 
+    echo 250 > /sys/devices/platform/i8042/serio1/serio2/sensitivity
+    echo 120 > /sys/devices/platform/i8042/serio1/serio2/speed
+  fi
 
-# Say we want to manage our VM in laptop (power effecient) mode.
-echo 5 > /proc/sys/vm/laptop_mode
+  # sometimes the scroll wheel gets unset and the acceleration 
+  # goes back down - always lovely.
+  xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
+  xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
+  xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
+  xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
+}
 
-# Bring the screen brightness down
-echo 3 > /sys/devices/*/*/backlight/acpi_video0/brightness
+# The application powertop says to do these things.
+# I actually don't know too much about them.
+#
+# Lots of stackoverflow posts back this up.
+# These are generally things that don't really change
+# the user experience as far as I know.
+powertop_recommends() {
+  # Start the PM system if available
+  if [ `which tlp` -eq 0 ]; then
+    tlp start
+  fi
 
-# Enable on-demand frequency scaling
-for i in `cat /proc/cpuinfo | grep processor | awk ' { print $NF } '`; do
-  cpufreq-set -c $i -g ondemand 
-done
+  # Disable the watch dog timer
+  echo 0 > /proc/sys/kernel/nmi_watchdog
 
-# Turn off unneeded LEDS
-for i in /sys/class/leds/*/brightness; do 
-  echo 0 > $i
-done
+  # Enable HD power saving
+  echo Y > /sys/module/snd_hda_intel/parameters/power_save_controller
+  echo 1 > /sys/module/snd_hda_intel/parameters/power_save
+
+  # Make the cache busting of the vm very lazy
+  echo 120000 > /proc/sys/vm/dirty_writeback_centisecs 
+
+  # Put the PCI devices in power control
+  for i in /sys/bus/pci/devices/*/power/control; do 
+    echo auto > $i
+  done
+
+  # Say we want to manage our VM in laptop (power effecient) mode.
+  echo 5 > /proc/sys/vm/laptop_mode
+}
+
+# This dims the screen down to a level of 3
+# which is acceptable in low-light conditions.
+dim_screen() {
+  # Bring the screen brightness down
+  echo 3 > /sys/devices/*/*/backlight/acpi_video0/brightness
+}
+
+# This tries to disable any LED lights that can be turned off
+no_blinky() {
+  for i in /sys/class/leds/*/brightness /sys/devices/platform/*/leds/*/brightness; do 
+    echo 0 > $i
+  done
+}
+
+cpu_scaling() {
+  # Enable on-demand frequency scaling
+  for i in `cat /proc/cpuinfo | grep processor | awk ' { print $NF } '`; do
+    cpufreq-set -d $min_cpu_freq -u $max_cpu_freq -c $i -g ondemand 
+  done
+}
+
+# These are laptop related
+remount_sd
+trackpoint_adjust
+dim_screen
+
+# These are more general
+powertop_recommends
+no_blinky
+cpu_scaling
