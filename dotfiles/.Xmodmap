@@ -1,7 +1,11 @@
-remove Lock = Caps_Lock
+! remove Lock = 66
 remove Control = Control_L
 ! keysym Control_L = Caps_Lock
-keysym Caps_Lock = Control_L
+! keysym 66 = Control_L
 add Lock = Caps_Lock
 add Control = Control_L
-keycode 127 = KP_Add
+keycode 66 = Control_L
+keycode 78 = KP_Add
+keycode 133 = F1
+keycode 97 = Alt_L
+keycode 180 = Escape

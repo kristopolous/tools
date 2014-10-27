@@ -1,3 +1,4 @@
+xterm*VT100.geometry: 80x30
 !black
 xterm*color0:            #393939
 xterm*color8:            #474747
@@ -20,14 +21,18 @@ xterm*color13:           #a761c2
 xterm*color6:            #435d75
 xterm*color14:           #6e98a4
 !!white
-xterm*color7:            #dddddd
-xterm*color15:           #dddddd
+xterm*color7:            #ffffff
+xterm*color15:           #ffffff
 
-*faceName: Inconsolata
-xterm*font1:	-misc-fixed-medium-r-normal--2-20-75-75-c-20-iso10646-1
-xterm*font2:	-misc-fixed-medium-r-normal--3-30-75-75-c-30-iso10646-1
-xterm*font3:	-misc-fixed-medium-r-normal--4-40-75-75-c-40-iso10646-1
-xterm*font4:	-misc-fixed-medium-r-normal--5-50-75-75-c-50-iso10646-1
-xterm*font:	-misc-fixed-medium-r-normal--5-50-75-75-c-50-iso10646-1
-xterm*font5:	-misc-fixed-medium-r-normal--6-60-75-75-c-60-iso10646-1
-xterm*font6:	-misc-fixed-medium-r-normal--7-70-75-75-c-70-iso10646-1
+xterm*faceName: Cousine
+xterm*faceSize: 11.0
+xterm*faceSize1: 3.0
+xterm*faceSize2: 7.0
+xterm*faceSize3: 10.0
+xterm*faceSize4: 15.0
+xterm*faceSize5: 18.0
+
+xterm*cutNewLine: false
+xterm*cutToBeginningOfLine: false
+xterm*charClass: 33:48,35:48,37-38:48,43-47:48,58:48,61:48,63-64:48,95:48,126:48
+!! XTerm*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48
