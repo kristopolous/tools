@@ -1,0 +1,4 @@
+xrandr --output VGA1 --off --output LVDS1 --auto
+sleep 1
+pkill notion
+notion&

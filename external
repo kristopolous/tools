@@ -1,0 +1,8 @@
+setxkbmap -option ctrl:nocaps  
+xmodmap ~/.Xmodmap
+
+xrdb -merge ~/.Xresources
+xrandr --output VGA1 --auto --output LVDS1 --off
+sleep 1
+pkill notion
+notion&
