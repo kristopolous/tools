@@ -7,8 +7,10 @@ These are various helper scripts that I use day to day.
  * authadd: Similar to ssh-copy-id but seems to work more.
  * chooser: An 802.11 scanner and chooser
  * config-all: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point
+ * external: A script I use to dock the laptop and rerun keyboard mappings
  * hotspot: A script I use to test mobile from my laptop
  * indiff: A tool for comparing code differences
+ * internal: A script I use when undocking my laptop
  * inotify: A way to see when a collection of files is accessed
  * laptop-power-saving.sh: The various tricks I've learned to make the most of my laptop battery
  * my_xterm: Just a dumb xterm wrapper in acidx for notion.
