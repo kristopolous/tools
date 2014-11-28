@@ -1,0 +1,12 @@
+#!/bin/bash
+
+./laptop.sh
+
+for i in avahi-daemon libvirt-guests libvirtd saned rpcbind bluetooth nfs-common cups mysql apache2 isc-dhcp-server hostapd; do
+  sudo service $i stop
+done
+
+for i in adb hostapd; do
+  echo killing $i
+  sudo pkill $i
+done
