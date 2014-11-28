@@ -13,6 +13,7 @@ These are various helper scripts that I use day to day.
  * internal: A script I use when undocking my laptop
  * inotify: A way to see when a collection of files is accessed
  * laptop-power-saving.sh: The various tricks I've learned to make the most of my laptop battery
+ * minimal: A minimal-level battery saving setting (used in conjunction with the prior script)
  * my_xterm: Just a dumb xterm wrapper in acidx for notion.
  * ssh_config: Just a base level system with the control master settings that
  * sshot: A poor man's screen sharing application.
