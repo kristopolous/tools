@@ -1,0 +1,12 @@
+#!/bin/bash
+port=/sys/devices/*/*/drm/card*/card*/intel_backlight/brightness
+while [ 0 ]; do
+	read -n 1 -d '' i
+	clear
+	last=`cat $port`
+	incr=0
+	[ $i = 'u' ] && incr=50
+	[ $i = 'd' ] && incr=-50
+	echo $(( last + incr )) | sudo tee $port >& /dev/null
+	echo -n $(( last + incr ))
+done
