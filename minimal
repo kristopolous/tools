@@ -2,11 +2,19 @@
 
 ./laptop.sh
 
-for i in avahi-daemon libvirt-guests libvirtd saned rpcbind bluetooth nfs-common cups mysql apache2 isc-dhcp-server hostapd; do
+for i in  \
+  avahi-daemon \
+  bluetooth \
+  cups cups-browsed saned \
+  libvirt-guests libvirtd \
+  mysql nginx apache2 \
+  rpcbind nfs-common \
+  isc-dhcp-server hostapd; do
+
   sudo service $i stop
 done
 
-for i in adb hostapd; do
+for i in pulseaudio adb hostapd; do
   echo killing $i
   sudo pkill $i
 done

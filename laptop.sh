@@ -10,10 +10,10 @@
 
 # I'm a man of modest demands so I intentionally underpower my cpu
 # to increase my battery life
-max_cpu_freq=1700000
+max_cpu_freq=1333000
 
 #min_cpu_freq=1200000
-min_cpu_freq=1200000
+min_cpu_freq=1000000
 
 set -x
 
