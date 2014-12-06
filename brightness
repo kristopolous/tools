@@ -4,7 +4,7 @@ while [ 0 ]; do
 	read -n 1 -d '' i
 	clear
 	last=`cat $port`
-	incr=0
+	incr=1000
 	[ $i = 'u' ] && incr=1052
 	[ $i = 'd' ] && incr=950
 	amount=$(( last * incr / 1000 ))
