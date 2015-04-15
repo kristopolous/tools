@@ -1,14 +1,32 @@
 #!/bin/bash
 port=/sys/devices/*/*/drm/card*/card*/intel_backlight/brightness
-while [ 0 ]; do
-	read -n 1 -d '' i
-	clear
+amount=0
+
+change() {
 	last=`cat $port`
 	incr=1000
-	[ $i = 'u' ] && incr=1052
-	[ $i = 'd' ] && incr=950
+	[ $1 = 'u' ] && incr=1052
+	[ $1 = 'd' ] && incr=950
 	amount=$(( last * incr / 1000 ))
-  [ $i = 'u' ] && (( amount++ ))
-  echo -n $amount
+  [ $1 = 'u' ] && (( amount++ ))
+  [ $amount -lt 13 ] && amount=10
 	echo $amount | sudo tee $port >& /dev/null
-done
+}
+
+if [ $# -gt 0 ]; then
+  times=$2
+
+  while [ $times -gt 0 ]; do
+    (( times-- ))
+    change $1
+  done
+else
+  while [ 0 ]; do
+    read -n 1 -d '' i
+    clear
+    last=`cat $port`
+    incr=1000
+    change $i
+    echo -n $amount
+  done
+fi
