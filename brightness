@@ -1,25 +1,54 @@
 #!/bin/bash
+# 
+# This script changes the brightness level of my screen.  For whatever
+# reason the keys have stopped working so I have to do it manually now.
+#
+# That's fine. I can handle that.
+#
+# When run without arguments you can press the "u" or the "d" key to
+# make it go [u]p or [d]own in brightness.
+#
+# The projection of it is geometric so you get more granulity in the 
+# dimmer settings then you get in other tools.
+#
+# Also, there's a bottom value that is not 0.  This means that you 
+# won't accidentally put yourself to a blank screen and then have
+# to blindly guess your way out of it.
+#
 port=/sys/devices/*/*/drm/card*/card*/intel_backlight/brightness
 amount=0
+bottom=13
+count=1
 
 change() {
-	last=`cat $port`
+  if [ $# -gt 1 ]; then
+    count=$2
+  fi
+
+  if [ $amount -eq 0 ]; then
+	  last=`cat $port`
+  else
+    last=$amount
+  fi
+
 	incr=1000
+
 	[ $1 = 'u' ] && incr=1052
 	[ $1 = 'd' ] && incr=950
-	amount=$(( last * incr / 1000 ))
-  [ $1 = 'u' ] && (( amount++ ))
-  [ $amount -lt 13 ] && amount=10
+
+  while [ $count -gt 0 ]; do
+    amount=$(( last * incr / 1000 ))
+    [ $1 = 'u' ] && (( amount++ ))
+    (( count-- ))
+  done
+
+  [ $amount -lt $bottom ] && amount=$bottom
+
 	echo $amount | sudo tee $port >& /dev/null
 }
 
 if [ $# -gt 0 ]; then
-  times=$2
-
-  while [ $times -gt 0 ]; do
-    (( times-- ))
-    change $1
-  done
+  change $1 $2
 else
   while [ 0 ]; do
     read -n 1 -d '' i
