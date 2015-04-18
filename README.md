@@ -5,6 +5,7 @@ These are various helper scripts that I use day to day.
 
 =======
  * authadd: Similar to ssh-copy-id but seems to work more.
+ * brightness: x86 screen brightness tool for xbindkeys
  * chooser: An 802.11 scanner and chooser
  * config-all: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point
  * external: A script I use to dock the laptop and rerun keyboard mappings
