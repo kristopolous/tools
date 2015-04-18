@@ -3,7 +3,6 @@ These are various helper scripts that I use day to day.
 
 ## Description
 
-=======
  * authadd: Similar to ssh-copy-id but seems to work more.
  * brightness: x86 screen brightness tool for xbindkeys
  * chooser: An 802.11 scanner and chooser
