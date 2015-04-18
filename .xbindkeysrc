@@ -1,0 +1,5 @@
+"brightness d 1" 
+  XF86MonBrightnessDown
+"brightness u 1" 
+  XF86MonBrightnessUp
+
