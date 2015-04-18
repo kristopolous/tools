@@ -16,20 +16,14 @@
 # to blindly guess your way out of it.
 #
 port=/sys/devices/*/*/drm/card*/card*/intel_backlight/brightness
-amount=0
+amount=`cat $port`
 bottom=13
 count=1
 
 change() {
-  if [ $# -gt 1 ]; then
-    count=$2
-  fi
+  count=${2:-1}
 
-  if [ $amount -eq 0 ]; then
-	  last=`cat $port`
-  else
-    last=$amount
-  fi
+  last=$amount
 
 	incr=1000
 
