@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Forcefully reassociate DEV on different networks
+#
+DEV=wlan0
+
+sudo ifconfig $DEV down
+sudo ifconfig $DEV 0.0.0.0
+sudo pkill dhclient
+sudo dhclient $DEV
