@@ -1,20 +1,16 @@
 #!/bin/bash
 
-./laptop.sh
+bin/laptop.sh
 
-for i in  \
-  avahi-daemon \
-  bluetooth \
-  cups cups-browsed saned \
-  libvirt-guests libvirtd \
-  mysql nginx apache2 \
-  rpcbind nfs-common \
-  isc-dhcp-server hostapd; do
+for i in \
+  apache2 avahi-daemon bluetooth      \
+  cups docker hostapd isc-dhcp-server \
+  libvirt-guests libvirtd mysql       \
+  nfs-common postgresql rpcbind saned; do
 
   sudo service $i stop
 done
-
-for i in pulseaudio adb hostapd; do
+for i in adb hostapd hamster; do
   echo killing $i
   sudo pkill $i
 done
