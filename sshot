@@ -35,11 +35,12 @@ toscreen() {
 
 toscreen "Smile!" 
 
-xwd -root |\
-  convert - png:- |\
+xwd -root             |\
+  convert - png:-       |\
   imgur upload /dev/stdin |\
-  grep original |\
-  awk ' { print $2 } ' |\
+  grep original             |\
+  tee -a ~/screen-capture.log |\
+  awk ' { print $2 } '          |\
   xclip
 
 toscreen "Done!"
