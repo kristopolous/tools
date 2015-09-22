@@ -8,6 +8,7 @@ These are various helper scripts that I use day to day.
  * chooser: An 802.11 scanner and chooser
  * config-all: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point
  * external: A script I use to dock the laptop and rerun keyboard mappings
+ * git_diff_wrapper: A wrapper to put in .git/config (read the file to find out how to use it)
  * git-last-modified: A way to view the last modified dates (with respect to git) of the files in a directory
  * hotspot: A script I use to test mobile from my laptop
  * indiff: A tool for comparing code differences
