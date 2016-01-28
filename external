@@ -2,7 +2,11 @@ setxkbmap -option ctrl:nocaps
 xmodmap ~/.Xmodmap
 
 xrdb -merge ~/.Xresources
-xrandr --output VGA1 --auto --output LVDS1 --off
+xrandr --output VGA1 --auto --mode 1600x1200 --rotate left --output LVDS1 --off #--auto --left-of VGA1
+xrandr --dpi 96
+#xrandr --output VGA1 --auto --mode 1600x1200 --output LVDS1 --off #--auto --left-of VGA1
+#xrandr --output VGA1 --auto --output LVDS1 --off
 sleep 1
 pkill notion
 notion&
+echo $?

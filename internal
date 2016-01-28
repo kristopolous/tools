@@ -1,4 +1,5 @@
-xrandr --output VGA1 --off --output LVDS1 --auto
+DISPLAY=:0 xrandr --output VGA1 --off --output LVDS1 --mode 1366x768
+xrandr --dpi 125
 sleep 1
 pkill notion
-notion&
+DISPLAY=:0 notion&
