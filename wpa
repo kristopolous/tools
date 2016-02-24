@@ -1,6 +1,6 @@
 #!/bin/bash
 ./bin/wireless_disable_80211n.sh
-pkill -9 wpa_supplicant
+kill -9 $(pgrep wpa_supplicant)
 service network-manager stop
 while [ 0 ]; do
   wpa_supplicant -Dnl80211,wext -iwlan0 -c/etc/wpa_supplicant.conf |& tee /tmp/wireless
