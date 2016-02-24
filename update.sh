@@ -1,4 +1,4 @@
 #!/bin/sh
 for i in *; do 
-  cp ~/bin/$i .
-end
+  [ -e ~/bin/$i ] && cp ~/bin/$i .
+done
