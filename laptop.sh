@@ -6,14 +6,14 @@
 # cpufreq-info -l 
 #
 # They are used tin the cpu_scaling function below
-#max_cpu_freq=2501000
+max_cpu_freq=3100000
 
 # I'm a man of modest demands so I intentionally underpower my cpu
 # to increase my battery life
-max_cpu_freq=1333000
+#max_cpu_freq=1700000
 
 #min_cpu_freq=1200000
-min_cpu_freq=1000000
+min_cpu_freq=1200000
 
 set -x
 
@@ -79,6 +79,7 @@ powertop_recommends() {
 dim_screen() {
   # Bring the screen brightness down
   echo 3 > /sys/devices/*/*/backlight/acpi_video0/brightness
+  echo 500 > /sys/devices/*/*/drm/card*/card*/intel_backlight/brightness
 }
 
 # This tries to disable any LED lights that can be turned off
@@ -91,7 +92,7 @@ no_blinky() {
 cpu_scaling() {
   # Enable on-demand frequency scaling
   for i in `cat /proc/cpuinfo | grep processor | awk ' { print $NF } '`; do
-    cpufreq-set -d $min_cpu_freq -u $max_cpu_freq -c $i -g ondemand 
+    echo cpufreq-set -d $min_cpu_freq -u $max_cpu_freq -c $i -g ondemand 
   done
 }
 
