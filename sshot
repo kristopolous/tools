@@ -26,6 +26,9 @@
 #   (the "Print Screen" button may work well)
 #
 
+SAVE=~/.sshot
+mkdir -p $SAVE
+
 toscreen() {
   echo "$1" | osd_cat -f '-*-lucida-*-r-*-*-94-*-*-*-*-*-*-*' -s 6 -S black -O 2 -u white -d 1&
   /bin/sleep 0.3
@@ -33,13 +36,19 @@ toscreen() {
   /bin/sleep 0.1
 }
 
+imgur=imgur
+[ -e $SAVE/secrets ] && imgur=`cat $SAVE/secrets`
+
 toscreen "Smile!" 
+
+echo >> $SAVE/screen-capture.log
+date >> $SAVE/screen-capture.log
 
 xwd -root             |\
   convert - png:-       |\
-  imgur upload /dev/stdin |\
+  $imgur upload /dev/stdin |\
   grep original             |\
-  tee -a ~/screen-capture.log |\
+  tee -a $SAVE/screen-capture.log |\
   awk ' { print $2 } '          |\
   xclip
 
