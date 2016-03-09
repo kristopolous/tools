@@ -1,33 +1,67 @@
+Xft*antialias: true
+Xft*hinting: true
+Xft*hintstyle: hintfull
+
 xterm*VT100.geometry: 80x30
-!black
-xterm*color0:            #393939
-xterm*color8:            #474747
-!!red
-xterm*color1:            #da4939
-xterm*color9:            #ff6c5c
-!!green
-xterm*color2:            #519f50
-xterm*color10:           #a5c261
-!!yellow
-xterm*color3:            #cc7833
-xterm*color11:           #bc9458
-!!blue
-xterm*color4:            #6d9cbe
-xterm*color12:           #d0d0ff
-!!magenta
-xterm*color5:            #9f5079
-xterm*color13:           #a761c2
-!!cyan
-xterm*color6:            #435d75
-xterm*color14:           #6e98a4
-!!white
-xterm*color7:            #ffffff
-xterm*color15:           #ffffff
+xterm*background: #000000
+xterm*foreground: #ffffff
+
+! --- standard colors ---
+
+! black
+xterm*color0: #000000
+
+! bright_black
+xterm*color8: #414141
+
+! red
+xterm*color1: #d6580f
+
+! bright_red
+xterm*color9: #f7b28a
+
+! green
+xterm*color2: #0fd658
+
+! bright_green
+xterm*color10: #8af7b2
+
+! yellow
+xterm*color3: #8dd60f
+
+! bright_yellow
+xterm*color11: #cff78a
+
+! blue
+xterm*color4: #580fd6
+
+! bright_blue
+xterm*color12: #b28af7
+
+! magenta
+xterm*color5: #d60f8d
+
+! bright_magenta
+xterm*color13: #f78acf
+
+! cyan
+xterm*color6: #0f8dd6
+
+! bright_cyan
+xterm*color14: #8acff7
+
+! white
+xterm*color7: #cecece
+
+! bright_white
+xterm*color15: #ffffff
+
 
 xterm*faceName: Cousine
+!xterm*faceName: inconsolata
 xterm*faceSize: 11.0
-xterm*faceSize1: 3.0
-xterm*faceSize2: 7.0
+xterm*faceSize1: 7.0
+xterm*faceSize2: 8.0
 xterm*faceSize3: 10.0
 xterm*faceSize4: 15.0
 xterm*faceSize5: 18.0
@@ -36,3 +70,11 @@ xterm*cutNewLine: false
 xterm*cutToBeginningOfLine: false
 xterm*charClass: 33:48,35:48,37-38:48,43-47:48,58:48,61:48,63-64:48,95:48,126:48
 !! XTerm*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48
+!
+! from https://github.com/majutsushi/urxvt-font-size
+URxvt.font: xft:cousine:size=10
+URxvt.perl-ext-common: font-size
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
