@@ -2,12 +2,15 @@
 # http://www.emacswiki.org/emacs/MovingTheCtrlKey
 setxkbmap -option ctrl:nocaps  
 xmodmap ~/.Xmodmap
+xbindkeys
 
 xrdb -merge ~/.Xresources
 xset b off
 xsetroot -solid black 
 
 notion &
+
+pkill autocutsel
 autocutsel &
 autocutsel -s PRIMARY & 
 
@@ -23,6 +26,6 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 
-sudo ./laptop.sh
+sudo ./bin/laptop.sh
 
 sleep 10000000
