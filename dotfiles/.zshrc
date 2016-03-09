@@ -46,7 +46,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/home/chris/bin:$PATH:/usr/local/Adobe/Reader9/bin/:/usr/local/adt/sdk/tools/:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/chris/.rvm/bin:/home/chris/code/ghub/tools/:/usr/local/adt/sdk/platform-tools:/usr/local/eclipse/:$HOME/.rbenv/bin
+export PATH=/home/chris/bin:$PATH:/usr/local/Adobe/Reader9/bin/:/usr/local/adt/sdk/tools/:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/chris/.rvm/bin:/home/chris/code/ghub/tools/:/usr/local/adt/sdk/platform-tools:/usr/local/eclipse/:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools
 
 unsetopt completeinword
 setopt nohup
@@ -82,3 +82,6 @@ unsetopt share_history
 unset STY
 export NODE_PATH='/usr/local/lib/jsctags:${NODE_PATH}'
 export TERM=xterm-256color
+export CLOUD_CFG=~/cloudcreds.cfg
+export NODE_ENV=development
+alias alsamixer='alsamixer -c 0'
