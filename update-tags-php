@@ -1,5 +1,5 @@
 #!/bin/sh
-echo Updating ctags ... please wait even longer
+echo Updating ctags 
 ctags \
   --exclude='*~' \
   -h .php \

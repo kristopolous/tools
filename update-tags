@@ -1,5 +1,5 @@
 #!/bin/sh
 echo Updating cscope ... please wait a long time
-cscope -R -b -q -s /usr/local/include/,/usr/include/,.
+cscope -R -b -q -s .
 echo Updating ctags ... please wait even longer
-ctags -B --c++-kinds=+p --fields=+afikKlmnsSzt --extra=+q --sort=foldcase -R /usr/local/include/ /usr/include .
+ctags -B --c++-kinds=+p --fields=+afikKlmnsSzt --extra=+q --sort=foldcase -R .

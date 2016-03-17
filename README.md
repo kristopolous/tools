@@ -17,9 +17,11 @@ These are various helper scripts that I use day to day.
  * laptop-power-saving.sh: The various tricks I've learned to make the most of my laptop battery
  * minimal: A minimal-level battery saving setting (used in conjunction with the prior script)
  * my_xterm: Just a dumb xterm wrapper in acidx for notion.
+ * reassoc: A tool that agressively gets a new ip address because sometimes dhclient just isn't enough
  * ssh_config: Just a base level system with the control master settings that
  * sshot: A poor man's screen sharing application.
  * strace-all: This will do a ps and grep for the string that is the last argument, then it will strace the pids of all of them simultaneously with parallelized xargs, following vforks
  * update-tags: Updates ctags and cscope ; useful for emacs and vim code navigation
  * waitfor: A blocking thing of the above (see description in the c file)
+ * wpa: A script that maintains wpa_supplicant sanely (used with reassoc)
  * youtube-dl: From http://rg3.github.com/youtube-dl/download.html
