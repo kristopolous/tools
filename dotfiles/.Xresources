@@ -57,7 +57,8 @@ xterm*color7: #cecece
 xterm*color15: #ffffff
 
 
-xterm*faceName: Cousine
+!xterm*faceName: Cousine
+xterm*faceName:*-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1
 !xterm*faceName: inconsolata
 xterm*faceSize: 11.0
 xterm*faceSize1: 7.0

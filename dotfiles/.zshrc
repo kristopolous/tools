@@ -85,3 +85,6 @@ export TERM=xterm-256color
 export CLOUD_CFG=~/cloudcreds.cfg
 export NODE_ENV=development
 alias alsamixer='alsamixer -c 0'
+
+#export NVM_DIR="/home/chris/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
