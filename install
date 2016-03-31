@@ -2,6 +2,9 @@
 for i in `find -maxdepth 1 -executable -type f`; do
   if [ $i != $0 ]; then
     name=`basename $i`
+    if [ "$i" -eq "install" ]; then
+      next
+    fi
     if [ ! -e $HOME/bin/$name ]; then
       echo "Installing $name"
       cp -pu $i $HOME/bin
