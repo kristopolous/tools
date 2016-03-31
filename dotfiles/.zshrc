@@ -85,4 +85,5 @@ export TERM=xterm-256color
 export CLOUD_CFG=~/cloudcreds.cfg
 export NODE_ENV=development
 alias alsamixer='alsamixer -c 0'
+alias nvmsh='source ~/bin/nvmsh'
 
