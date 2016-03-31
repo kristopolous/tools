@@ -6,7 +6,7 @@
 # Dec 11, 2009
 
 doexit () {
-	echo Exiting...
+  echo Exiting...
 }
 
 if [ $# -ne 1 ]; then
@@ -18,13 +18,13 @@ HOST=$1
 PUBLICKEY=~/.ssh/id_rsa.pub
 
 if [ ! -f "$PUBLICKEY" ]; then
-	echo Looked for a public key in $PUBLICKEY but could not find one... 
+  echo Looked for a public key in $PUBLICKEY but could not find one... 
   ssh-keygen -t rsa
 fi
 
 if [ ! -n "$HOST" ]; then
-	echo "No host specified ... exiting"
-	doexit
+  echo "No host specified ... exiting"
+  doexit
 fi
 
 # here's the magic
