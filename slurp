@@ -1,0 +1,7 @@
+#!/bin/sh
+for file in *; do
+  if [ -f ~/bin/$file ]; then
+    echo "$file"
+    cp -pu ~/bin/$file .
+  fi
+done
