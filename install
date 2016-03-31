@@ -6,6 +6,7 @@ for i in inotify waitfor; do
   fi
 done
 
+cd bin
 for i in `find -maxdepth 1 -executable -type f`; do
   if [ $i != $0 ]; then
     name=`basename $i`
