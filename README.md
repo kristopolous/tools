@@ -25,3 +25,12 @@ These are various helper scripts that I use day to day.
  * waitfor: A blocking thing of the above (see description in the c file)
  * wpa: A script that maintains wpa_supplicant sanely (used with reassoc)
  * youtube-dl: From http://rg3.github.com/youtube-dl/download.html
+
+## Install
+
+There's an installer that will put these into your `$HOME/bin` directory
+If you trust me just run
+
+    $ ./installer
+
+And then add `$HOME/bin` to your path.
