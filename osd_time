@@ -1,4 +1,4 @@
 #!/bin/sh
 while [ 0 ]; do
-  date +%H:%M | osd_cat --color=white -O 1 -d 60 -A right
+  date +%H:%M | osd_cat --color=white -O 1 -d 30 -A right
 done
