@@ -1,4 +1,11 @@
 #!/bin/bash
+for i in inotify waitfor; do
+  if [ ! -e bin/$i ]; then
+    echo "Making $i"
+    cc src/$i.c -o bin/$i
+  fi
+done
+
 for i in `find -maxdepth 1 -executable -type f`; do
   if [ $i != $0 ]; then
     name=`basename $i`
