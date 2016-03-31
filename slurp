@@ -5,3 +5,6 @@ for file in *; do
     cp -pu ~/bin/$file .
   fi
 done
+echo "\n -- Dotfiles --"
+cd dotfiles
+./slurp
