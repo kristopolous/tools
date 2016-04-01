@@ -14,20 +14,19 @@ Most scripts are further commented if you click through the link.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/hotspot">hotspot</a>: A script I use to test mobile from my laptop.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/indiff">indiff</a>: A tool for comparing code differences. See [this reddit post](https://www.reddit.com/r/vim/comments/1tapo8/indiff_inline_visual_diff_comparisons/).
  * [internal](https://github.com/kristopolous/tools/blob/master/bin/internal): A script I use when undocking my laptop. This is the companion script to external.
- * [inotify](https://github.com/kristopolous/tools/blob/master/bin/inotify): A way to see when a collection of files is accessed. Also see the [sysdig](https://github.com/draios/sysdig) project I contribute to.
+ * [inotify](https://github.com/kristopolous/tools/blob/master/src/inotify.c): A way to see when a collection of files is accessed. Also see the [sysdig](https://github.com/draios/sysdig) project I contribute to.
  * [laptop-power-saving](https://github.com/kristopolous/tools/blob/master/bin/laptop-power-saving): The various tricks I've learned to make the most of my laptop battery
  * [minimal](https://github.com/kristopolous/tools/blob/master/bin/minimal): A minimal-level battery saving setting (used in conjunction with the prior script)
  * [my_xterm](https://github.com/kristopolous/tools/blob/master/bin/my_xterm): Just a dumb xterm wrapper in [acidx](https://github.com/kristopolous/acidx) for [notion](http://notion.sourceforge.net/).
  * [nvmsh](https://github.com/kristopolous/tools/blob/master/bin/nvmsh): Starts [nvm](https://github.com/creationix/nvm) (which has a multi-second load time, so it's not in .zshrc)
  * [osd_time](https://github.com/kristopolous/tools/blob/master/bin/osd_time): Puts a tiny clock in the top right. Needs osd_cat.
  * [reassoc](https://github.com/kristopolous/tools/blob/master/bin/reassoc): A tool that agressively gets a new ip address because sometimes dhclient just isn't enough. It also brings down eth0 just so the networking stack doesn't get confused on how to route packets.
- * ssh_config: Just a base level system with the control master settings that
- * sshot: A poor man's screen sharing application.
- * strace-all: This will do a ps and grep for the string that is the last argument, then it will strace the pids of all of them simultaneously with parallelized xargs, following vforks
- * update-tags: Updates ctags and cscope ; useful for emacs and vim code navigation
- * waitfor: A blocking thing of the above (see description in the c file)
- * wpa: A script that maintains wpa_supplicant sanely (used with reassoc)
- * youtube-dl: From http://rg3.github.com/youtube-dl/download.html
+ * [sshot](https://github.com/kristopolous/tools/blob/master/bin/sshot): A poor man's screen sharing application. Note: the imgur cli tool it's using is broken as of 2016-03-31. [See issue #1](https://github.com/kristopolous/tools/issues/1)
+ * [strace-all](https://github.com/kristopolous/tools/blob/master/bin/strace-all): This will do a ps and grep for the string that is the last argument, then it will strace the pids of all of them simultaneously with parallelized xargs, following vforks
+ * [update-tags](https://github.com/kristopolous/tools/blob/master/bin/update-tags): Updates ctags and cscope; useful for emacs and vim code navigation. There's companion versions for different types of code bases.
+ * [waitfor](https://github.com/kristopolous/tools/blob/master/src/waitfor.c): A blocking thing of the above (see description in the c file)
+ * [wpa](https://github.com/kristopolous/tools/blob/master/bin/wpa): A script that maintains wpa_supplicant sanely (used with reassoc)
+ * [youtube-dl](https://github.com/kristopolous/tools/blob/master/bin/youtube-dl): From http://rg3.github.com/youtube-dl/download.html
 
 ## Install
 
