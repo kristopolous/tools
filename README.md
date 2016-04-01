@@ -1,15 +1,15 @@
-Various helper scripts that I use day to day.
+Various helper scripts that I use day to day along with my personal dotfiles for things such as tmux, zsh, and xinit. 
 
-Each script is further commented if you click through the link.
+Most scripts are further commented if you click through the link. 
 
 ## Description
 
  * <a href='https://github.com/kristopolous/tools/blob/master/bin/authadd'>authadd</a>: Similar to ssh-copy-id but seems to work more.
  * <a href='https://github.com/kristopolous/tools/blob/master/bin/brightness'>brightness</a>: x86 screen brightness tool for xbindkeys.
- * chooser: An 802.11 scanner and chooser.
- * config-all: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point.
- * external: A script I use to dock the laptop and rerun keyboard mappings.
- * git_diff_wrapper: A wrapper to put in .git/config (read the file to find out how to use it).
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/chooser">chooser</a>: An 802.11 scanner and chooser.
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/config-all">config-all</a>: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point.
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/external">external</a>: A script I use to dock the laptop and rerun keyboard mappings.
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/git_diff_wrapper">git_diff_wrapper</a>: A wrapper to put in .git/config (read the file to find out how to use it).
  * git-last-modified: A way to view the last modified dates (with respect to git) of the files in a directory.
  * hotspot: A script I use to test mobile from my laptop.
  * indiff: A tool for comparing code differences
@@ -37,3 +37,7 @@ If you trust me just run
     $ ./installer
 
 And then add `$HOME/bin` to your path.
+
+## History
+
+The earliest file here goes back to 2000 (dotfiles/.twmrc) ... I began using Linux I believe in 1998.
