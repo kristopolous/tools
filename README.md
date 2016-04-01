@@ -16,11 +16,11 @@ Most scripts are further commented if you click through the link.
  * [internal](https://github.com/kristopolous/tools/blob/master/bin/internal): A script I use when undocking my laptop. This is the companion script to external.
  * [inotify](https://github.com/kristopolous/tools/blob/master/bin/inotify): A way to see when a collection of files is accessed. Also see the [sysdig](https://github.com/draios/sysdig) project I contribute to.
  * [laptop-power-saving](https://github.com/kristopolous/tools/blob/master/bin/laptop-power-saving): The various tricks I've learned to make the most of my laptop battery
- * minimal: A minimal-level battery saving setting (used in conjunction with the prior script)
- * my_xterm: Just a dumb xterm wrapper in acidx for notion.
- * nvmsh: Starts nvm (which has a multi-second load time, so it's not in .zshrc)
- * osd_time: Puts a tiny clock in the top right
- * reassoc: A tool that agressively gets a new ip address because sometimes dhclient just isn't enough
+ * [minimal](https://github.com/kristopolous/tools/blob/master/bin/minimal): A minimal-level battery saving setting (used in conjunction with the prior script)
+ * [my_xterm](https://github.com/kristopolous/tools/blob/master/bin/my_xterm): Just a dumb xterm wrapper in [acidx](https://github.com/kristopolous/acidx) for [notion](http://notion.sourceforge.net/).
+ * [nvmsh](https://github.com/kristopolous/tools/blob/master/bin/nvmsh): Starts [nvm](https://github.com/creationix/nvm) (which has a multi-second load time, so it's not in .zshrc)
+ * [osd_time](https://github.com/kristopolous/tools/blob/master/bin/osd_time): Puts a tiny clock in the top right. Needs osd_cat.
+ * [reassoc](https://github.com/kristopolous/tools/blob/master/bin/reassoc): A tool that agressively gets a new ip address because sometimes dhclient just isn't enough. It also brings down eth0 just so the networking stack doesn't get confused on how to route packets.
  * ssh_config: Just a base level system with the control master settings that
  * sshot: A poor man's screen sharing application.
  * strace-all: This will do a ps and grep for the string that is the last argument, then it will strace the pids of all of them simultaneously with parallelized xargs, following vforks
