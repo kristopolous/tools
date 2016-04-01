@@ -10,10 +10,10 @@ Most scripts are further commented if you click through the link.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/config-all">config-all</a>: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/external">external</a>: A script I use to dock the laptop and rerun keyboard mappings.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/git_diff_wrapper">git_diff_wrapper</a>: A wrapper to put in .git/config (read the file to find out how to use it).
- * git-last-modified: A way to view the last modified dates (with respect to git) of the files in a directory.
- * hotspot: A script I use to test mobile from my laptop.
- * indiff: A tool for comparing code differences
- * internal: A script I use when undocking my laptop
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/git-last-modified">git-last-modified</a>: A way to view the last modified dates (with respect to git) of the files in a directory.
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/hotspot">hotspot</a>: A script I use to test mobile from my laptop.
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/indiff">indiff</a>: A tool for comparing code differences. See [this reddit post](https://www.reddit.com/r/vim/comments/1tapo8/indiff_inline_visual_diff_comparisons/).
+ * [internal](https://github.com/kristopolous/tools/blob/master/bin/internal): A script I use when undocking my laptop. This is the companion script to external.
  * inotify: A way to see when a collection of files is accessed
  * laptop-power-saving.sh: The various tricks I've learned to make the most of my laptop battery
  * minimal: A minimal-level battery saving setting (used in conjunction with the prior script)
