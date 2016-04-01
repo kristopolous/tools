@@ -1,16 +1,17 @@
-## Introduction
-These are various helper scripts that I use day to day.
+Various helper scripts that I use day to day.
+
+Each script is further commented if you click through the link.
 
 ## Description
 
- * authadd: Similar to ssh-copy-id but seems to work more.
- * brightness: x86 screen brightness tool for xbindkeys
- * chooser: An 802.11 scanner and chooser
- * config-all: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point
- * external: A script I use to dock the laptop and rerun keyboard mappings
- * git_diff_wrapper: A wrapper to put in .git/config (read the file to find out how to use it)
- * git-last-modified: A way to view the last modified dates (with respect to git) of the files in a directory
- * hotspot: A script I use to test mobile from my laptop
+ * <a href='https://github.com/kristopolous/tools/blob/master/bin/authadd'>authadd</a>: Similar to ssh-copy-id but seems to work more.
+ * <a href='https://github.com/kristopolous/tools/blob/master/bin/brightness'>brightness</a>: x86 screen brightness tool for xbindkeys.
+ * chooser: An 802.11 scanner and chooser.
+ * config-all: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point.
+ * external: A script I use to dock the laptop and rerun keyboard mappings.
+ * git_diff_wrapper: A wrapper to put in .git/config (read the file to find out how to use it).
+ * git-last-modified: A way to view the last modified dates (with respect to git) of the files in a directory.
+ * hotspot: A script I use to test mobile from my laptop.
  * indiff: A tool for comparing code differences
  * internal: A script I use when undocking my laptop
  * inotify: A way to see when a collection of files is accessed
