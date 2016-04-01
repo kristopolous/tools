@@ -14,8 +14,8 @@ Most scripts are further commented if you click through the link.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/hotspot">hotspot</a>: A script I use to test mobile from my laptop.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/indiff">indiff</a>: A tool for comparing code differences. See [this reddit post](https://www.reddit.com/r/vim/comments/1tapo8/indiff_inline_visual_diff_comparisons/).
  * [internal](https://github.com/kristopolous/tools/blob/master/bin/internal): A script I use when undocking my laptop. This is the companion script to external.
- * inotify: A way to see when a collection of files is accessed
- * laptop-power-saving.sh: The various tricks I've learned to make the most of my laptop battery
+ * [inotify](https://github.com/kristopolous/tools/blob/master/bin/inotify): A way to see when a collection of files is accessed. Also see the [sysdig](https://github.com/draios/sysdig) project I contribute to.
+ * [laptop-power-saving](https://github.com/kristopolous/tools/blob/master/bin/laptop-power-saving): The various tricks I've learned to make the most of my laptop battery
  * minimal: A minimal-level battery saving setting (used in conjunction with the prior script)
  * my_xterm: Just a dumb xterm wrapper in acidx for notion.
  * nvmsh: Starts nvm (which has a multi-second load time, so it's not in .zshrc)
