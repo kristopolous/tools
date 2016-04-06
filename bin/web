@@ -1,0 +1,5 @@
+#!/bin/sh
+
+scp "$1" 9ol.es:www
+echo http://9ol.es/`basename "$1"`
+echo http://9ol.es/l.htm#`basename "$1"`
