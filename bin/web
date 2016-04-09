@@ -1,5 +1,14 @@
 #!/bin/sh
 
+if [ $# -lt 2 ]; then
+  tmp=`mktemp`
+  while read line; do
+    echo $line >> $tmp
+  done
+  cat $tmp
+  exit
+fi
+
 scp "$1" 9ol.es:www
 echo http://9ol.es/`basename "$1"`
 echo http://9ol.es/l.htm#`basename "$1"`
