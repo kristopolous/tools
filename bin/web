@@ -1,14 +1,18 @@
 #!/bin/sh
 
+url='http://9ol.es'
+
 if [ $# -lt 2 ]; then
   tmp=`mktemp`
   while read line; do
     echo $line >> $tmp
   done
+  now=`date +%Y%m%d%H%M`
   cat $tmp
+  rm $tmp
   exit
 fi
 
 scp "$1" 9ol.es:www
-echo http://9ol.es/`basename "$1"`
-echo http://9ol.es/l.htm#`basename "$1"`
+echo $url/`basename "$1"`
+echo $url/l.htm#`basename "$1"`
