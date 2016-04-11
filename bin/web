@@ -1,18 +1,21 @@
 #!/bin/sh
 
-url='http://9ol.es'
+host="9ol.es"
+url="http://$host"
 
 if [ $# -lt 2 ]; then
   tmp=`mktemp`
   while read line; do
     echo $line >> $tmp
   done
-  now=`date +%Y%m%d%H%M`
-  cat $tmp
+  fname=tmp/`date +%Y%m%d%H%M`.txt
+
+  scp -q $tmp $host:www/$fname
+  echo $url/$fname
   rm $tmp
   exit
 fi
 
-scp "$1" 9ol.es:www
+scp "$1" $host:www
 echo $url/`basename "$1"`
 echo $url/l.htm#`basename "$1"`
