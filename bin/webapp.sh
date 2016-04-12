@@ -7,12 +7,12 @@ skype=web.skype.com
 
 make_bins() {
   for i in slack hipchat skype; do
-    [ -e $i ] || ln $PWD/webapp.sh $i
+    [ -e $i ] || ln -s $PWD/webapp.sh $i
   done
 }
 
 if [ "$ex" == "webapp.sh" ]; then
   make_bins
 else
-  google-chrome --app=https://${!ex}/ &
+  google-chrome --app=https://${!ex}/
 fi
