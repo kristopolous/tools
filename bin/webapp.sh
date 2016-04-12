@@ -5,7 +5,7 @@ slack=waivecar.slack.com
 hipchat=crowdfunder.hipchat.com/chat
 skype=web.skype.com
 
-bins() {
+make_bins() {
   for i in slack hipchat skype; do
     [ -e $i ] || ln $PWD/webapp.sh $i
   done
@@ -13,18 +13,13 @@ bins() {
 
 echo $ex
 if [ "$ex" == "webapp.sh" ]; then
-  bins
+  make_bins
 else
-  finished=1
   for i in slack hipchat skype; do
     if [ "$0" == "$i" ]; then
       echo google-chrome --app=https://$i/
-      finished=0
+      exit
     fi
   done
+  echo "Woops, don't know how to start $ex"
 fi
-
-if [ ! $finished ]; then
-  echo "Woops, don't know how to start $0"
-fi
-
