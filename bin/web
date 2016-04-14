@@ -3,7 +3,7 @@
 host="9ol.es"
 url="http://$host"
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 1 ]; then
   tmp=`mktemp`
   while read line; do
     echo $line >> $tmp
@@ -16,6 +16,11 @@ if [ $# -lt 2 ]; then
   exit
 fi
 
-scp "$1" $host:www
-echo $url/`basename "$1"`
-echo $url/l.htm#`basename "$1"`
+if [ -e $1 ]; then
+  scp "$1" $host:www
+  echo $url/`basename "$1"`
+  echo $url/l.htm#`basename "$1"`
+else
+  echo "Couldn't find $1 ... trying to retrieve it"
+  wget $url/$1
+fi
