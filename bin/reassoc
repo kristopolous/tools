@@ -13,4 +13,4 @@ down eth0
 down $DEV
 
 sudo pkill dhclient
-sudo dhclient $DEV
+sudo dhclient -v $DEV
