@@ -1,0 +1,8 @@
+#!/usr/bin/python
+import uuid
+import binascii
+import sys
+
+hex = uuid.uuid4().hex.decode('hex')
+base = binascii.b2a_base64(hex)
+sys.stdout.write(base.replace('=',''))
