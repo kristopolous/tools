@@ -33,9 +33,10 @@ Most scripts are further commented if you click through the link.
 There's an installer that will put these into your `$HOME/bin` directory
 If you trust me just run
 
-    $ ./installer
+    $ ./install
 
-And then add `$HOME/bin` to your path.
+And then add `$HOME/bin` to your path.  If you already have a file in your `$HOME/bin` directory that this conflicts, an
+MD5 checksum is done and if they don't match then you get prompted whether you want to install it.  You can view a diff of the changes, skip the file, or install it anyway.
 
 ## History
 
