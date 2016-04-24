@@ -5,4 +5,13 @@ import sys
 
 hex = uuid.uuid4().hex.decode('hex')
 base = binascii.b2a_base64(hex)
+# None of those silly equal signs
+base = base.replace('=', '')
+
+# Also I want to use this in the shell so we take slashes
+# and +s and swap them out with alphabet letters .. random enough. 
+# Whatevs.
+base = base.replace('/', 'A')
+base = base.replace('+', 'B')
+
 sys.stdout.write(base.replace('=',''))
