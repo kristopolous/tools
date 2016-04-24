@@ -24,6 +24,7 @@ Most scripts are further commented if you click through the link.
  * [sshot](https://github.com/kristopolous/tools/blob/master/bin/sshot): A poor man's screen sharing application. Note: the imgur cli tool it's using is broken as of 2016-03-31. [See issue #1](https://github.com/kristopolous/tools/issues/1)
  * [strace-all](https://github.com/kristopolous/tools/blob/master/bin/strace-all): This will do a ps and grep for the string that is the last argument, then it will strace the pids of all of them simultaneously with parallelized xargs, following vforks
  * [update-tags](https://github.com/kristopolous/tools/blob/master/bin/update-tags): Updates ctags and cscope; useful for emacs and vim code navigation. There's companion versions for different types of code bases.
+ * [uuidb64](https://github.com/kristopolous/tools/blob/master/bin/uuidb64): A python2 script that outputs a computer-friendly *almost* Base64 version of a UUID (a few potentially problematic b64 characters get substituted out). For use when you need a sufficiently random string but don't want some long base16 hyphenated UUID.
  * [waitfor](https://github.com/kristopolous/tools/blob/master/src/waitfor.c): A blocking thing of the above (see description in the c file)
  * [wpa](https://github.com/kristopolous/tools/blob/master/bin/wpa): A script that maintains wpa_supplicant sanely (used with reassoc)
  * [youtube-dl](https://github.com/kristopolous/tools/blob/master/bin/youtube-dl): From http://rg3.github.com/youtube-dl/download.html
