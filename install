@@ -19,11 +19,18 @@ install() {
     if [ $issame -eq "1" ]; then
       install=0
     else
-      echo "The checksums for $name don't match. Do you want to install it anyway? (y/n)"
+      echo -n "Checksums for $name don't match. install it? (y/n/(d)iff) "
       read n
-      if [ $n = "y" ]; then
-        install=1
-      fi
+      case $n in
+        y) install=1 ;;
+
+        d) 
+          diff -c $HOME/bin/$name $1
+          install $1
+          return
+          ;;
+      esac
+      echo -n " ..."
     fi
   fi
 
