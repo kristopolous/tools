@@ -11,11 +11,27 @@ compile() {
 
 install() {
   name=`basename $1`
+  install=0
   if [ ! -e $HOME/bin/$name ]; then
-    echo "Installing $name"
-    cp -pu $1 $HOME/bin
+    install=1
   else
-    echo "Skipping $name (latest version installed)"
+    issame=`md5sum $HOME/bin/$name $1 | uniq -w 33 | wc -l`
+    if [ $issame -eq "1" ]; then
+      install=0
+    else
+      echo "The checksums for $name don't match. Do you want to install it anyway? (y/n)"
+      read n
+      if [ $n = "y" ]; then
+        install=1
+      fi
+    fi
+  fi
+
+  if [ $install -eq "1" ]; then
+    echo "Installing $name"
+    cp -p $1 $HOME/bin
+  else
+    echo "Skipping $name"
   fi
 }
 
@@ -28,7 +44,7 @@ if [ $# -gt 0 ]; then
     shift
   done
 else
-  for i in `find -maxdepth 1 -executable -type f`; do
+  for i in `find -maxdepth 1 -executable -type f | sort -n`; do
     install $i
   done
 fi
