@@ -9,6 +9,7 @@ read cred
 echo -n "Internal IP:port: "
 read internal
 
-cmd="ssh -NC -R $public:$internal $cred"
-echo cmd
+cmd="ssh -f -NC -R $public:$internal $cred"
+echo Starting:
+echo "  " $cmd
 $cmd
