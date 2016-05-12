@@ -1,5 +1,7 @@
 #!/bin/bash
 
+full_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+install_path=`dirname $full_path`
 ex=`basename $0`
 
 declare -A url_list
@@ -10,11 +12,11 @@ url_list[hangouts]=hangouts.google.com
 
 make_bins() {
   for i in "${!url_list[@]}"; do
-    if [ -e $i ]; then
-      echo "$i already exists"
+    if [ -e $install_path/$i ]; then
+      echo "$install_path/$i already exists"
     else
       echo "Creating $i"
-      ln -s $PWD/webapp.sh $i
+      ln -s $full_path $install_path/$i
     fi
   done
 }
