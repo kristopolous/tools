@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo -n "Public IP:port: "
+read public
+
+echo -n "SSH user@hostname: "
+read cred
+
+echo -n "Internal IP:port: "
+read internal
+
+cmd="ssh -NC -R $public:$internal $cred"
+echo cmd
+$cmd
