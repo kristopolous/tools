@@ -14,12 +14,15 @@ pkill autocutsel
 autocutsel &
 autocutsel -s PRIMARY & 
 
-synclient FingerHigh=45
-synclient PalmDetect=1
-synclient TapButton1=0
-synclient TapButton2=0
-synclient VertTwoFingerScroll=1
-synclient HorizTwoFingerScroll=0
+cat << ENDL | xargs synclient
+  FingerHigh=45
+  PalmDetect=1
+  TapButton1=0
+  TapButton2=0
+  VertTwoFingerScroll=1
+  HorizTwoFingerScroll=0
+  CoastingSpeed=0 
+ENDL
 
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
