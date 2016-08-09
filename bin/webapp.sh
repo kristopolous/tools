@@ -24,5 +24,5 @@ make_bins() {
 if [ "$ex" == "webapp.sh" ]; then
   make_bins
 else
-  google-chrome --app=https://${url_list[$ex]}/
+  exec google-chrome --app=https://${url_list[$ex]}/
 fi
