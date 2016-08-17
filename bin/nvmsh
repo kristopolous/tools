@@ -1,3 +1,12 @@
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-node --version
+if [ $# -gt 0 ]; then
+  case $1 in
+    on) touch /tmp/nvmsh ;;
+    off) rm -f /tmp/nvmsh ;;
+  esac
+fi
+
+if [ -e /tmp/nvmsh ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+  node --version
+fi
