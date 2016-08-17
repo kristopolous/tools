@@ -55,6 +55,8 @@ export CLOUD_CFG=~/cloudcreds.cfg
 
 alias alsamixer='alsamixer -c 0'
 alias nvmsh='source ~/bin/nvmsh'
+alias tmux-x="tmux new-session -t `tmux list-session -F '#{session_name}' | head -1`"
+
 
 export PS1='%B%T%b %d %{%}'
 autoload -Uz compinit
