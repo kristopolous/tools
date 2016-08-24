@@ -2,7 +2,7 @@
 #
 # indiff
 # 
-# visual, inline comparisons of blocks in vim.
+# visual, inline comparisons of blocks in vim (useful for git merges)
 #
 # usage:
 #
@@ -22,7 +22,7 @@
 # Here's a youtube video: http://www.youtube.com/watch?v=ROlv7IawkeU
 # The code is available here: https://github.com/kristopolous/tools/blob/master/indiff
 #
-# MIT Licensed, 2013, chris mckenzie.
+# MIT Licensed, 2013-2016, chris mckenzie.
 #
 
 # create 2 temp files
@@ -35,7 +35,7 @@ file=$lhs
 while IFS='' read line; do
 
   # keep reading into lhs until the sentinel line is found
-  part=`echo "$line" | grep -E '^[<>]+$' | wc -l`
+  part=`echo "$line" | grep -E '^[=<>]+$' | wc -l`
   
   # use it to toggle which file is being written to
   if [ $part -eq 1 ]; then
