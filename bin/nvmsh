@@ -9,4 +9,6 @@ if [ -e /tmp/nvmsh ]; then
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
   node --version
+  # Also we modify the shell prompt to tell us 
+  PS1=N$PS1
 fi
