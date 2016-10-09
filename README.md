@@ -5,6 +5,7 @@ Most scripts are further commented if you click through the link.
 ## Description
 
  * <a href='https://github.com/kristopolous/tools/blob/master/bin/authadd'>authadd</a>: Similar to ssh-copy-id but seems to work more.
+ * <a href='https://github.com/kristopolous/tools/blob/master/bin/automonitor'>automonitor</a>: A tool that detects when monitor cables get plugged in to change from internal to external.
  * <a href='https://github.com/kristopolous/tools/blob/master/bin/brightness'>brightness</a>: x86 screen brightness tool for xbindkeys.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/chooser">chooser</a>: An 802.11 scanner and chooser.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/config-all">config-all</a>: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point.
