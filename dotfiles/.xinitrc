@@ -8,6 +8,7 @@ xrdb -merge ~/.Xresources
 xset b off
 xsetroot -solid black 
 
+automonitor &
 notion &
 
 pkill autocutsel
