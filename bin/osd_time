@@ -1,4 +1,5 @@
 #!/bin/sh
 while [ 0 ]; do
-  date +%m%d' '%H:%M | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=white -O 1 -d 30 -A right
+  line=`date +%m%d' '%H%M``acpi | awk -F , ' { print $2 } '`
+  echo $line | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=white -O 1 -d 30 -A right
 done
