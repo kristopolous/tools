@@ -1,0 +1,22 @@
+#!/bin/bash
+
+card=0
+
+change() {
+  {
+    [ $1 = 'u' ] && amixer -c $card set Master 5%+
+    [ $1 = 'd' ] && amixer -c $card set Master 5%-
+  } > /dev/null
+  amount=`amixer -c $card sget Master | tail -1 | awk ' { print $3 } '`
+}
+
+if [ $# -gt 0 ]; then
+  change $1 
+else
+  while [ 0 ]; do
+    read -n 1 -d '' i
+    clear
+    change $i
+    echo -n $amount
+  done
+fi
