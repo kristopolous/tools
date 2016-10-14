@@ -8,7 +8,7 @@ for i in \
   libvirt-guests libvirtd mysql       \
   nfs-common postgresql rpcbind saned; do
 
-  sudo service $i stop
+  sudo service $i stop&
 done
 for i in hipchat skype pidgin chrome adb hostapd hamster; do
   echo killing $i
