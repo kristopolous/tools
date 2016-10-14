@@ -2,4 +2,8 @@
   XF86MonBrightnessDown
 "brightness u 4" 
   XF86MonBrightnessUp
+"volume d"
+  XF86AudioLowerVolume
+"volume u"
+  XF86AudioRaiseVolume
 
