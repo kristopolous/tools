@@ -50,6 +50,8 @@ trackpoint_adjust() {
 # These are generally things that don't really change
 # the user experience as far as I know.
 powertop_recommends() {
+  powertop --auto-tune
+
   # Start the PM system if available
   if [ `which tlp` -eq 0 ]; then
     tlp start
