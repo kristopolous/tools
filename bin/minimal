@@ -10,7 +10,7 @@ for i in \
 
   sudo service $i stop&
 done
-for i in hipchat skype pidgin chrome adb hostapd hamster; do
+for i in hipchat pulseaudio skype pidgin chrome adb hostapd hamster; do
   echo killing $i
   sudo pkill -9 $i
 done
