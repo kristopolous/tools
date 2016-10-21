@@ -2,7 +2,7 @@
 #
 # Forcefully reassociate DEV on different networks
 #
-DEV=wlan0
+. $HOME/bin/wpa.info
 set -x
 
 down() {
