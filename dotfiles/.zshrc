@@ -10,7 +10,7 @@ function expand-or-complete-or-list-files() {
     fi
 }
 
-export PATH=/home/chris/bin:$PATH:/usr/local/Adobe/Reader9/bin/:/usr/local/adt/sdk/tools/:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/chris/.rvm/bin:/home/chris/code/ghub/tools/:/usr/local/adt/sdk/platform-tools:/usr/local/eclipse/:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools
+export PATH=/home/chris/bin:$PATH:/usr/local/Adobe/Reader9/bin/:/usr/local/adt/sdk/tools/:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/chris/.rvm/bin:/home/chris/code/ghub/tools/:/usr/local/adt/sdk/platform-tools:/usr/local/eclipse/:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0
 
 unsetopt completeinword
 setopt nohup
@@ -55,6 +55,7 @@ export CLOUD_CFG=~/cloudcreds.cfg
 
 alias alsamixer='alsamixer -c 0'
 alias nvmsh='source ~/bin/nvmsh'
+alias apktool='java -jar $HOME/proggies/apktool_2.2.0.jar'
 
 function tmux-x () {
   tmux new-session -t `tmux list-session -F '#{session_name}' | head -1`
@@ -63,4 +64,6 @@ function tmux-x () {
 
 export PS1='%B%T%b %d %{%}'
 autoload -Uz compinit
+alias ack-grep="/usr/bin/ack-grep --ignore-file='match:/vendors|bundle.js/'"
+alias ack="/usr/bin/ack-grep --ignore-file='match:/vendors|bundle.js/'"
 compinit
