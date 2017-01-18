@@ -1,5 +1,22 @@
 #!/bin/sh
 while [ 0 ]; do
-  line=`date +%m%d' '%H%M``acpi | awk -F , ' { print $2 } '`
-  echo $line | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=white -O 1 -d 30 -A right
+  acpi=`acpi`
+  temp=`sensors coretemp-isa-0000 --no-adapter -u | grep -Po '(?<=temp1_input: )(\d*)'`
+  line=`date +%m%d' '%H%M``echo $acpi | awk -F , ' { print $2 } '`
+  
+  if [ `echo $acpi | grep Discharg | wc -l` -eq 1 ]; then 
+    line=${line}VV
+  fi
+
+  if [ $temp -lt 56 ]; then
+    color=white
+  elif [ $temp -lt 64 ]; then
+    color=yellow
+  elif [ $temp -lt 73 ]; then
+    color=orange
+  else
+    color=pink
+  fi
+
+  echo $line | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=$color -O 1 -d 30 -A right
 done
