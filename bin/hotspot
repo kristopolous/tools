@@ -3,7 +3,7 @@
 # Start a hotspot in a non-bridged mode
 
 # This is where the internet is
-DEV_INTERNET=wlan0
+DEV_INTERNET=eth0
 
 # This is what you are listening on.
 DEV_AP=wlan1

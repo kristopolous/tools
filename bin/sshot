@@ -26,6 +26,7 @@
 #   (the "Print Screen" button may work well)
 #
 
+exit
 SAVE=~/.sshot
 mkdir -p $SAVE
 
