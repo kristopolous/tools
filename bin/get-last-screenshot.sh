@@ -1,7 +1,16 @@
 #!/bin/bash
 which=${1:-1}
+
 getfile() {
-  adb shell "ls /mnt/sdcard/Pictures/Screenshots/Sc*" | tail -n $which | head -1 | tr -d '\r\n'
+  if [ $which = 'today' ]; then
+    today=`date +%Y-%m-%d`
+    adb shell "ls /mnt/sdcard/Pictures/Screenshots/Sc*" | grep $today | tr -d '\r'
+  else
+    adb shell "ls /mnt/sdcard/Pictures/Screenshots/Sc*" | tail -n $which | head -1 | tr -d '\r\n'
+  fi
 }
 path=`getfile`
-adb pull $path
+echo $path
+for file in $path; do
+  adb pull $file
+done
