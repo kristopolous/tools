@@ -2,11 +2,19 @@ setxkbmap -option ctrl:nocaps
 xmodmap ~/.Xmodmap
 
 xrdb -merge ~/.Xresources
-xrandr --output VGA1 --auto --mode 1600x1200 --rotate left --output LVDS1 --off #--auto --left-of VGA1
+portrait() {
+  xrandr --output VGA1 --auto --mode 1600x1200 --rotate left --output LVDS1 --off #--auto --left-of VGA1
+}
+landscape() {
+  xrandr --output VGA1 --auto --mode 1600x1200 --output LVDS1 --off #--auto --left-of VGA1
+}
+#portrait
+landscape
 xrandr --dpi 96
 #xrandr --output VGA1 --auto --mode 1600x1200 --output LVDS1 --off #--auto --left-of VGA1
 #xrandr --output VGA1 --auto --output LVDS1 --off
 sleep 1
 pkill notion
+sleep 1
 notion&
 echo $?
