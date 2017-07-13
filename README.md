@@ -10,6 +10,8 @@ Most scripts are further commented if you click through the link.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/chooser">chooser</a>: An 802.11 scanner and chooser.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/config-all">config-all</a>: Used with ./configure, fills in all the prefix, lib, bin, sbin, man, info etc directories to point to a single install point.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/external">external</a>: A script I use to dock the laptop and rerun keyboard mappings.
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/get-current-screenshot">get-current-screenshot</a>: Grabs the current screenshot from a connected android phone over adb.
+ * <a href="https://github.com/kristopolous/tools/blob/master/bin/get-last-screenshot">get-last-screenshot</a>: Grabs the previous *N* screenshots from a connected android phone over adb.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/git_diff_wrapper">git_diff_wrapper</a>: A wrapper to put in .git/config (read the file to find out how to use it).
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/git-last-modified">git-last-modified</a>: A way to view the last modified dates (with respect to git) of the files in a directory.
  * <a href="https://github.com/kristopolous/tools/blob/master/bin/hotspot">hotspot</a>: A script I use to test mobile from my laptop.
