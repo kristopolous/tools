@@ -1,11 +1,12 @@
 #!/bin/bash
 . /home/chris/bin/wpa.info
-export DEV=wlan0
 ./bin/wireless_disable_80211n.sh
 wpa=$(pgrep wpa_supplicant)
 [ -n "$wpa" ] && kill -9 $wpa
+sleep 0.5
 pkill -9 wpa_supplicant
+sleep 0.5
 service network-manager stop
 while [ 0 ]; do
-  wpa_supplicant -Dnl80211,wext -i$DEV -c/etc/wpa_supplicant.conf |& tee /tmp/wireless
+  wpa_supplicant -d -Dnl80211,wext -i$DEV -c/etc/wpa_supplicant.conf 
 done
