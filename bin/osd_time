@@ -5,18 +5,28 @@ while [ 0 ]; do
   line=`date +%m%d' '%H%M``echo $acpi | awk -F , ' { print $2 } '`
   
   if [ `echo $acpi | grep Discharg | wc -l` -eq 1 ]; then 
-    line=${line}VV
+    line=${line}V
+  fi
+  if [ `echo $acpi | grep Charg | wc -l` -eq 1 ]; then 
+    line=${line}^
   fi
 
-  if [ $temp -lt 56 ]; then
+  if [ $temp -lt 59 ]; then
     color=white
-  elif [ $temp -lt 64 ]; then
+    delay=30
+  elif [ $temp -lt 68 ]; then
     color=yellow
-  elif [ $temp -lt 73 ]; then
+    delay=10
+  elif [ $temp -lt 77 ]; then
     color=orange
+    delay=5
+  elif [ $temp -lt 82 ]; then
+    color=red
+    delay=3
   else
     color=pink
+    delay=3
   fi
 
-  echo $line | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=$color -O 1 -d 30 -A right
+  echo $line | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=$color -O 1 -d $delay -A right
 done
