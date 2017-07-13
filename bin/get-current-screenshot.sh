@@ -1,5 +1,8 @@
 #!/bin/bash
 
-filename=Screenshot_`date +%Y-%m-%d_%H-%m-%S`.png
-adb shell screencap -p | sed 's/\r$//' > $filename
+filename=${1:-Screenshot_`date +%Y-%m-%d_%H-%m-%S`.png}
+adb shell screencap -p > $filename
+if [ "$(file -b $filename)" = "data" ]; then
+  sed -i 's/\r$//' $filename
+fi
 echo $filename
