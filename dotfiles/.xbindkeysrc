@@ -6,4 +6,5 @@
   XF86AudioLowerVolume
 "volume u"
   XF86AudioRaiseVolume
-
+"volume m"
+  XF86AudioMute
