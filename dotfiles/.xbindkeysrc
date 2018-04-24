@@ -1,4 +1,8 @@
 "brightness d 4" 
+  XF86Display
+"brightness u 4" 
+  XF86WebCam
+"brightness d 4" 
   XF86MonBrightnessDown
 "brightness u 4" 
   XF86MonBrightnessUp
@@ -8,3 +12,5 @@
   XF86AudioRaiseVolume
 "volume m"
   XF86AudioMute
+"volume m"
+  XF86AudioMicMute

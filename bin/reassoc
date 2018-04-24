@@ -9,8 +9,10 @@ down() {
   sudo ip link set $1 down
   sudo ifconfig $1 0.0.0.0
 }
-down eth0
-down $DEV
+if [ $# -eq 0 ]; then
+  down eth0
+  down $DEV
+fi
 
 sudo pkill dhclient
 sudo dhclient -v $DEV

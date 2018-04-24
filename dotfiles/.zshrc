@@ -10,7 +10,7 @@ function expand-or-complete-or-list-files() {
     fi
 }
 
-export PATH=/home/chris/bin:$PATH:/usr/local/Adobe/Reader9/bin/:/usr/local/adt/sdk/tools/:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/chris/.rvm/bin:/home/chris/code/ghub/tools/:/usr/local/adt/sdk/platform-tools:/usr/local/eclipse/:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0
+export PATH=/home/chris/bin:$PATH:/usr/local/Adobe/Reader9/bin/:/usr/local/adt/sdk/tools/:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/chris/.rvm/bin:/home/chris/code/ghub/tools/:/usr/local/eclipse/:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0:/home/chris/.local/bin/:/home/chris/.yarn/bin:/home/chris/proggies/adt/sdk/tools/templates/gradle/wrapper
 
 unsetopt completeinword
 setopt nohup
@@ -35,8 +35,10 @@ unsetopt share_history
 unset STY
 unsetopt correct_all
 
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=100000000
+SAVEHIST=100000000
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 HISTFILE=~/.zsh_history
 export HISTSIZE
 export SAVEHIST
@@ -49,7 +51,7 @@ LS_COLORS='rs=0:di=01;36:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:c
 export LS_COLORS
 
 setopt INC_APPEND_HISTORY
-export NODE_PATH='/usr/local/lib/jsctags:${NODE_PATH}'
+export NODE_PATH=$HOME/unbreak-node:${NODE_PATH}
 export TERM=xterm-256color
 export CLOUD_CFG=~/cloudcreds.cfg
 
@@ -64,6 +66,15 @@ function tmux-x () {
 
 export PS1='%B%T%b %d %{%}'
 autoload -Uz compinit
-alias ack-grep="/usr/bin/ack-grep --ignore-file='match:/vendors|bundle.js/'"
-alias ack="/usr/bin/ack-grep --ignore-file='match:/vendors|bundle.js/'"
+alias ack-grep="/usr/bin/ack --ignore-file='match:/vendors|bundle.js/'"
+alias ack="/usr/bin/ack --ignore-file='match:/vendors|bundle.js|.map/'"
 compinit
+alias mpv="mpv --no-audio-display"
+export SLACK_TOKEN="xoxp-16741664645-23839258918-238070654752-bb4630b3173b678c42dde96c35a5466f"
+alias gbr="git branch -r"
+gitc() {
+  git checkout --track -b $1 origin/$1
+}
+gitp() {
+  git remote update origin --prune
+}
