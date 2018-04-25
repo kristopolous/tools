@@ -64,7 +64,8 @@ function tmux-x () {
 }
 
 
-. secrets
+[ -e $HOME/.secrets ] && source $HOME/.secrets
+
 export PS1='%B%T%b %d %{%}'
 autoload -Uz compinit
 alias ack-grep="/usr/bin/ack --ignore-file='match:/vendors|bundle.js/'"
