@@ -64,13 +64,13 @@ function tmux-x () {
 }
 
 
+. secrets
 export PS1='%B%T%b %d %{%}'
 autoload -Uz compinit
 alias ack-grep="/usr/bin/ack --ignore-file='match:/vendors|bundle.js/'"
 alias ack="/usr/bin/ack --ignore-file='match:/vendors|bundle.js|.map/'"
 compinit
 alias mpv="mpv --no-audio-display"
-export SLACK_TOKEN="xoxp-16741664645-23839258918-238070654752-bb4630b3173b678c42dde96c35a5466f"
 alias gbr="git branch -r"
 gitc() {
   git checkout --track -b $1 origin/$1
