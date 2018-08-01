@@ -2,6 +2,8 @@
 #
 # Start a hotspot in a non-bridged mode
 
+. hotspot.secrets
+
 # This is where the internet is
 DEV_INTERNET=eth0
 
@@ -9,9 +11,50 @@ DEV_INTERNET=eth0
 DEV_AP=wlan1
 
 # We are nat'ing so we need an IP
-IP_AP=172.16.10.1
+IP_START=172.16.10
+IP_END=.1
+IP_AP=$IP_START$IP_END
+
 MASK_AP=255.255.255.0
 CLASS_AP=24
+
+cat > /etc/hostapd/hostapd.conf << endl
+interface=$DEV_AP
+driver=nl80211
+ssid=$SSID
+auth_algs=1
+channel=11
+hw_mode=g
+country_code=US
+bridge=br0
+wpa=1
+eap_server=0
+wpa_passphrase=$PASS
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=CCMP
+macaddr_acl=0
+logger_stdout=-1
+logger_stdout_level=1
+beacon_int=100
+dtim_period=2
+ignore_broadcast_ssid=0
+endl
+
+sed -i -r 's/(INTERFACESv4=).*/INTERFACESv4="'$DEV_AP'"/' /etc/default/isc-dhcp-server
+
+
+cat > /etc/dhcp/dhcpd.conf << endl
+ddns-update-style none;
+default-lease-time 600;
+subnet ${IP_START}.0 netmask $MASK_AP {
+  range ${IP_START}.5 ${IP_START}.30;
+  option domain-name-servers 8.8.8.8,74.82.42.42,68.94.156.1;
+  option routers $IP_AP;
+  option broadcast-address ${IP_START}.255;
+  default-lease-time 60000;
+  max-lease-time 720000;
+}
+endl
 
 set -x
 pkill hostapd
@@ -22,9 +65,12 @@ hostapd /etc/hostapd/hostapd.conf&
 sysctl net.ipv4.conf.all.forwarding=1
 
 ifconfig $DEV_AP $IP_AP netmask $MASK_AP
-ip route add $IP_AP/$CLASS_AP dev $DEV_AP
+ip route add ${IP_START}.0/$CLASS_AP dev $DEV_AP
 
-service isc-dhcp-server restart
+service isc-dhcp-server stop
+[ -e /var/run/dhcpd.pid ] && rm /var/run/dhcpd.pid
+sleep 1
+service isc-dhcp-server start
 
 iptables -F
 iptables --table nat -F
