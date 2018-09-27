@@ -1,0 +1,11 @@
+#!/bin/bash
+count=${1:-1}
+
+getfile() {
+  adb shell "ls -tr /mnt/sdcard/DCIM/Camera/*jpg" | tail -$count | tr '\r\n' ' '
+}
+path=`getfile`
+
+for file in $path; do
+  adb pull $file
+done
