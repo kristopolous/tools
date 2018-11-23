@@ -1,0 +1,4 @@
+#!/bin/sh
+
+display=`xrandr | grep \ connected | awk ' { print $1 }'`
+xrandr --output $display --brightness 1.0
