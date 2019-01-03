@@ -1,15 +1,19 @@
-
 # http://www.emacswiki.org/emacs/MovingTheCtrlKey
+automonitor &
+notion &
+#xrandr --output eDP-1 --scale 0.85x0.85
 setxkbmap -option ctrl:nocaps  
 xmodmap ~/.Xmodmap
 xbindkeys
+echo 80 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed
+echo 118 | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity 
+# There's a lot of interrupts from the controller, this effects battery life
+echo 50 | sudo tee /sys/devices/platform/i8042/serio1/serio2/rate
 
 xrdb -merge ~/.Xresources
 xset b off
 xsetroot -solid black 
 
-automonitor &
-notion &
 
 pkill autocutsel
 autocutsel &

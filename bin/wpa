@@ -1,6 +1,5 @@
 #!/bin/bash
 . /home/chris/bin/wpa.info
-./bin/wireless_disable_80211n.sh
 wpa=$(pgrep wpa_supplicant)
 [ -n "$wpa" ] && kill -9 $wpa
 sleep 0.5

@@ -10,7 +10,7 @@ function expand-or-complete-or-list-files() {
     fi
 }
 
-export PATH=/home/chris/bin:$PATH:/usr/local/Adobe/Reader9/bin/:/usr/local/adt/sdk/tools/:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/chris/.rvm/bin:/home/chris/code/ghub/tools/:/usr/local/eclipse/:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0:/home/chris/.local/bin/:/home/chris/.yarn/bin:/home/chris/proggies/adt/sdk/tools/templates/gradle/wrapper
+export PATH=/home/chris/bin:$PATH:/usr/local/sbin/usr/sbin:/sbin:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0:/home/chris/.local/bin/:/home/chris/proggies/adt/sdk/tools/bin/
 
 unsetopt completeinword
 setopt nohup
@@ -57,7 +57,7 @@ export CLOUD_CFG=~/cloudcreds.cfg
 
 alias alsamixer='alsamixer -c 0'
 alias nvmsh='source ~/bin/nvmsh'
-alias apktool='java -jar $HOME/proggies/apktool_2.2.0.jar'
+alias apktool='java -jar $HOME/proggies/apktool_2.3.4.jar'
 
 function tmux-x () {
   tmux new-session -t `tmux list-session -F '#{session_name}' | head -1`
@@ -73,9 +73,15 @@ alias ack="/usr/bin/ack --ignore-file='match:/vendors|bundle.js|.map/'"
 compinit
 alias mpv="mpv --no-audio-display"
 alias gbr="git branch -r"
+alias gij="git status"
 gitc() {
   git checkout --track -b $1 origin/$1
 }
 gitp() {
   git remote update origin --prune
 }
+
+export ANDRIOD_NDK_HOME=/home/chris/proggies/android-ndk-r17c/
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/chris/.sdkman"
+[[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"

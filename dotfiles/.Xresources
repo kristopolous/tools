@@ -2,6 +2,8 @@ Xft*antialias: true
 Xft*hinting: true
 Xft*hintstyle: hintfull
 
+Xcursor.size: 24
+Xcursor.theme: redglass
 xterm*VT100.geometry: 80x30
 xterm*background: #000000
 xterm*foreground: #ffffff
@@ -12,10 +14,10 @@ xterm*foreground: #ffffff
 xterm*color0: #000000
 
 ! bright_black
-xterm*color8: #414141
+xterm*color8: #818181
 
 ! red
-xterm*color1: #d6580f
+xterm*color1: #FB481C
 
 ! bright_red
 xterm*color9: #f7b28a
@@ -33,7 +35,7 @@ xterm*color3: #8dd60f
 xterm*color11: #cff78a
 
 ! blue
-xterm*color4: #580fd6
+xterm*color4: #580ff6
 
 ! bright_blue
 xterm*color12: #b28af7
@@ -58,13 +60,13 @@ xterm*color15: #ffffff
 
 
 xterm*faceName:*-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1
-xterm*faceSize: 10.0
-xterm*faceSize1: 5.0
-xterm*faceSize2: 8.0
-xterm*faceSize3: 9.0
-xterm*faceSize4: 11.0
-xterm*faceSize5: 12.0
-xterm*faceSize6: 15.0
+xterm*faceSize: 14.0
+xterm*faceSize1: 8.0
+xterm*faceSize2: 10.0
+xterm*faceSize3: 13.0
+xterm*faceSize4: 15.0
+xterm*faceSize5: 18.0
+xterm*faceSize6: 22.0
 
 xterm*cutNewLine: false
 xterm*cutToBeginningOfLine: false
@@ -78,3 +80,5 @@ URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
 URxvt.keysym.C-S-Up:   perl:font-size:incglobal
 URxvt.keysym.C-S-Down: perl:font-size:decglobal
+xterm*allowWindowOps      : False
+xterm*disallowedWindowOps : 1,2,3,4,5,6,7,8,9,11,13,18,19,20,21,GetSelection,SetSelection,SetWinLines,SetXprop

@@ -10,14 +10,14 @@ if [ $# -lt 1 ]; then
   done
   fname=tmp/`date +%Y%m%d%H%M`.txt
 
-  scp -q $tmp $host:www/$fname
+  scp -Cq $tmp $host:www/$fname
   echo $url/$fname
   rm $tmp
   exit
 fi
 
 if [ -e $1 ]; then
-  scp "$1" $host:www
+  scp -C "$1" $host:www
   echo $url/`basename "$1"`
   echo $url/l.htm#`basename "$1"`
 else
