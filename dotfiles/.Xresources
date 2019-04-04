@@ -66,7 +66,7 @@ xterm*faceSize2: 10.0
 xterm*faceSize3: 13.0
 xterm*faceSize4: 15.0
 xterm*faceSize5: 18.0
-xterm*faceSize6: 22.0
+xterm*faceSize6: 29.0
 
 xterm*cutNewLine: false
 xterm*cutToBeginningOfLine: false
