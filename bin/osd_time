@@ -29,5 +29,6 @@ while [ 0 ]; do
     delay=3
   fi
 
-  echo $line | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=$color -O 1 -d $delay -A right
+  echo $line | osd_cat -f '-*-lucida-*-r-*-*-12-*-*-*-*-*-*-*' --color=$color -O 1 -d $delay -A right &
+  sleep $(( delay - 1 ))
 done
