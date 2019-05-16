@@ -35,6 +35,5 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 sudo $HOME/bin/laptop.sh
 $HOME/bin/osd_time&
 
-pkill xbindkeys
-xbindkeys
+{ pgrep xbindkeys || xbindkeys } > /dev/null
 sleep 10000000
