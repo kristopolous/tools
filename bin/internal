@@ -1,6 +1,50 @@
-DISPLAY=:0 xrandr --output VGA1 --off --output LVDS1 --mode 1366x768 --rotate normal
-xrandr --dpi 105
-sleep 1
-pkill notion
-sleep 1
-DISPLAY=:0 notion&
+#!/bin/sh
+
+export DISPLAY=:0
+prog=$( basename $0 )
+internal=$( xrandr | grep primary | awk ' { print $1 }' )
+external=$( xrandr | grep -v primary | grep \ connected | awk ' { print $1 }' )
+
+[ -z "$external" ] && echo "Can't find external monitor with xrandr. Exiting" && exit 1
+[ -z "$internal" ] && echo "Can't find internal monitor with xrandr. Exiting" && exit 1
+
+orient=${1:-portrait}
+dual=$2
+
+portrait() {
+  xrandr --output $external --auto --mode 1600x1200 --rotate left --output $internal $opts
+}
+landscape() {
+  xrandr --output $external --auto --mode 1600x1200 --output $internal $opts
+}
+internal() {
+  DISPLAY=:0 xrandr --output $external --off --output $internal --auto --rotate normal
+}
+
+
+if [ "$prog" = "internal" ]; then
+  internal
+else
+  if [ -n "$dual" ]; then
+    opts="--auto --left-of $external"
+  else
+    opts="--off"
+  fi
+
+  eval $orient
+fi
+
+if [ $? ] ; then
+  #setxkbmap -option ctrl:nocaps  
+  #xmodmap ~/.Xmodmap
+  xrdb -merge ~/.Xresources
+
+  xrandr --dpi 75
+
+  sleep 1
+  pkill notion
+  sleep 1
+  notion&
+else
+  echo "Failed"
+fi

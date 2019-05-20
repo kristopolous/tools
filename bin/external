@@ -1,5 +1,6 @@
 #!/bin/sh
 
+export DISPLAY=:0
 prog=$( basename $0 )
 internal=$( xrandr | grep primary | awk ' { print $1 }' )
 external=$( xrandr | grep -v primary | grep \ connected | awk ' { print $1 }' )
@@ -16,14 +17,23 @@ portrait() {
 landscape() {
   xrandr --output $external --auto --mode 1600x1200 --output $internal $opts
 }
+internal() {
+  DISPLAY=:0 xrandr --output $external --off --output $internal --auto --rotate normal
+}
 
-if [ -n "$dual" ]; then
-  opts="--auto --left-of $external"
+
+if [ "$prog" = "internal" ]; then
+  internal
 else
-  opts="--off"
+  if [ -n "$dual" ]; then
+    opts="--auto --left-of $external"
+  else
+    opts="--off"
+  fi
+
+  eval $orient
 fi
 
-eval $orient
 if [ $? ] ; then
   #setxkbmap -option ctrl:nocaps  
   #xmodmap ~/.Xmodmap
