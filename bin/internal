@@ -23,6 +23,7 @@ internal() {
 
 
 if [ "$prog" = "internal" ]; then
+  xrandr --dpi 125
   internal
 else
   if [ -n "$dual" ]; then
@@ -32,14 +33,13 @@ else
   fi
 
   eval $orient
+  xrandr --dpi 75
 fi
 
 if [ $? ] ; then
   #setxkbmap -option ctrl:nocaps  
   #xmodmap ~/.Xmodmap
   xrdb -merge ~/.Xresources
-
-  xrandr --dpi 75
 
   sleep 1
   pkill notion
