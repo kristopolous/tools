@@ -11,13 +11,13 @@ orient=${1:-portrait}
 dual=$2
 
 portrait() {
-  echo xrandr --output $external --auto --mode 1600x1200 --rotate left --output $internal $opts
+  xrandr --output $external --auto --mode 1600x1200 --rotate left --output $internal $opts
 }
 landscape() {
-  echo xrandr --output $external --auto --mode 1600x1200 --output $internal $opts
+  xrandr --output $external --auto --mode 1600x1200 --output $internal $opts
 }
 
-if [ $dual ]; then
+if [ -n "$dual" ]; then
   opts="--auto --left-of $external"
 else
   opts="--off"
@@ -25,8 +25,8 @@ fi
 
 eval $orient
 if [ $? ] ; then
-  setxkbmap -option ctrl:nocaps  
-  xmodmap ~/.Xmodmap
+  #setxkbmap -option ctrl:nocaps  
+  #xmodmap ~/.Xmodmap
   xrdb -merge ~/.Xresources
 
   xrandr --dpi 75
