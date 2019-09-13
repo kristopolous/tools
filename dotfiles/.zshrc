@@ -10,7 +10,7 @@ function expand-or-complete-or-list-files() {
     fi
 }
 
-export PATH=/home/chris/bin:$PATH:/usr/local/sbin/usr/sbin:/sbin:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0:/home/chris/.local/bin/:/home/chris/proggies/adt/sdk/tools/bin/
+export PATH=/home/chris/bin:/usr/local/bin/:$PATH:/usr/local/sbin/usr/sbin:/sbin:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0:/home/chris/.local/bin/:/home/chris/proggies/adt/sdk/tools/bin/:/home/chris/proggies/arduino/arduino-1.8.9
 
 unsetopt completeinword
 setopt nohup
@@ -86,3 +86,4 @@ export ANDRIOD_NDK_HOME=/home/chris/proggies/adt/sdk/ndk-bundle/
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/chris/.sdkman"
 [[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
+export PATH=$PATH:/home/chris/waive/WaiveScreen/tools/server
