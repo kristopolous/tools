@@ -1,14 +1,15 @@
 #!/bin/bash
 
 card=0
+opts="-D pulse"
 
 change() {
   {
-    [ $1 = 'u' ] && amixer -c $card set Master 5%+
-    [ $1 = 'd' ] && amixer -c $card set Master 5%-
-    [ $1 = 'm' ] && amixer -c $card set Master toggle
+    [ $1 = 'u' ] && amixer $opts set Master 5%+
+    [ $1 = 'd' ] && amixer $opts set Master 5%-
+    [ $1 = 'm' ] && amixer $opts set Master toggle
   } > /dev/null
-  amount=`amixer -c $card sget Master | tail -1 | awk ' { print $3 } '`
+  amount=`amixer $opts sget Master | tail -1 | awk ' { print $3 } '`
 }
 
 if [ $# -gt 0 ]; then

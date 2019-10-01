@@ -5,7 +5,7 @@ install_path=`dirname $full_path`
 ex=`basename $0`
 
 declare -A url_list
-url_list[slack]=waivecar.slack.com
+url_list[slack]="waivecar.slack.com ilinxworkchat.slack.com"
 url_list[hipchat]=crowdfunder.hipchat.com/chat
 url_list[skype]=web.skype.com
 url_list[hangouts]=hangouts.google.com

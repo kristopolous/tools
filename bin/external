@@ -12,10 +12,10 @@ orient=${1:-portrait}
 dual=$2
 
 portrait() {
-  xrandr --output $external --auto --mode 1600x1200 --rotate left --output $internal $opts
+  xrandr --output $external --auto --mode 1920x1200 --rotate left --output $internal $opts
 }
 landscape() {
-  xrandr --output $external --auto --mode 1600x1200 --output $internal $opts
+  xrandr --output $external --auto --mode 1920x1200 --output $internal $opts
 }
 internal() {
   DISPLAY=:0 xrandr --output $external --off --output $internal --auto --rotate normal

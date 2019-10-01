@@ -87,3 +87,7 @@ export ANDRIOD_NDK_HOME=/home/chris/proggies/adt/sdk/ndk-bundle/
 export SDKMAN_DIR="/home/chris/.sdkman"
 [[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
 export PATH=$PATH:/home/chris/waive/WaiveScreen/tools/server
+MPV_EXEC=/usr/bin/mpv
+function mpv {
+        $MPV_EXEC --term-status-msg $'\n\e]0;${filename} - mpv\a\n${?pause==yes:(Paused) }${time-pos} / ${duration} (${percent-pos}%)' $@
+}

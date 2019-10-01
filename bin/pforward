@@ -9,8 +9,9 @@ read cred
 echo -n "Internal IP:port: "
 read internal
 
-cmd="ssh -f -NC -R $public:$internal $cred"
+cmd="ssh -NC -R $public:$internal $cred"
 echo Starting:
 echo "  " $cmd
 echo $(date +%s) $cmd >> $HOME/.pforward
 $cmd
+echo $!

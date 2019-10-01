@@ -1,15 +1,19 @@
+clear mod2
+keycode 77 = XF86Copy
+add mod4 = XF86Copy
+!clear mod4
 ! remove Lock = 66
-remove Control = Control_L
+!remove Control = Control_L
 ! keysym Control_L = Caps_Lock
 ! keysym 66 = Control_L
-add Lock = Caps_Lock
-add Control = Control_L
+!add Lock = Caps_Lock
 ! add mod3 = Print
-keycode 66 = Control_L
-keycode 78 = KP_Add
-keycode 133 = Super_L Control_L
-keycode 135 = Super_L Control_L
-keycode 97 = Alt_L
-keycode 180 = Escape
+!keycode 66 = Super_L Control_L
+!keycode 66 = Super_L
+!keycode 133 = Super_L Control_L
+!keycode 135 = Super_L Control_L
+!keycode 97 = Alt_L
+!keycode 180 = Escape
 ! keycode 107 = mod3
-add mod4 = Menu
+!keysym Super_L = Print
+!add mod4 = Super_L

@@ -7,9 +7,9 @@
 "brightness u 4" 
   XF86MonBrightnessUp
 "volume d"
-  XF86AudioLowerVolume
+  Shift+F12
 "volume u"
-  XF86AudioRaiseVolume
+  Shift+F11
 "volume m"
   XF86AudioMute
 "volume m"
