@@ -5,6 +5,27 @@ notion &
 setxkbmap -option ctrl:nocaps  
 xmodmap ~/.Xmodmap
 
+footpad() {
+  # ref: https://superuser.com/questions/760602/how-to-remap-keys-under-linux-for-a-specific-keyboard-only/869064#869064
+  local base=/tmp/xkb
+  local path=$base/symbols
+  local id=9
+  local name=foot
+  mkdir -p $path
+
+  cat > $path/foot << EOF
+  xkb_symbols "foot" {
+    key <LCTL> { [ Hyper_L ] };
+    key <LALT> { [ Hyper_R ] };
+    key <LWIN> { [ Meta_L ]  };
+  };
+EOF
+
+  setxkbmap -device $id -print \
+   | sed 's/\(xkb_symbols.*\)"/\1+foot('$name')"/' \
+   | xkbcomp -I$base -i $id -synch - :0
+}
+
 mouse=/sys/devices/rmi4-00/rmi4-00.fn03/serio2
 echo 100 | sudo tee $mouse/speed
 echo 250 | sudo tee $mouse/sensitivity 
@@ -39,6 +60,8 @@ echo 200 | sudo tee -a /sys/devices/platform/i8042/serio1/serio2/sensitivity
 
 sudo $HOME/bin/laptop.sh
 $HOME/bin/osd_time&
+
+footpad
 
 { pgrep xbindkeys || xbindkeys } > /dev/null
 sleep 10000000
