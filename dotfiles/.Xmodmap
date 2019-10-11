@@ -1,4 +1,5 @@
 clear mod2
+add mod2 = Hyper_L
 keycode 77 = XF86Copy
 add mod4 = XF86Copy
 !clear mod4

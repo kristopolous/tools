@@ -17,7 +17,7 @@ footpad() {
   xkb_symbols "foot" {
     key <LCTL> { [ Hyper_L ] };
     key <LALT> { [ Hyper_R ] };
-    key <LWIN> { [ Meta_L ]  };
+    key <LWIN> { [ Hyper_L ]  };
   };
 EOF
 
