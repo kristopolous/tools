@@ -5,10 +5,9 @@ prog=$( basename $0 )
 internal=$( xrandr | grep primary | awk ' { print $1 }' )
 external=$( xrandr | grep -v primary | grep \ connected | awk ' { print $1 }' )
 
-[ -z "$external" ] && echo "Can't find external monitor with xrandr. Exiting" && exit 1
 [ -z "$internal" ] && echo "Can't find internal monitor with xrandr. Exiting" && exit 1
 
-orient=${1:-portrait}
+orient=${1:-landscape}
 dual=$2
 
 portrait() {
@@ -26,6 +25,7 @@ if [ "$prog" = "internal" ]; then
   xrandr --dpi 125
   internal
 else
+  [ -z "$external" ] && echo "Can't find external monitor with xrandr. Exiting" && exit 1
   if [ -n "$dual" ]; then
     opts="--auto --left-of $external"
   else
@@ -37,8 +37,8 @@ else
 fi
 
 if [ $? ] ; then
-  #setxkbmap -option ctrl:nocaps  
-  #xmodmap ~/.Xmodmap
+  setxkbmap -option ctrl:nocaps  
+  xmodmap ~/.Xmodmap
   xrdb -merge ~/.Xresources
 
   sleep 1
