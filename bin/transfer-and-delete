@@ -1,0 +1,11 @@
+#!/bin/bash
+
+path=$1
+for file in $(adb shell "find $path -type f"); do
+  to=.$(dirname $file)
+  mkdir -p $to
+  if adb pull $file .$file; then
+    adb shell "rm $file"
+  fi
+done
+
