@@ -17,7 +17,7 @@ portrait() {
   xrandr --output $external --auto --mode $resolution --rotate left --output $internal $opts
 }
 landscape() {
-  xrandr --dpi 100 --output $external --auto --mode $resolution --output $internal $opts
+  xrandr --output $external --auto --mode $resolution --output $internal $opts
 }
 internal() {
   DISPLAY=:0 xrandr --output $external --off --output $internal --auto --rotate normal
@@ -36,7 +36,7 @@ else
   fi
 
   eval $orient
-  xrandr --dpi 75
+  xrandr --dpi 100
 fi
 
 if [ $? ] ; then
