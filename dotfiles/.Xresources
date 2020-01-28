@@ -4,6 +4,7 @@ Xft*hintstyle: hintfull
 
 Xcursor.size: 24
 Xcursor.theme: redglass
+Xterm*selectToClipboard: true
 xterm*VT100.geometry: 80x30
 xterm*background: #000000
 xterm*foreground: #ffffff
@@ -61,8 +62,8 @@ xterm*color15: #ffffff
 
 xterm*faceName:*-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1
 xterm*faceSize: 14.0
-xterm*faceSize1: 8.0
-xterm*faceSize2: 10.0
+xterm*faceSize1: 9.0
+xterm*faceSize2: 11.0
 xterm*faceSize3: 13.0
 xterm*faceSize4: 15.0
 xterm*faceSize5: 18.0
