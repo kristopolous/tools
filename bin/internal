@@ -7,14 +7,17 @@ external=$( xrandr | grep -v primary | grep \ connected | awk ' { print $1 }' )
 
 [ -z "$internal" ] && echo "Can't find internal monitor with xrandr. Exiting" && exit 1
 
+echo "internal: $internal | external: $external"
+
 orient=${1:-landscape}
 dual=$2
+resolution=3840x2160
 
 portrait() {
-  xrandr --output $external --auto --mode 1920x1200 --rotate left --output $internal $opts
+  xrandr --output $external --auto --mode $resolution --rotate left --output $internal $opts
 }
 landscape() {
-  xrandr --output $external --auto --mode 1920x1200 --output $internal $opts
+  xrandr --dpi 100 --output $external --auto --mode $resolution --output $internal $opts
 }
 internal() {
   DISPLAY=:0 xrandr --output $external --off --output $internal --auto --rotate normal
