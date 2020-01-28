@@ -5,10 +5,10 @@
 . hotspot.secrets
 
 # This is where the internet is
-DEV_INTERNET=wwan0
+DEV_INTERNET=wlan0
 
 # This is what you are listening on.
-DEV_AP=wlan0
+DEV_AP=wlxa0f3c10ad308
 
 # We are nat'ing so we need an IP
 IP_START=172.16.10
@@ -22,17 +22,17 @@ cat > /etc/hostapd/hostapd.conf << endl
 interface=$DEV_AP
 driver=nl80211
 ssid=$SSID
-auth_algs=2
-wep_key0=123456789a
+auth_algs=1
+wpa=2
 channel=11
 hw_mode=g
+#wep_key0=123456789a
 country_code=US
-bridge=br0
-#wpa=1
+#bridge=br0
 eap_server=0
-#wpa_passphrase=$PASS
-#wpa_key_mgmt=WPA-PSK
-#wpa_pairwise=CCMP
+wpa_passphrase=$PASS
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP CCMP
 macaddr_acl=0
 logger_stdout=-1
 logger_stdout_level=1
