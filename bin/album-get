@@ -1,0 +1,14 @@
+#!/bin/bash
+base=$1
+shift
+
+[ -e $base ] || mkdir $base
+cd $base
+
+for i in $(curl https://$base.bandcamp.com/ | grep -Po '(?<=album\/)[^"]*' ); do
+  (
+    [ -e $i ] || mkdir $i
+    cd $i
+    youtube-dl https://$base.bandcamp.com/album/$i
+  )
+done
