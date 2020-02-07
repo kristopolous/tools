@@ -15,7 +15,7 @@ footpad() {
 
   cat > $path/foot << EOF
   xkb_symbols "foot" {
-    key <LCTL> { [ Hyper_L ] };
+    key <LCTL> { [ CTRL_L ALT_L ] };
     key <LALT> { [ Hyper_R ] };
     key <LWIN> { [ Hyper_L ]  };
   };
