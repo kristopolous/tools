@@ -1,15 +1,22 @@
 #!/bin/bash
-base=$1
+
+if [[ $1 =~ \. ]]; then
+  base=$( echo $1 | sed -n 's/\..*$//p' )
+  base_url=$1
+else
+  base=$1
+  base_url=$base.bandcamp.com
+fi
 shift
 
 [ -e $base ] || mkdir $base
 cd $base
 
-for i in $(curl -s https://$base.bandcamp.com/ | grep -Po '(?<=album\/)[^?"]*' ); do
+for i in $(curl -s https://$base_url/ | grep -Po '(?<=album\/)[^?"]*' ); do
   (
     [ -e $i ] || mkdir $i
     cd $i
-    url=https://$base.bandcamp.com/album/$i
+    url=https://$base_url/album/$i
     echo -e "\n\n$url\n\n"
     youtube-dl $url
   )
