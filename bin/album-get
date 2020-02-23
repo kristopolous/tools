@@ -3,9 +3,11 @@
 if [[ $1 =~ \. ]]; then
   [[ -n "$2" ]] && base="$2" || base=$( echo $1 | sed -n 's/\..*$//p' )
   base_url=$1
+  extra=
 else
   base=$1
   base_url=$base.bandcamp.com
+  extra=music
 fi
 shift
 
@@ -13,14 +15,14 @@ echo ">> Using $base"
 [ -e $base ] || mkdir $base
 cd $base
 
-for i in $(curl -s https://$base_url/ | grep -Po '(?<=album\/)[^?"]*' ); do
+for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?"]*' ); do
   (
     if [[ ! -e $i ]]; then 
       mkdir $i
       cd $i
       url=https://$base_url/album/$i
       echo -e "\n\n$url\n\n"
-      youtube-dl $url
+      youtube-dl -- "$url"
     else
       printf " %-30s exists\n" $i
     fi
