@@ -15,7 +15,7 @@ echo ">> Using $base"
 [ -e $base ] || mkdir $base
 cd $base
 
-for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?"]*' ); do
+for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
   (
     if [[ ! -e $i ]]; then 
       mkdir $i
@@ -24,7 +24,7 @@ for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?"]*' ); d
       echo -e "\n\n$url\n\n"
       youtube-dl -- "$url"
     else
-      printf " %-30s exists\n" $i
+      echo " ✓ $i"
     fi
   )
 done
