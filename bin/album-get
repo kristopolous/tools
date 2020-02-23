@@ -15,10 +15,14 @@ cd $base
 
 for i in $(curl -s https://$base_url/ | grep -Po '(?<=album\/)[^?"]*' ); do
   (
-    [ -e $i ] || mkdir $i
-    cd $i
-    url=https://$base_url/album/$i
-    echo -e "\n\n$url\n\n"
-    youtube-dl $url
+    if [[ ! -e $i ]]; then 
+      mkdir $i
+      cd $i
+      url=https://$base_url/album/$i
+      echo -e "\n\n$url\n\n"
+      youtube-dl $url
+    else
+      printf " %-30s exists\n" $i
+    fi
   )
 done
