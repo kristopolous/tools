@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $# = 0 ]] ; then
+  ls | xargs -n 1 ${BASH_SOURCE[0]}
+  exit
+fi
+
 if [[ $1 =~ \. ]]; then
   [[ -n "$2" ]] && base="$2" || base=$( echo $1 | sed -n 's/\..*$//p' )
   base_url=$1
@@ -11,7 +16,7 @@ else
 fi
 shift
 
-echo ">> Using $base"
+echo "♫ $base ♫"
 [ -e $base ] || mkdir $base
 cd $base
 
@@ -20,12 +25,12 @@ for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*'
     mkdir $i
     cd $i
     url=https://$base_url/album/$i
-    echo " ⇩ $url"
+    echo "  ⇩ $url"
     youtube-dl -- "$url"
     cd ..
   else
     count=$( ls $i | wc -l )
     [[ "$count" = "0" ]] && count="- ---" || count="✓ $count"
-    echo " $count $i"
+    echo "  $count $i"
   fi
 done
