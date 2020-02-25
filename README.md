@@ -1,3 +1,5 @@
+# shell tools
+
 Various helper scripts that I use day to day along with my personal dotfiles for things such as tmux, zsh, and xinit. 
 
 Most scripts are further commented if you click through the link. 
@@ -47,4 +49,4 @@ MD5 checksum is done and if they don't match then you get prompted whether you w
 
 ## History
 
-The earliest file here goes back to 2000 (dotfiles/.twmrc) ... I began using Linux I believe in 1998.
+The earliest file here goes back to 2000 (dotfiles/.twmrc) although I use notion now.  I began using Linux I believe in 1998.
