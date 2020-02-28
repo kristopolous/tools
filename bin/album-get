@@ -36,9 +36,9 @@ starting_point=$PWD
 
 for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
   if [[ ! -e $i ]]; then 
-    cd $starting_point
-    mkdir $i
-    cd $i
+    mkdir $starting_point/$i
+    cd $starting_point/$i
+    echo ">> $starting_point/$i"
     url=https://$base_url/album/$i
     echo "  ⇩ $url"
     youtube-dl -- "$url"
