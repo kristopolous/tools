@@ -35,16 +35,17 @@ cd $base
 starting_point=$PWD
 
 for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
-  if [[ ! -e $i ]]; then 
-    mkdir $starting_point/$i
-    cd $starting_point/$i
-    echo ">> $starting_point/$i"
+  place=$starting_point/$i
+  [[ -e $place ]] || mkdir $place
+  count=$( ls $place | wc -l )
+  if [[ "$count" = "0" ]]; then
+    cd $place
+    echo ">> $place"
     url=https://$base_url/album/$i
     echo "  ⇩ $url"
     youtube-dl -- "$url"
   else
-    count=$( ls $i | wc -l )
-    [[ "$count" = "0" ]] && count="- ---" || count="✓ $count"
+    count="✓ $count"
     echo "  $count $i"
   fi
 done
