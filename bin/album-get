@@ -6,7 +6,12 @@ if [[ $# = 0 ]] ; then
 fi
 
 if [[ $1 =~ \. ]]; then
-  [[ -n "$2" ]] && base="$2" || base=$( echo $1 | sed -n 's/\..*$//p' )
+  if [[ -n "$2" ]]; then 
+    base="$2" 
+    domain=$1
+  else 
+    base=$( echo $1 | sed -n 's/\..*$//p' )
+  fi
   base_url=$1
   extra=
 else
@@ -17,7 +22,15 @@ fi
 shift
 
 echo "♫ $base ♫"
-[ -e $base ] || mkdir $base
+[[ -e $base ]] || mkdir $base
+
+if [[ -e $base/domain ]]; then
+  base_url=$(< $base/domain )
+  echo " ! using $base_url" 
+elif [[ -n "$domain" ]]; then
+  echo $base_url > $base/domain
+fi
+
 cd $base
 
 for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
