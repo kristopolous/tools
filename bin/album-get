@@ -35,20 +35,30 @@ cd $base
 starting_point=$PWD
 
 for full in $(curl -s https://$base_url/$extra |  grep -Po '(?<=")[\w:\/\.]+(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
+  # sometimes we get x-dom references, sometimes it's relevant. We resolve that below.
   i=$(basename $full)
   place=$starting_point/$i
+
   [[ -e $place ]] || mkdir $place
+
+  # if we haven't any files then we just try to download from it again... 
   count=$( ls $place | wc -l )
   if [[ "$count" = "0" ]]; then
     cd $place
     echo ">> $place"
+
+    # here's where we look for the full url
     if [[ $full =~ : ]]; then
       url=$full
+      echo $full > $place/domain
     else
       url=https://$base_url/album/$i
     fi
     echo "  ⇩ $url"
+
+    # sometimes people are posting wav files ... really, that's crazy
     youtube-dl --reject-title "\.wav" -- "$url"
+
   else
     count="✓ $count"
     echo "  $count $i"
