@@ -31,16 +31,17 @@ elif [[ -n "$domain" ]]; then
   echo $base_url > $base/domain
 fi
 
+starting_point=$PWD
 cd $base
 
 for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
   if [[ ! -e $i ]]; then 
+    cd $starting_point
     mkdir $i
     cd $i
     url=https://$base_url/album/$i
     echo "  ⇩ $url"
     youtube-dl -- "$url"
-    cd ..
   else
     count=$( ls $i | wc -l )
     [[ "$count" = "0" ]] && count="- ---" || count="✓ $count"
