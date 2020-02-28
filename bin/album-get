@@ -31,8 +31,8 @@ elif [[ -n "$domain" ]]; then
   echo $base_url > $base/domain
 fi
 
-starting_point=$PWD
 cd $base
+starting_point=$PWD
 
 for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
   if [[ ! -e $i ]]; then 
