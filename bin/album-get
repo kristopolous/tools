@@ -5,62 +5,66 @@ if [[ $# = 0 ]] ; then
   exit
 fi
 
-if [[ $1 =~ \. ]]; then
-  if [[ -n "$2" ]]; then 
-    base="$2" 
-    domain=$1
-  else 
-    base=$( echo $1 | sed -n 's/\..*$//p' )
-  fi
-  base_url=$1
-  extra=
-else
-  base=$1
-  base_url=$base.bandcamp.com
-  extra=music
-fi
-shift
-
-echo "♫ $base ♫"
-[[ -e $base ]] || mkdir $base
-
-if [[ -e $base/domain ]]; then
-  base_url=$(< $base/domain )
-  echo " ! using $base_url" 
-elif [[ -n "$domain" ]]; then
-  echo $base_url > $base/domain
-fi
-
-cd $base
-starting_point=$PWD
-
-for full in $(curl -s https://$base_url/$extra |  grep -Po '(?<=")[\w:\/\.]+(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
-  # sometimes we get x-dom references, sometimes it's relevant. We resolve that below.
-  i=$(basename $full)
-  place=$starting_point/$i
-
-  [[ -e $place ]] || mkdir $place
-
-  # if we haven't any files then we just try to download from it again... 
-  count=$( ls $place | wc -l )
-  if [[ "$count" = "0" ]]; then
-    cd $place
-    echo ">> $place"
-
-    # here's where we look for the full url
-    if [[ $full =~ : ]]; then
-      url=$full
-      echo $full > $place/domain
-    else
-      url=https://$base_url/album/$i
+while [[ $# -gt 0 ]]; do
+  if [[ $1 =~ \. ]]; then
+    if [[ -n "$2" ]]; then 
+      base="$2" 
+      domain=$1
+      base_url=$1
+      shift
+    else 
+      base=$( echo $1 | sed -n 's/\..*$//p' )
+      base_url=$1
     fi
-    echo "  ⇩ $url"
-
-    # sometimes people are posting wav files ... really, that's crazy
-    youtube-dl --reject-title "\.wav" -- "$url"
-
+    extra=
   else
-    count="✓ $count"
-    echo "  $count $i"
+    base=$1
+    base_url=$base.bandcamp.com
+    extra=music
   fi
+  shift
+
+  echo "♫ $base ♫"
+  [[ -e $base ]] || mkdir $base
+
+  if [[ -e $base/domain ]]; then
+    base_url=$(< $base/domain )
+    echo " ! using $base_url" 
+  elif [[ -n "$domain" ]]; then
+    echo $base_url > $base/domain
+  fi
+
+  cd $base
+  starting_point=$PWD
+
+  for full in $(curl -s https://$base_url/$extra |  grep -Po '(?<=")[\w:\/\.]+(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
+    # sometimes we get x-dom references, sometimes it's relevant. We resolve that below.
+    i=$(basename $full)
+    place=$starting_point/$i
+
+    [[ -e $place ]] || mkdir $place
+
+    # if we haven't any files then we just try to download from it again... 
+    count=$( ls $place | wc -l )
+    if [[ "$count" = "0" ]]; then
+      cd $place
+      echo ">> $place"
+
+      # here's where we look for the full url
+      if [[ $full =~ : ]]; then
+        url=$full
+        echo $full > $place/domain
+      else
+        url=https://$base_url/album/$i
+      fi
+      echo "  ⇩ $url"
+
+      # sometimes people are posting wav files ... really, that's crazy
+      youtube-dl --reject-title "\.wav" -- "$url"
+
+    else
+      count="✓ $count"
+      echo "  $count $i"
+    fi
+  done
 done
