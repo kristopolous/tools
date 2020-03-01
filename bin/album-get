@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $# = 0 ]] ; then
-  for i in $(ls); do
+  for i in $(ls | shuf); do
     ${BASH_SOURCE[0]} $i
   done
   exit
@@ -43,8 +43,12 @@ while [[ $# -gt 0 ]]; do
     # sometimes we get x-dom references, sometimes it's relevant. We resolve that below.
     i=$(basename $full)
     place=$starting_point/$i
+    isnew=
 
-    [[ -e $place ]] || mkdir $place
+    if [[ ! -e $place ]]; then
+      isnew=true
+      mkdir $place
+    fi
 
     # if we haven't any files then we just try to download from it again... 
     count=$( ls $place | wc -l )
@@ -61,8 +65,20 @@ while [[ $# -gt 0 ]]; do
       fi
       echo "  ⇩ $url"
 
+      # this means we've been here before. We can use the -g 
+      # option to see if nothing ought to be downloaded in which
+      # case we mark it as skippable
+      if [[ -z "$isnew" ]]; then
+        track_count=$( youtube-dl -f mp3-128 -g -- "$url" | wc -l )
+        if [[ "$track_count" = "0" ]]; then
+          echo "  ( no files )"
+          touch $place/no-files
+          continue
+        fi
+      fi
+
       # sometimes people are posting wav files ... really, that's crazy
-      youtube-dl -f mp3-128 --reject-title "\.wav" -- "$url"
+      youtube-dl -f mp3-128 -- "$url"
 
     else
       count="✓ $count"
