@@ -4,4 +4,4 @@ set -x
 base=/ssd/mp3/label
 mkdir -p /tmp/$1
 mv $base/$1/* /tmp/$1
-touch $base/$1/no
+touch $base/$1/${2:-no}
