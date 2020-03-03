@@ -2,6 +2,6 @@
 
 set -x
 base=/ssd/mp3/label
-mkdir /tmp/$1
+mkdir -p /tmp/$1
 mv $base/$1/* /tmp/$1
 touch $base/$1/no
