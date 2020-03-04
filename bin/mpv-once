@@ -5,15 +5,21 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
   ls $i/*.mp3 > /dev/null
   n=nothing
   if [[ $? == "0" ]]; then
-    mpv --no-audio-display $i
-    echo -n "$i >>> "
-    read n
+    while [[ 0 ]]; do
+      mpv --no-audio-display $i
+      echo -n "$i >>> "
+      read n
+      [[ $n == 'r' ]] && continue
+      break
+    done
+
     [[ $n == 'purge' ]] && album-purge $i
-    if [[ $n == 'skip' ]]; then
+    if [[ $n == 's' ]]; then
       echo "Skipping ... "
       continue
     fi
     n="__rating_$n"
+    break
   fi
   echo $i $n >> .listen_done
 done
