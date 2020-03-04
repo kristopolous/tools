@@ -9,6 +9,10 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
     echo -n "$i >>> "
     read n
     [[ $n == 'purge' ]] && album-purge $i
+    if [[ $n == 'skip' ]]; then
+      echo "Skipping ... "
+      continue
+    fi
     n="__rating_$n"
   fi
   echo $i $n >> .listen_done
