@@ -51,7 +51,7 @@ while [[ $# -gt 0 ]]; do
     count=$( ls $place | wc -l )
     if [[ "$count" = "0" ]]; then
       cd $place
-      echo ">> $place"
+      echo "--- $place"
 
       # here's where we look for the full url
       if [[ $full =~ : ]]; then
