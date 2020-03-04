@@ -19,7 +19,6 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
       continue
     fi
     n="__rating_$n"
-    break
   fi
   echo $i $n >> .listen_done
 done
