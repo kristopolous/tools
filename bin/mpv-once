@@ -2,9 +2,12 @@
 echo */* | tr ' ' '\n' > .listen_all
 touch .listen_done
 for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u | shuf); do
-  mpv --no-audio-display $i
-  echo -n "$i >>> "
-  read n
-  [[ $n == 'purge' ]] && album-purge $i
+  ls $i/*.mp3 > /dev/null
+  if [[ $? == "0" ]]; then
+    mpv --no-audio-display $i
+    echo -n "$i >>> "
+    read n
+    [[ $n == 'purge' ]] && album-purge $i
+  fi
   echo $i $n >> .listen_done
 done
