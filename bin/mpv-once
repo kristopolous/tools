@@ -1,0 +1,7 @@
+#!/bin/bash
+echo */* | tr ' ' '\n' > .listen_all
+touch .listen_done
+for i in $(cat .listen_all .listen_done | sort | uniq -u | shuf); do
+  mpv $i
+  echo $i >> .listen_done
+done
