@@ -13,8 +13,10 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
       break
     done
 
-    [[ $n == 'purge' ]] && album-purge $i
-    if [[ $n == 's' ]]; then
+    if [[ $n == 'purge' ]]; then 
+      album-purge $i
+      n="__purge"
+    elif [[ $n == 's' ]]; then
       echo "Skipping ... "
       n="__skipping"
     else
