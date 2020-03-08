@@ -30,6 +30,7 @@ while [[ $# -gt 0 ]]; do
     base_url=$(< $base/domain )
     echo " ! using $base_url" 
   elif [[ -n "$domain" ]]; then
+    echo 'hi';
     echo $base_url > $base/domain
   fi
 
@@ -48,7 +49,7 @@ while [[ $# -gt 0 ]]; do
     fi
 
     # if we haven't any files then we just try to download from it again... 
-    count=$( ls $place | wc -l )
+    count=$( ls $place/*.mp3 $place/no-files | wc -l )
     if [[ "$count" = "0" ]]; then
       cd $place
       echo "--- $place"
