@@ -41,7 +41,7 @@ while [[ $# -gt 0 ]]; do
 
   for full in $(curl -s https://$base_url/$extra |  grep -Po '(?<=")[\w:\/\.]+(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
     # sometimes we get x-dom references, sometimes it's relevant. We resolve that below.
-    i=$(basename $full)
+    i=$(basename "$full")
     place="$starting_point/$i"
     isnew=
 
