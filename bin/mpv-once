@@ -3,7 +3,7 @@ echo */* | tr ' ' '\n' > .listen_all
 touch .listen_done
 for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u | shuf); do
   n=__nothing
-  ls $i/*.mp3 > /dev/null
+  ls $i/*.mp3 > /dev/null 2>&1
   if [[ $? == "0" ]]; then
     while [[ 0 ]]; do
       mpv --no-audio-display $i
