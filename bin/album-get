@@ -40,24 +40,24 @@ while [[ $# -gt 0 ]]; do
   for full in $(curl -s https://$base_url/$extra |  grep -Po '(?<=")[\w:\/\.]+(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
     # sometimes we get x-dom references, sometimes it's relevant. We resolve that below.
     i=$(basename $full)
-    place=$starting_point/$i
+    place="$starting_point/$i"
     isnew=
 
-    if [[ ! -e $place ]]; then
+    if [[ ! -e "$place" ]]; then
       isnew=true
-      mkdir $place
+      mkdir "$place"
     fi
 
     # if we haven't any files then we just try to download from it again... 
-    count=$( ls $place/*.mp3 $place/no-files 2> /dev/null | wc -l )
+    count=$( ls "$place"/*.mp3 $place/no-files 2> /dev/null | wc -l )
     if [[ "$count" = "0" ]]; then
-      cd $place
+      cd "$place"
       echo "--- $place"
 
       # here's where we look for the full url
       if [[ $full =~ : ]]; then
         url=$full
-        echo $full > $place/domain
+        echo $full > "$place"/domain
       else
         url=https://$base_url/album/$i
       fi
@@ -70,7 +70,7 @@ while [[ $# -gt 0 ]]; do
         track_count=$( youtube-dl -f mp3-128 -g -- "$url" | wc -l )
         if [[ "$track_count" = "0" ]]; then
           echo "  ( no files )"
-          touch $place/no-files
+          touch "$place"/no-files
           continue
         fi
       fi
