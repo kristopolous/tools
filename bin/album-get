@@ -5,19 +5,22 @@ if [[ $# = 0 ]] ; then
 fi
 
 while [[ $# -gt 0 ]]; do
-  if [[ $1 =~ \. ]]; then
+  arg=${1%%.}
+  echo $arg
+
+  if [[ $arg =~ \. ]]; then
     if [[ -n "$2" ]]; then 
       base="$2" 
-      domain=$1
-      base_url=$1
+      domain=$arg
+      base_url=$arg
       shift
     else 
-      base=$( echo $1 | sed -n 's/\..*$//p' )
-      base_url=$1
+      base=$( echo $arg | sed -n 's/\..*$//p' )
+      base_url=$arg
     fi
     extra=
   else
-    base=$1
+    base=$arg
     base_url=$base.bandcamp.com
     extra=music
   fi
@@ -30,7 +33,6 @@ while [[ $# -gt 0 ]]; do
     base_url=$(< $base/domain )
     echo " ! using $base_url" 
   elif [[ -n "$domain" ]]; then
-    echo 'hi';
     echo $base_url > $base/domain
   fi
 
