@@ -6,7 +6,6 @@ fi
 
 while [[ $# -gt 0 ]]; do
   arg=${1%%.}
-  echo $arg
 
   if [[ $arg =~ \. ]]; then
     if [[ -n "$2" ]]; then 
