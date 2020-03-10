@@ -6,7 +6,7 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
   ls $i/*.mp3 > /dev/null 2>&1
   if [[ $? == "0" ]]; then
     while [[ 0 ]]; do
-      mpv --no-audio-display $i
+      mpv --no-audio-display "$i"/*.mp3
       echo -n "$i >>> "
       read n
       [[ $n == 'r' ]] && continue
