@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $# = 0 ]] ; then
-  ls | shuf | xargs -n 1 -P 8 ${BASH_SOURCE[0]} 
+  ls | sort | xargs -n 1 -P 8 ${BASH_SOURCE[0]} 
 fi
 
 while [[ $# -gt 0 ]]; do
@@ -25,15 +25,16 @@ while [[ $# -gt 0 ]]; do
   fi
   shift
 
-  echo "♫ $base ♫"
   [[ -e $base ]] || mkdir $base
 
+  base_name=$base
   if [[ -e $base/domain ]]; then
     base_url=$(< $base/domain )
-    echo " ! using $base_url" 
+    base_name=$base_url
   elif [[ -n "$domain" ]]; then
     echo $base_url > $base/domain
   fi
+  echo "♫ $base_name ♫"
 
   cd $base
   starting_point=$PWD
@@ -80,8 +81,9 @@ while [[ $# -gt 0 ]]; do
       youtube-dl -f mp3-128 -- "$url"
 
     else
-      count="✓ $count"
-      echo "  $count $i"
+      true
+      #count="✓ $count"
+      #echo "  $count $i"
     fi
   done
 done
