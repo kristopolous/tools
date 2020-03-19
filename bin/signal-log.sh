@@ -2,7 +2,7 @@
 n=0
 arr=()
 ping_window=30
-buffer_window=900
+buffer_window=1800
 logfile=/tmp/signal-history
 floor=4
 ceil=15
