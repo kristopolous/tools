@@ -4,6 +4,7 @@ arr=()
 ping_window=20
 buffer_window=900
 logfile=/tmp/signal-history
+echo "Using $logfile"
 while [ 0 ]; do
   ping -q -w 2 -c 2 8.8.8.8 > /dev/null
 
