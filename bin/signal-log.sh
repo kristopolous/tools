@@ -14,7 +14,8 @@ while [ 0 ]; do
     fi
     fail=$((fail + 1))
   fi
-  sleep 0.75
+  ping -w 2 -c 2 8.8.8.8
+  echo $?
   tail -900 power-history| sed -E 's/^[0-9]*//g' | awk ' { print FNR" "$0 } ' > /tmp/power
   mv /tmp/power power-history
 done
