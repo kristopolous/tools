@@ -2,6 +2,8 @@
 n=0
 arr=()
 ping_window=20
+buffer_window=900
+logfile=/tmp/signal-history
 while [ 0 ]; do
   ping -q -w 2 -c 2 8.8.8.8 > /dev/null
 
@@ -15,18 +17,18 @@ while [ 0 ]; do
 
   stats=$(links -dump http://admin:admin@192.168.1.1/status_deviceinfo.htm | grep -A 2 "SNR Margin" | grep -Po '[\d\.]*' | tr '\n' ' ')
   if [ -n "$stats" ]; then
-    echo  "$n $last $stats" >> power-history
+    echo "$n $last $stats" >> $logfile
     n=$(( n + 1 ))
     fail=0
   else
     if (( fail < 5 )); then
-      echo "$n $last 0 0 0 0 0 0 0" >> power-history
+      echo "$n $last 0 0 0 0 0 0 0" >> $logfile
       sleep 3
       n=$(( n + 1 ))
     fi
     fail=$((fail + 1))
   fi
 
-  tail -900 power-history| sed -E 's/^[0-9]* //g' | awk ' { print FNR" "$0 } ' > /tmp/power
-  mv /tmp/power power-history
+  tail -$buffer_window $logfile | sed -E 's/^[0-9]* //g' | awk ' { print FNR" "$0 } ' > ${logfile}.bak
+  mv ${logfile}.bak $logfile
 done
