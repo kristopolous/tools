@@ -1,9 +1,12 @@
 #!/bin/bash
 n=0
 arr=()
-ping_window=20
+ping_window=30
 buffer_window=900
 logfile=/tmp/signal-history
+floor=5
+ceil=15
+range=$(( ceil - floor ))
 echo "Using $logfile"
 while [ 0 ]; do
   ping -q -w 2 -c 2 8.8.8.8 > /dev/null
@@ -14,16 +17,16 @@ while [ 0 ]; do
   count=0
   for x in ${arr[@]}; do ttl=$(( x + ttl )); done
   count=${#arr[@]}
-  last=$(( 100 - ttl * 100 / count ))
+  last=$(( floor + ttl * range / count ))
 
-  stats=$(links -dump http://admin:admin@192.168.1.1/status_deviceinfo.htm | grep -A 2 "SNR Margin" | grep -Po '[\d\.]*' | tr '\n' ' ')
+  stats=$(links -dump http://admin:admin@192.168.1.1/status_deviceinfo.htm | grep -A 1 "SNR Margin" | grep -Po '[\d\.]*' | tr '\n' ' ')
   if [ -n "$stats" ]; then
     echo "$n $last $stats" >> $logfile
     n=$(( n + 1 ))
     fail=0
   else
     if (( fail < 5 )); then
-      echo "$n $last 0 0 0 0 0 0 0" >> $logfile
+      echo "$n $last $floor $floor $floor $floor" >> $logfile
       sleep 3
       n=$(( n + 1 ))
     fi
