@@ -7,6 +7,7 @@ logfile=/tmp/signal-history
 floor=4
 ceil=15
 range=$(( ceil - floor ))
+floor=${floor}.0
 
 echo "Using $logfile"
 while [ 0 ]; do
@@ -17,7 +18,7 @@ while [ 0 ]; do
   ttl=0
   for x in ${arr[@]}; do ttl=$(( x + ttl )); done
   count=${#arr[@]}
-  last=$( bc -l <<< "scale=2; $floor + $ttl * $range / $count" )
+  last=$( bc -l <<< "scale=1; $floor + $ttl * $range / $count" )
 
   stats=$(links -dump http://admin:admin@192.168.1.1/status_deviceinfo.htm | grep -A 1 "SNR Margin" | grep -Po '[\d\.]*' | tr '\n' ' ')
   if [ -n "$stats" ]; then
