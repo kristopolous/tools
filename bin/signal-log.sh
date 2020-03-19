@@ -1,5 +1,6 @@
 #!/bin/bash
 n=0
+arr=()
 while [ 0 ]; do
   stats=$(links -dump http://admin:admin@192.168.1.1/status_deviceinfo.htm | grep -A 2 "SNR Margin" | grep -Po '[\d\.]*' | tr '\n' ' ')
   if [ -n "$stats" ]; then
@@ -14,8 +15,14 @@ while [ 0 ]; do
     fi
     fail=$((fail + 1))
   fi
-  ping -w 2 -c 2 8.8.8.8
-  echo $?
-  tail -900 power-history| sed -E 's/^[0-9]*//g' | awk ' { print FNR" "$0 } ' > /tmp/power
+  ping -q -w 2 -c 2 8.8.8.8 > /dev/null
+  arr+=( $? )
+  ttl=0
+  for x in ${arr[@]}; do ttl=$(( x + count )); done
+  count=${#arr[@]}
+  [[ $count -gt 10 ]] && arr=( ${arr[@]:1} )
+  echo $count $ttl
+
+  tail -900 power-history| sed -E 's/^[0-9]* //g' | awk ' { print FNR" "$0 } ' > /tmp/power
   mv /tmp/power power-history
 done
