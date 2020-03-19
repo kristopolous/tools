@@ -33,5 +33,6 @@ while [ 0 ]; do
     fail=$(( fail + 1 ))
   fi
 
-  tail -$buffer_window ${logfile}.bak | awk ' { print FNR" "$0 } ' > $logfile
+  tail -$buffer_window ${logfile}.bak | awk ' { print FNR" "$0 } ' > ${logfile}.holder
+  mv ${logfile}.holder $logfile
 done
