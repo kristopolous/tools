@@ -4,7 +4,7 @@ arr=()
 ping_window=30
 buffer_window=900
 logfile=/tmp/signal-history
-floor=5
+floor=4
 ceil=15
 range=$(( ceil - floor ))
 echo "Using $logfile"
@@ -17,7 +17,7 @@ while [ 0 ]; do
   count=0
   for x in ${arr[@]}; do ttl=$(( x + ttl )); done
   count=${#arr[@]}
-  last=$(( floor + ttl * range / count ))
+  last=$( bc -l <<< "scale=2; $floor + $ttl * $range / $count" )
 
   stats=$(links -dump http://admin:admin@192.168.1.1/status_deviceinfo.htm | grep -A 1 "SNR Margin" | grep -Po '[\d\.]*' | tr '\n' ' ')
   if [ -n "$stats" ]; then
