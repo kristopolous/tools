@@ -1,10 +1,12 @@
 #!/bin/bash
 n=0
 arr=()
+ping_window=20
 while [ 0 ]; do
   ping -q -w 2 -c 2 8.8.8.8 > /dev/null
+
   arr+=( $? )
-  [[ $count -gt 20 ]] && arr=( ${arr[@]:1} )
+  [[ $count -gt $ping_window ]] && arr=( ${arr[@]:1} )
   ttl=0
   count=0
   for x in ${arr[@]}; do ttl=$(( x + ttl )); done
@@ -18,7 +20,7 @@ while [ 0 ]; do
     fail=0
   else
     if (( fail < 5 )); then
-      echo "$n $last 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" >> power-history
+      echo "$n $last 0 0 0 0 0 0 0" >> power-history
       sleep 3
       n=$(( n + 1 ))
     fi
