@@ -40,6 +40,17 @@ assign() {
   ip addr add $six_address/$six_prefix dev $wwan
   ip route add default via $four_gateway dev $wwan
   ip route add default via $six_gateway dev $wwan
+
+  perl -l << EPERL | $SUDO tee /etc/resolv.conf
+    @lines = split(/,\s*/, '$four_dns');
+    foreach( @lines ) {
+      print 'nameserver ', \$_;
+    }
+    @lines = split(/,\s*/, '$six_dns');
+    foreach( @lines ) {
+      print 'nameserver ', \$_;
+    }
+EPERL
 }
 
 search
