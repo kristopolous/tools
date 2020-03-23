@@ -1,0 +1,61 @@
+#!/bin/bash
+
+
+pgrep ModemManager > /dev/null || /usr/local/sbin/ModemManager&
+
+die() {
+  echo $1
+  exit
+}
+
+search() {
+  mmcli -S 
+  modem=$(basename $(mmcli -L | grep Modem | awk ' { print $1 } '))
+  [ -z "$modem" ] && die "no modem"
+  mm="mmcli -m $modem"
+}
+
+ethconnect() {
+  ethtool -s enp0s25 speed 100 duplex full autoneg off
+  dhclient enp0s25
+}
+
+connect() {
+  $mm --simple-disconnect
+  $mm --set-allowed-modes='3g|4g' --set-preferred-mode=4g
+  $mm --simple-connect="apn=internet,ip-type=ipv4v6"
+}
+
+assign() {
+  wwan=`ip addr show | grep ww[pa] | head -1 | awk -F ':' ' { print $2 } '`
+
+  eval `mmcli -b $modem | grep -A 4 IPv4 | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/four_/g" | tr '\n' ';'`
+  eval `mmcli -b $modem | grep -A 4 IPv6 | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/six_/g" | tr '\n' ';'`
+
+  set -x
+  ip addr flush dev $wwan
+  ip route flush 0/0
+  ifconfig $wwan up
+  ip addr add $four_address/$four_prefix dev $wwan
+  ip addr add $six_address/$six_prefix dev $wwan
+  ip route add default via $four_gateway dev $wwan
+  ip route add default via $six_gateway dev $wwan
+
+  perl -l << EPERL | $SUDO tee /etc/resolv.conf
+    @lines = split(/,\s*/, '$four_dns');
+    foreach( @lines ) {
+      print 'nameserver ', \$_;
+    }
+    @lines = split(/,\s*/, '$six_dns');
+    foreach( @lines ) {
+      print 'nameserver ', \$_;
+    }
+EPERL
+}
+
+search
+#ethconnect
+connect
+assign
+
+
