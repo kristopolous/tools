@@ -71,9 +71,9 @@ autoload -Uz compinit
 alias ack-grep="/usr/bin/ack --ignore-file='match:/vendors|bundle.js/'"
 alias ack="/usr/bin/ack --ignore-file='match:/vendors|bundle.js|.map/'"
 compinit
-alias mpv="mpv --no-audio-display"
 alias gbr="git branch -r"
 alias gij="git status"
+alias mpv="mpv --no-audio-display"
 gitc() {
   git checkout --track -b $1 origin/$1
 }
@@ -88,6 +88,6 @@ export SDKMAN_DIR="/home/chris/.sdkman"
 [[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
 export PATH=$PATH:/home/chris/code/Waivecar/Ijiraq/tools/server:/home/chris/code/Waivecar/Waivescreen/tools/server/:/home/chris/code/Waivecar/Ijiraq/tools/
 MPV_EXEC=/usr/bin/mpv
-function mpv {
+function mpv_ {
         $MPV_EXEC --term-status-msg $'\n\e]0;${filename} - mpv\a\n${?pause==yes:(Paused) }${time-pos} / ${duration} (${percent-pos}%)' $@
 }

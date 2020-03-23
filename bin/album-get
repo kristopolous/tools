@@ -1,31 +1,89 @@
 #!/bin/bash
 
-if [[ $1 =~ \. ]]; then
-  [[ -n "$2" ]] && base="$2" || base=$( echo $1 | sed -n 's/\..*$//p' )
-  base_url=$1
-  extra=
-else
-  base=$1
-  base_url=$base.bandcamp.com
-  extra=music
+if [[ $# = 0 ]] ; then
+  ls | sort | xargs -n 1 -P 8 ${BASH_SOURCE[0]} 
 fi
-shift
 
-echo ">> Using $base"
-[ -e $base ] || mkdir $base
-cd $base
+while [[ $# -gt 0 ]]; do
+  arg=${1%%.}
 
-for i in $(curl -s https://$base_url/$extra | grep -Po '(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
-  if [[ ! -e $i ]]; then 
-    mkdir $i
-    cd $i
-    url=https://$base_url/album/$i
-    echo " ⇩ $url"
-    youtube-dl -- "$url"
-    cd ..
+  if [[ $arg =~ \. ]]; then
+    if [[ -n "$2" ]]; then 
+      base="$2" 
+      domain=$arg
+      base_url=$arg
+      shift
+    else 
+      base=$( echo $arg | sed -n 's/\..*$//p' )
+      base_url=$arg
+    fi
+    extra=
   else
-    count=$( ls $i | wc -l )
-    [[ "$count" = "0" ]] && count="- ---" || count="✓ $count"
-    echo " $count $i"
+    base=$arg
+    base_url=$base.bandcamp.com
+    extra=music
   fi
+  shift
+
+  [[ -e $base ]] || mkdir $base
+
+  base_name=$base
+  if [[ -e $base/domain ]]; then
+    base_url=$(< $base/domain )
+    base_name=$base_url
+  elif [[ -n "$domain" ]]; then
+    echo $base_url > $base/domain
+  fi
+  echo "♫ $base_name ♫"
+
+  cd $base
+  starting_point=$PWD
+
+  for full in $(curl -s https://$base_url/$extra |  grep -Po '(?<=")[\w:\/\.]+(?<=album\/)[^?'"'"'"]*' | sort | uniq ); do
+    # sometimes we get x-dom references, sometimes it's relevant. We resolve that below.
+    i=$(basename "$full")
+    place="$starting_point/$i"
+    isnew=
+
+    if [[ ! -e "$place" ]]; then
+      isnew=true
+      mkdir "$place"
+    fi
+
+    # if we haven't any files then we just try to download from it again... 
+    count=$( ls "$place"/* 2> /dev/null | grep -Ev '\/domain$' | wc -l )
+    if [[ "$count" = "0" ]]; then
+      cd "$place"
+      echo "--- $place"
+
+      # here's where we look for the full url
+      if [[ $full =~ : ]]; then
+        url=$full
+        echo $full > "$place"/domain
+      else
+        url=https://$base_url/album/$i
+      fi
+      echo "  ⇩ $url"
+
+      # this means we've been here before. We can use the -g 
+      # option to see if nothing ought to be downloaded in which
+      # case we mark it as skippable
+      if [[ -z "$isnew" ]]; then
+        track_count=$( youtube-dl -f mp3-128 -g -- "$url" | wc -l )
+        if [[ "$track_count" = "0" ]]; then
+          echo "  ( no files )"
+          touch "$place"/no-files
+          continue
+        fi
+      fi
+
+      # sometimes people are posting wav files ... really, that's crazy
+      youtube-dl -f mp3-128 -- "$url"
+
+    else
+      true
+      #count="✓ $count"
+      #echo "  $count $i"
+    fi
+  done
 done

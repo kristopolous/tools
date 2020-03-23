@@ -1,0 +1,30 @@
+#!/bin/bash
+echo */* | tr ' ' '\n' > .listen_all
+touch .listen_done
+for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u | shuf); do
+  n=__nothing
+  ls $i/*.mp3 > /dev/null 2>&1
+  if [[ $? == "0" ]]; then
+    while [[ 0 ]]; do
+      mpv --no-audio-display "$i"/*.mp3
+      while [[ 0 ]]; do
+        echo -n "$i >>> "
+        read n
+        [[ -z "$n" ]] && continue
+        break
+      done
+      [[ $n == 'r' ]] || break
+    done
+
+    if [[ $n == 'purge' ]]; then 
+      album-purge $i
+      n="__purge"
+    elif [[ $n == 's' ]]; then
+      echo "Skipping ... "
+      n="__skipping"
+    else
+      n="__rating_$n"
+    fi
+  fi
+  echo $i $n $(date +%Y%m%d) >> .listen_done
+done
