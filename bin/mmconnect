@@ -1,7 +1,9 @@
 #!/bin/bash
 
-
-pgrep ModemManager > /dev/null || /usr/local/sbin/ModemManager&
+if ! pgrep ModemManager > /dev/null; then 
+  /usr/local/sbin/ModemManager&
+  sleep 5
+fi
 
 die() {
   echo $1
