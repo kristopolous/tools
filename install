@@ -38,8 +38,8 @@ install() {
 
   if [ $install -eq "1" ]; then
     echo "Installing $name"
-    [ -e $HOME/bin/$1 ] && rm $HOME/bin/$1
-    ln -s $1 $HOME/bin
+    [ -h $HOME/bin/$1 -o -e $HOME/bin/$1 ] && rm $HOME/bin/$1
+    ln -s $PWD/$1 $HOME/bin
   else
     echo "Skipping $name"
   fi
