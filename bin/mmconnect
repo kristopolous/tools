@@ -2,7 +2,7 @@
 
 if ! pgrep ModemManager > /dev/null; then 
   /usr/local/sbin/ModemManager&
-  sleep 5
+  sleep 12
 fi
 
 die() {
