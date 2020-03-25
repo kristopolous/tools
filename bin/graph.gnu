@@ -6,7 +6,7 @@ set ytics textcolor rgb "white"
 set key textcolor rgb "white"
 set border lw 1 lc rgb "white"
 set key outside
-set yrange [3.8:]
+set yrange [2.8:]
 #plot for [col=1:2] 'power-history' using 0:col with lines
 set logscale y 2 
 
