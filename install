@@ -12,7 +12,9 @@ compile() {
 install() {
   name=`basename $1`
   install=0
-  if [ ! -e $HOME/bin/$name ]; then
+  if [ "$2" == "force" ]; then
+    install=1
+  elif [ ! -e $HOME/bin/$name ]; then
     install=1
   else
     issame=`md5sum $HOME/bin/$name $1 | uniq -w 33 | wc -l`
@@ -36,7 +38,8 @@ install() {
 
   if [ $install -eq "1" ]; then
     echo "Installing $name"
-    cp -p $1 $HOME/bin
+    [ -h $HOME/bin/$1 -o -e $HOME/bin/$1 ] && rm $HOME/bin/$1
+    ln -s $PWD/$1 $HOME/bin
   else
     echo "Skipping $name"
   fi
@@ -47,7 +50,7 @@ compile
 cd bin
 if [ $# -gt 0 ]; then
   while [ $# -gt 0 ]; do
-    install $1
+    install $1 force
     shift
   done
 else
