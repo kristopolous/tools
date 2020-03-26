@@ -80,6 +80,7 @@ while [[ $# -gt 0 ]]; do
       # sometimes people are posting wav files ... really, that's crazy
       youtube-dl -f mp3-128 -- "$url"
       echo $? > "$place"/exit-code
+      echo "$(date +%Y%m%d) $place" >> "$starting_point/.dl_history"
 
     else
       true
