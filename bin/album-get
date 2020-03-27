@@ -4,6 +4,7 @@ if [[ $# = 0 ]] ; then
   ls | sort | xargs -n 1 -P 8 ${BASH_SOURCE[0]} 
 fi
 
+base_path=$PWD
 while [[ $# -gt 0 ]]; do
   arg=${1%%.}
 
@@ -51,7 +52,7 @@ while [[ $# -gt 0 ]]; do
     fi
 
     # if we haven't any files then we just try to download from it again... 
-    count=$( ls "$place"/* 2> /dev/null | grep -Ev '\/domain$' | wc -l )
+    count=$( ls "$place"/* 2> /dev/null | grep -Ev '\/(exit-code|domain)$' | wc -l )
     if [[ "$count" = "0" ]]; then
       cd "$place"
       echo "--- $place"
@@ -79,6 +80,8 @@ while [[ $# -gt 0 ]]; do
 
       # sometimes people are posting wav files ... really, that's crazy
       youtube-dl -f mp3-128 -- "$url"
+      echo $? > "$place"/exit-code
+      echo "$(date +%Y%m%d) $place" >> "$base_path/.dl_history"
 
     else
       true
