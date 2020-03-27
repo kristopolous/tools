@@ -12,7 +12,9 @@ die() {
 
 search() {
   mmcli -S 
-  modem=$(basename $(mmcli -L | grep Modem | awk ' { print $1 } '))
+  modemList=$(mmcli -L | grep Modem | awk ' { print $1 } ')
+  [ -z "$modemList" ] && die "no modem"
+  modem=$(basename $modemList)
   [ -z "$modem" ] && die "no modem"
   mm="mmcli -m $modem"
 }
@@ -30,9 +32,13 @@ connect() {
 
 assign() {
   wwan=`ip addr show | grep ww[xpa] | head -1 | awk -F ':' ' { print $2 } '`
+  # it can be a different number ... smh
+  bearerList=$(mmcli --list-bearers -m $modem | grep freedesktop | awk ' { print $1 } ')
+  [ -z "$bearerList" ] && die "no bearers"
+  bearer=$(basename $bearerList)
 
-  eval `mmcli -b $modem | grep -A 4 IPv4 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/four_/g" | tr '\n' ';'`
-  eval `mmcli -b $modem | grep -A 4 IPv6 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/six_/g" | tr '\n' ';'`
+  eval `mmcli -b $bearer | grep -A 4 IPv4 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/four_/g" | tr '\n' ';'`
+  eval `mmcli -b $bearer | grep -A 4 IPv6 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/six_/g" | tr '\n' ';'`
 
   set -x
   ip addr flush dev $wwan
