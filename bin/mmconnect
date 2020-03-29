@@ -1,8 +1,10 @@
 #!/bin/bash
 
+useipv4=1
+useipv6=
 if ! pgrep ModemManager > /dev/null; then 
-  /usr/local/sbin/ModemManager&
-  sleep 12
+  /usr/sbin/ModemManager&
+  sleep 15
 fi
 
 die() {
@@ -12,7 +14,9 @@ die() {
 
 search() {
   mmcli -S 
-  modem=$(basename $(mmcli -L | grep Modem | awk ' { print $1 } '))
+  modemList=$(mmcli -L | grep Modem | awk ' { print $1 } ')
+  [ -z "$modemList" ] && die "no modem"
+  modem=$(basename $modemList)
   [ -z "$modem" ] && die "no modem"
   mm="mmcli -m $modem"
 }
@@ -25,38 +29,55 @@ ethconnect() {
 connect() {
   $mm --simple-disconnect
   $mm --set-allowed-modes='3g|4g' --set-preferred-mode=4g
-  $mm --simple-connect="apn=internet,ip-type=ipv4v6"
+
+  type=""
+  [ -n "$useipv4" ] && type="v4" 
+  [ -n "$useipv6" ] && type="${type}v6" 
+
+  $mm --simple-connect="apn=internet,ip-type=ip${type}"
 }
 
 assign() {
   wwan=`ip addr show | grep ww[xpa] | head -1 | awk -F ':' ' { print $2 } '`
+  # it can be a different number ... smh
+  bearerList=$(mmcli --list-bearers -m $modem | grep freedesktop | awk ' { print $1 } ')
+  [ -z "$bearerList" ] && die "no bearers"
+  bearer=$(basename $bearerList)
 
-  eval `mmcli -b $modem | grep -A 4 IPv4 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/four_/g" | tr '\n' ';'`
-  eval `mmcli -b $modem | grep -A 4 IPv6 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/six_/g" | tr '\n' ';'`
-
-  set -x
   ip addr flush dev $wwan
   ip route flush 0/0
   ifconfig $wwan up
-  ip addr add $four_address/$four_prefix dev $wwan
-  ip addr add $six_address/$six_prefix dev $wwan
-  ip route add default via $four_gateway dev $wwan
-  ip route add default via $six_gateway dev $wwan
+  rm /etc/resolv.conf
 
-  perl -l << EPERL | $SUDO tee /etc/resolv.conf
-    @lines = split(/,\s*/, '$four_dns');
-    foreach( @lines ) {
-      print 'nameserver ', \$_;
-    }
-    @lines = split(/,\s*/, '$six_dns');
-    foreach( @lines ) {
-      print 'nameserver ', \$_;
-    }
+  if [ -n "$useipv4" ];then
+    eval `mmcli -b $bearer | grep -A 4 IPv4 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/four_/g" | tr '\n' ';'`
+    ip addr add $four_address/$four_prefix dev $wwan
+    ip route add default via $four_gateway dev $wwan
+    perl -l << EPERL | tee -a /etc/resolv.conf
+      @lines = split(/,\s*/, '$four_dns');
+      foreach( @lines ) {
+        print 'nameserver ', \$_;
+      }
 EPERL
+  fi
+
+  if [ -n "$useipv6" ]; then
+    eval `mmcli -b $bearer | grep -A 4 IPv6 | tr '[A-Z]' '[a-z]' | awk -F '|' ' { print $2 } ' | sed s/"'"//g | sed -E s'/: (.*)/="\1"/' | sed -E "s/^[\' ]+/six_/g" | tr '\n' ';'`
+    ip addr add $six_address/$six_prefix dev $wwan
+    ip route add default via $six_gateway dev $wwan
+
+    perl -l << EPERL | tee -a /etc/resolv.conf
+      @lines = split(/,\s*/, '$six_dns');
+      foreach( @lines ) {
+        print 'nameserver ', \$_;
+      }
+EPERL
+  fi
 }
 
 search
 #ethconnect
+set -x
 connect
 assign
 
