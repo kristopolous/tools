@@ -6,6 +6,12 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
   ls $i/*.mp3 > /dev/null 2>&1
   if [[ $? == "0" ]]; then
     while [[ 0 ]]; do
+      label=$( dirname $i)
+      [[ -e $label/domain ]] && domain=$(< $label/domain ) || domain=${label}.bandcamp.com
+      release=$( basename $i )
+
+      echo https://$domain/album/$release
+
       mpv --no-audio-display "$i"/*.mp3
       while [[ 0 ]]; do
         echo -n "$i >>> "
