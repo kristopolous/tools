@@ -9,12 +9,13 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
       label=$( dirname $i)
       [[ -e $label/domain ]] && domain=$(< $label/domain ) || domain=${label}.bandcamp.com
       release=$( basename $i )
-
+      echo
       echo https://$domain/album/$release
+      echo
 
       mpv --no-audio-display "$i"/*.mp3
       while [[ 0 ]]; do
-        echo -n "$i >>> "
+        echo -n "$i >> "
         read n
         [[ "$n" =~ ^(r|s|[3-5]|pu|purge)$ ]] && break
       done
