@@ -1,6 +1,5 @@
 #!/bin/bash
 host=192.168.0.50
-session=0
 # this is a mapping of 
 #
 #   /usr/include/X11/keysymdef.h and
@@ -28,4 +27,4 @@ declare -A mapping=( [p]='pu ENTER' [return]='ENTER' [space]='" "' [comma]='<' [
 # echo $(date) "$1->($control)" >> /tmp/keycode
 #
 
-ssh $host "tmux send-keys -t $session $control"
+ssh $host "tmux send-keys -t mpv-once $control"
