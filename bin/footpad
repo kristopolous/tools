@@ -1,0 +1,24 @@
+#!/bin/bash
+
+footpad() {
+  # ref: https://superuser.com/questions/760602/how-to-remap-keys-under-linux-for-a-specific-keyboard-only/869064#869064
+  local base=/tmp/xkb
+  local path=$base/symbols
+  local id=21
+  local name=foot
+  mkdir -p $path
+
+  cat > $path/foot << EOF
+  xkb_symbols "foot" {
+    key <LCTL> { [ CTRL_L ALT_L ] };
+    key <LALT> { [ Hyper_R ] };
+    key <LWIN> { [ Hyper_L ]  };
+  };
+EOF
+
+  setxkbmap -device $id -print \
+   | sed 's/\(xkb_symbols.*\)"/\1+foot('$name')"/' \
+   | xkbcomp -I$base -i $id -synch - :0
+}
+
+footpad
