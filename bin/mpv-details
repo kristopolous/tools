@@ -7,5 +7,5 @@ label=$(basename "$label_path")
 [[ -e $label_path/domain ]] && domain=$(< $label_path/domain ) || domain=${label}.bandcamp.com
 echo https://$domain/album/$release
 echo $label // $release
-echo $track
+echo ${track/-[0-9]*.mp3/}
 id3v2 -R "$current" | grep -E '^\w{4}\:'  | grep -vE '(APIC|TPE2|COMM)'
