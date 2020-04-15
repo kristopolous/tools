@@ -1,0 +1,6 @@
+#!/bin/bash
+host=192.168.0.50
+session=0
+declare -A mapping=( [space]=' ' [less]='<' [greater]='>' )
+[ ${mapping[$1]+_} ] && control=${mapping[$1]} || control=$1
+ssh $host 'tmux send-keys -t '$session' "'$control'"'
