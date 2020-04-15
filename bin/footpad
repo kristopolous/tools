@@ -2,9 +2,10 @@
 
 footpad() {
   # ref: https://superuser.com/questions/760602/how-to-remap-keys-under-linux-for-a-specific-keyboard-only/869064#869064
+  local devname=1a86:e026
   local base=/tmp/xkb
   local path=$base/symbols
-  local id=21
+  local id=$( xinput list --short | grep -oP $devname'.*id=\K(\d*)(?=.*keyboard)' )
   local name=foot
   mkdir -p $path
 
