@@ -12,7 +12,7 @@ trap finish EXIT
 
 # This allows remote control
 if [[ -n "$1" ]]; then
-  mpv $1
+  mpv $1/*mp3
   exit
 fi
 
