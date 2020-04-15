@@ -1,4 +1,21 @@
 #!/bin/bash
+
+# we're going to restore it to this.
+start_name=$( tmux display-message -p '#W' )
+
+tmux rename-window "mpv-once"
+
+function finish {
+  tmux rename-window "$start_name"
+}
+trap finish EXIT
+
+# This allows remote control
+if [[ -n "$1" ]]; then
+  mpv $1
+  exit
+fi
+
 echo */* | tr ' ' '\n' > .listen_all
 touch .listen_done
 for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u | shuf); do
@@ -19,6 +36,7 @@ for i in $(cat .listen_all .listen_done | awk ' { print $1 } ' | sort | uniq -u 
         read n
         [[ "$n" =~ ^(q|r|s|[3-5]|pu|purge)$ ]] && break
       done
+
       [[ $n == 'q' ]] && exit
       [[ $n == 'r' ]] || break
     done
