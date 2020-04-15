@@ -1,0 +1,11 @@
+#!/bin/bash
+current=$(lsof -F n -p $(pgrep -fo "mpv ") | grep -E mp3 | cut -c 2-)
+track=$(basename "$current")
+release=$(basename "$(dirname "$current")")
+label_path=$(dirname "$(dirname "$current")")
+label=$(basename "$label_path")
+[[ -e $label_path/domain ]] && domain=$(< $label/domain ) || domain=${label}.bandcamp.com
+echo https://$domain/album/$release
+echo $label // $release
+echo $track
+id3v2 -R "$current" | grep -E '^\w{4}\:'  | grep -vE '(APIC|TPE2|COMM)'
