@@ -13,10 +13,10 @@ if [[ $1 == 'd' ]]; then
   rm $tmp
   exit
 elif [[ $1 == '9' ]]; then
-  ssh $host "amixer -D pulse sset Master 7%-"
+  ssh $host "amixer -D pulse sset Master 4%-"
   exit
 elif [[ $1 == '0' ]]; then
-  ssh $host "amixer -D pulse sset Master 7%+"
+  ssh $host "amixer -D pulse sset Master 4%+"
   exit
 fi
 
