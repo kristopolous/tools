@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if ping -W 3 -c 1 may.local > /dev/null; then
+  host=may.local
+  rsync=rsync
+else
+  rsync="rsync -e 'ssh -p 7175'"
+  host=9ol.es
+fi
+$rsync -azvr --exclude-from=/home/chris/.backup-excludes /home/chris $host:/raid/backup/t480
+$rsync -azvr --exclude-from=/home/chris/.backup-excludes --delete /home/chris $host:/raid/backup/t480
+date > /home/chris/last_backup
