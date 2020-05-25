@@ -8,10 +8,10 @@ RandomPlacement
 NoTitleHighlight 
 IconifyByUnmapping
 
-ResizeFont 	"-adobe-helvetica-medium-r-normal-*-40-*-*-*-*-*-*-*"
-MenuFont 	"-adobe-helvetica-*-r-*-*-24-*-*-*-*-*-*-*"
-TitleFont	"-*-lucida-medium-r-normal-*-14-*-*-*-*-*-*-*"
-IconManagerFont "-*-uniread v-medium-r-normal-*-*-100-*-*-*-*-*-*"
+#ResizeFont 	"-adobe-helvetica-medium-r-normal-*-40-*-*-*-*-*-*-*"
+#MenuFont 	"-adobe-helvetica-*-r-*-*-24-*-*-*-*-*-*-*"
+#TitleFont	"-*-lucida-medium-r-normal-*-14-*-*-*-*-*-*-*"
+#IconManagerFont "-*-uniread v-medium-r-normal-*-*-100-*-*-*-*-*-*"
 
 BorderWidth 4
 
