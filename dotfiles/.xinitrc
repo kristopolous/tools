@@ -56,7 +56,7 @@ xset b off
 xsetroot -solid black 
 
 # An attempt to merge all the clipboards together
-# (there 3 last I counted)
+# (there are 3 last I counted)
 pkill autocutsel
 autocutsel &
 autocutsel -s PRIMARY & 
