@@ -1,0 +1,4 @@
+#!/bin/sh
+redshift -m vidmode -PO $2
+xrandr --output HDMI-2 --brightness $1
+xrandr --output DP-1 --brightness $1
