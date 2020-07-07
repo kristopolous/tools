@@ -1,3 +1,16 @@
-#!/bin/sh
-redshift -m vidmode -PO $2
-xrandr --output HDMI-2 --brightness $1 --output DP-1 --brightness $1
+#!/bin/bash
+
+while getopts "b:r:" OPTION
+do
+  case $OPTION in
+    b)
+      b=${OPTARG}
+      xrandr --output HDMI-2 --brightness $b --output DP-1 --brightness $b
+      ;;
+    r)
+      r=${OPTARG}
+      redshift -m vidmode -PO $r
+  esac
+done
+shift $((OPTIND-1))
+
