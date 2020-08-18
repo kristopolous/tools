@@ -1,8 +1,12 @@
 #!/bin/bash
 store=$(mktemp -d)
+todo=( /tmp/todo.0 /tmp/todo.1 )
+stats=/tmp/stats
+#truncate ${todo[@]} $stats
 
 keep=$1
 toss=$2
+
 show() {
   echo "echo $1"
 }
@@ -20,6 +24,7 @@ comment "Using store $store"
   cd $toss
   find . -type f > $store/toss
   comment "Made toss list in $store $(wc -l $store/toss)"
+  expected=$(cat $store/toss | wc -l)
 }
 
 ix=0
@@ -41,6 +46,7 @@ do
 
         if (( ix % 1000 == 0 )); then
           show "$ix files .. $(( size / 1024 / 1024 )) MB"
+          echo $ix..$(( (ix * 100) / expected ))% $(( size / 1024 / 1024 ))MB > /dev/stderr
         fi          
 
         comment "$keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
