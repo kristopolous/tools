@@ -27,6 +27,7 @@ comment "Using store $store"
   expected=$(cat $store/toss | wc -l)
 }
 
+echo "... sorting" > /dev/stderr
 ix=0
 size=0
 sort --parallel=4 $store/keep $store/toss | grep -Ev "[\`']" | uniq -d | while read i
@@ -42,12 +43,13 @@ do
       if [[ $keep_md5 == $toss_md5 ]]; then
         echo "rm '$toss/$i'"
         echo
-        (( ix ++ ))
 
         if (( ix % 1000 == 0 )); then
           show "$ix files .. $(( size / 1024 / 1024 )) MB"
           printf "%-6s %-4s %dMB\n" $ix $(( (ix * 100) / expected ))% $(( size / 1024 / 1024 )) > /dev/stderr
         fi          
+
+        (( ix ++ ))
 
         comment "$keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
       else
