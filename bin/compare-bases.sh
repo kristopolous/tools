@@ -14,6 +14,11 @@ comment() {
   echo "# $1"
 }
 
+if [[ "$keep" == "$toss" ]]; then
+  echo "Woahhh cowboy, $keep is $toss ... back on up now." > /dev/stderr
+  exit 1
+fi
+
 comment "Using store $store"
 { 
   cd "$keep"
