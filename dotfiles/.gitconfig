@@ -3,15 +3,10 @@
 	email = kristopolous@yahoo.com
 
 [pager]
-      diff =
+    diff = 
+
 [diff]
-      external = git_diff_wrapper
-
-[color]
-    ui = auto
-
-[color "branch"]
-  remote = yellow
+    external = git_diff_wrapper
 
 [alias]
    log-json = log --pretty=format:'\"%h\": {%n  \"commit\": \"%H\",%n  \"author\": \"%an <%ae>\",%n  \"date\": \"%ad\",%n  \"message\": \"%s\"%n}'

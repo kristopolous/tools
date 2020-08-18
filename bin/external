@@ -13,14 +13,25 @@ orient=${1:-landscape}
 dual=$2
 resolution=3840x2160
 
+giant() {
+  xrandr --output HDMI-2 --auto --mode 3840x2160 --rotate left
+  xrandr --output DP-1 --auto --mode 3840x2160 --rotate left --left-of HDMI-2
+  xrandr --output $internal --off
+}
+
 portrait() {
-  xrandr --output $external --auto --mode $resolution --rotate left --output $internal $opts
+  xrandr --output HDMI-2 --auto --mode 3840x2160 --rotate left
+  xrandr --output DP-1 --auto --mode 3840x2160 --rotate left --left-of HDMI-2
+  xrandr --output $internal --off
+  #xrandr --output $external --auto --mode $resolution --rotate left --output $internal $opts
 }
 landscape() {
   xrandr --output $external --auto --mode $resolution --output $internal $opts
 }
 internal() {
-  DISPLAY=:0 xrandr --output $external --off --output $internal --auto --rotate normal
+  xrandr --output HDMI-2 --off
+  xrandr --output DP-1 --off
+  DISPLAY=:0 xrandr --output $internal --auto --rotate normal
 }
 
 

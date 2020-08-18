@@ -10,7 +10,8 @@ function expand-or-complete-or-list-files() {
     fi
 }
 
-export PATH=/home/chris/bin:/usr/local/bin/:$PATH:/usr/local/sbin/usr/sbin:/sbin:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0:/home/chris/.local/bin/:/home/chris/proggies/adt/sdk/tools/bin/:/home/chris/proggies/arduino/arduino-1.8.9
+export PATH=/home/chris/bin:/usr/local/bin/:$PATH:/usr/local/sbin/usr/sbin:/sbin:$HOME/.rbenv/bin:/home/chris/proggies/adt/sdk/tools:/home/chris/proggies/adt/sdk/platform-tools:/home/chris/proggies/adt/sdk/build-tools/23.0.0:/home/chris/.local/bin/:/home/chris/proggies/adt/sdk/tools/bin/:/home/chris/proggies/arduino/arduino-1.8.9:/home/chris/node_modules/.bin/
+
 
 unsetopt completeinword
 setopt nohup

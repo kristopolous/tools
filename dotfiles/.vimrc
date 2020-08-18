@@ -361,3 +361,5 @@ autocmd FileType python setlocal shiftwidth=2 softtabstop=2 expandtab
 
 " Reset the cursor during git commits to not be the last place it was.
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+map <F1> <Esc>
+imap <F1> <Esc>
