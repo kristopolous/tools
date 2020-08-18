@@ -44,13 +44,6 @@ do
         echo "rm '$toss/$i'"
         echo
 
-        if (( ix % 1000 == 0 )); then
-          show "$ix files .. $(( size / 1024 / 1024 )) MB"
-          printf "%-6s %-4s %dMB\n" $ix $(( (ix * 100) / expected ))% $(( size / 1024 / 1024 )) > /dev/stderr
-        fi          
-
-        (( ix ++ ))
-
         comment "$keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
       else
         comment "$i md5 diff $keep_md5 $toss_md5"
@@ -61,5 +54,12 @@ do
   else
     comment "Cannot find $keep/$i or $toss/$i"
   fi
+  
+  if (( ix % 1000 == 0 )); then
+    show "$ix files .. $(( size / 1024 / 1024 )) MB"
+    printf "%-6s %-4s %dMB\n" $ix $(( (ix * 100) / expected ))% $(( size / 1024 / 1024 )) > /dev/stderr
+  fi          
+
+  (( ix ++ ))
 done
 
