@@ -43,7 +43,7 @@ do
           show "$ix files .. $(( size / 1024 / 1024 )) MB"
         fi          
 
-        comment "keep $keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
+        comment "$keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
       else
         comment "$i md5 diff $keep_md5 $toss_md5"
       fi
