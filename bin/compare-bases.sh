@@ -30,7 +30,7 @@ do
       toss_md5=$(cat "$toss/$i" | md5sum)
       if [[ $keep_md5 == $toss_md5 ]]; then
         echo "rm \"$toss/$i\""
-        comment "keep $keep/$i"
+        comment "keep $keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
       else
         comment "$i md5 diff $keep_md5 $toss_md5"
       fi
