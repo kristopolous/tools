@@ -16,12 +16,12 @@ comment() {
 
 comment "Using store $store"
 { 
-  cd $keep
+  cd "$keep"
   find -P . -type f > $store/keep
   comment "Made keep list in $store $(wc -l $store/keep)"
 }
 {
-  cd $toss
+  cd "$toss"
   find -P . -type f > $store/toss
   comment "Made toss list in $store $(wc -l $store/toss)"
   expected=$(cat $store/toss | wc -l)
