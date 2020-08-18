@@ -23,22 +23,24 @@ comment "Using store $store"
 }
 
 ix=0
-sort --parallel=4 $store/keep $store/toss | grep -v '"' | uniq -d | while read i
+size=0
+sort --parallel=4 $store/keep $store/toss | grep -Ev "[\`']" | uniq -d | while read i
 do
   if [[ -e "$keep/$i" && -e "$toss/$i" ]]; then
     keep_size=$(stat -c %s "$keep/$i")
     toss_size=$(stat -c %s "$toss/$i")
+    size=$(( size + toss_size ))
 
     if [[ $keep_size == $toss_size ]]; then
       keep_md5=$(cat "$keep/$i" | md5sum)
       toss_md5=$(cat "$toss/$i" | md5sum)
       if [[ $keep_md5 == $toss_md5 ]]; then
-        echo "rm \"$toss/$i\""
+        echo "rm '$toss/$i'"
         echo
         (( ix ++ ))
 
         if (( ix % 1000 == 0 )); then
-          show $ix
+          show "$ix files .. $(( size / 1024 / 1024 )) MB"
         fi          
 
         comment "keep $keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
