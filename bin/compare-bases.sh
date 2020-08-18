@@ -3,6 +3,9 @@ store=$(mktemp -d)
 
 keep=$1
 toss=$2
+show() {
+  echo "echo $1"
+}
 comment() {
   echo "# $1"
 }
@@ -19,6 +22,7 @@ comment "Using store $store"
   comment "Made toss list in $store $(wc -l $store/toss)"
 }
 
+ix=0
 sort --parallel=4 $store/keep $store/toss | uniq -d | while read i
 do
   if [[ -e "$keep/$i" && -e "$toss/$i" ]]; then
@@ -30,6 +34,13 @@ do
       toss_md5=$(cat "$toss/$i" | md5sum)
       if [[ $keep_md5 == $toss_md5 ]]; then
         echo "rm \"$toss/$i\""
+        echo
+        (( ix ++ ))
+
+        if (( ix % 1000 == 0 )); then
+          show $ix
+        fi          
+
         comment "keep $keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
       else
         comment "$i md5 diff $keep_md5 $toss_md5"
