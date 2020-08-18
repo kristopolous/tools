@@ -68,3 +68,5 @@ do
   (( ix ++ ))
 done
 
+show "$ix files .. $(( size / 1024 / 1024 )) MB"
+printf "%-6s %-4s %dMB\n" $ix $(( (ix * 100) / expected ))% $(( size / 1024 / 1024 )) > /dev/stderr
