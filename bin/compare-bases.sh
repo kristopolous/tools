@@ -23,7 +23,7 @@ comment "Using store $store"
 }
 
 ix=0
-sort --parallel=4 $store/keep $store/toss | uniq -d | while read i
+sort --parallel=4 $store/keep $store/toss | grep -v '"' | uniq -d | while read i
 do
   if [[ -e "$keep/$i" && -e "$toss/$i" ]]; then
     keep_size=$(stat -c %s "$keep/$i")
