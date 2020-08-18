@@ -46,7 +46,7 @@ do
 
         if (( ix % 1000 == 0 )); then
           show "$ix files .. $(( size / 1024 / 1024 )) MB"
-          echo $ix..$(( (ix * 100) / expected ))% $(( size / 1024 / 1024 ))MB > /dev/stderr
+          printf "%-6s %-3s %dMB\n" $ix $(( (ix * 100) / expected ))% $(( size / 1024 / 1024 )) > /dev/stderr
         fi          
 
         comment "$keep_size $toss_size $keep_md5 $toss_md5 $keep/$i"
