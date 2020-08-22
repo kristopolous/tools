@@ -1,7 +1,7 @@
 Xft*antialias: true
 Xft*hinting: true
 Xft*hintstyle: hintfull
-xterm*scrollTtyOutput:    false
+! xterm*scrollTtyOutput:    false
 
 xmessage*international: true
 Xcursor.size: 24
@@ -63,10 +63,10 @@ xterm*color15: #ffffff
 
 
 xterm*faceName:*-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1
-xterm*faceSize: 14.0
+xterm*faceSize: 12.0
 xterm*faceSize1: 9.0
 xterm*faceSize2: 10.0
-xterm*faceSize3: 12.0
+xterm*faceSize3: 11.0
 xterm*faceSize4: 15.0
 xterm*faceSize5: 18.0
 xterm*faceSize6: 29.0
