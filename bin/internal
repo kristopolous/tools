@@ -7,9 +7,9 @@ external=$( xrandr | grep -v primary | grep \ connected | awk ' { print $1 }' )
 
 [ -z "$internal" ] && echo "Can't find internal monitor with xrandr. Exiting" && exit 1
 
-echo "internal: $internal | external: $external"
+echo "\n\n--------\ninternal: $internal\n\n--------\nexternal:\n $external\n\n"
 
-orient=${1:-landscape}
+orient=${1:-portrait}
 dual=$2
 resolution=3840x2160
 
@@ -21,7 +21,7 @@ giant() {
 
 portrait() {
   xrandr --output HDMI-2 --auto --mode 3840x2160 --rotate left
-  xrandr --output DP-1 --auto --mode 3840x2160 --rotate left --left-of HDMI-2
+  xrandr --output DP-1 --auto --mode 3840x2160 --rotate left --right-of HDMI-2
   xrandr --output $internal --off
   #xrandr --output $external --auto --mode $resolution --rotate left --output $internal $opts
 }
