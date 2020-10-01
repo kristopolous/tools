@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if ping -W 3 -c 1 10.144 > /dev/null; then
-  host=10.144
+if ping -W 3 -c 1 10.5 > /dev/null; then
+  host=10.5
   rsync=rsync
 else
   rsync="rsync -e 'ssh -p 7175'"
