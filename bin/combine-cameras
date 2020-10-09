@@ -4,18 +4,20 @@ cam1=/dev/video7
 virtual=/dev/video8
 width=640
 height=480
+rate=5
+v4l2loopback-ctl set-fps $rate $virtual
 
-v4l2-ctl -d $cam0 -v width=$width,height=$height
-v4l2-ctl -d $cam1 -v width=$width,height=$height
+v4l2-ctl -d $cam0 -p $rate -v width=$width,height=$height
+v4l2-ctl -d $cam1 -p $rate -v width=$width,height=$height
 
 ffmpeg \
   -v verbose \
-  -f v4l2 -framerate 5 -video_size 640x480 \
-  -i /dev/video0 \
-  -i /dev/video6 \
-  -filter_complex " nullsrc=size=480x320,fps=5 [base];
+  -f v4l2 -framerate $rate -video_size ${width}x$height \
+  -i $cam0 \
+  -i $cam1 \
+  -filter_complex " nullsrc=size=480x320,fps=$rate [base];
   [0:v] setpts=PTS-STARTPTS,scale=320x240,transpose=3 [upperleft];
   [1:v] setpts=PTS-STARTPTS,scale=320x240,transpose=3 [upperright];
   [base][upperleft] overlay=shortest=1:x=240 [tmp1];
   [tmp1][upperright] overlay=shortest=1:x=0,format=yuv420p
-" -f v4l2 -r 5 /dev/video8
+" -f v4l2 -r $rate $virtual
