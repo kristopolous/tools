@@ -1,11 +1,13 @@
 #!/bin/bash
 
+external=( $( xrandr | grep -v primary | grep \ connected | awk ' { print $1 }' ) )
+
 while getopts "b:r:" OPTION
 do
   case $OPTION in
     b)
       b=${OPTARG}
-      xrandr --output HDMI-2 --brightness $b --output DP-1 --brightness $b
+      xrandr --output ${external[0]} --brightness $b --output ${external[1]} --brightness $b 
       ;;
     r)
       r=${OPTARG}
