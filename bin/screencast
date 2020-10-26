@@ -1,0 +1,52 @@
+#!/bin/bash
+#ffmpeg -f x11grab -framerate 15 -i :0.0+0,0 -vf 'scale=iw*.5:ih*.5' -f v4l2  /dev/video6
+# v4l2-ctl --list-formats-ext 
+
+. .screencast-secrets
+virtual=/dev/video2
+real=/dev/video1
+xin() {
+  modprobe v4l2loopback width=1920 height=1080
+  v4l2-ctl --list-devices
+  ffmpeg -f x11grab -framerate 15 -i :0.0+0,0 -f v4l2 /dev/video2
+}
+
+capture_screen() {
+  sudo modprobe v4l2loopback devices=2
+  ffmpeg -f x11grab -video_size 4320x2430 -framerate 15 -i :0.0+0,0 -f v4l2 /dev/video7
+}
+
+cams3() {
+  ffmpeg -i /dev/video6 -i /dev/video0 -i /dev/video3 -i /dev/video5 -filter_complex "nullsrc=size=1280x1024 [background];
+  [0:v] setpts=PTS-STARTPTS, scale=1280x1137 [left];
+  [1:v] setpts=PTS-STARTPTS, transpose=3,scale=282x480 [right];
+  [2:v] setpts=PTS-STARTPTS, scale=640x480 [two];
+  [3:v] setpts=PTS-STARTPTS, transpose=1,scale=270x480 [pocket];
+  [background][left]       overlay=shortest=1       [background+left];
+  [background+left][right] overlay=shortest=1:x=20:y=10 [background+right];
+  [background+right][pocket] overlay=shortest=1:x=322:y=10 [background+pocket];
+  [background+pocket][two] overlay=shortest=1:x=612:y=10,format=yuv420p
+  " -f v4l2 /dev/video8
+}
+
+cams1() {
+  #"nullsrc=size=1280x720 [background];
+  ffmpeg -f pulse -i default -i $virtual -i $real -filter_complex \
+  "color=s=1280x720:c=black [background];
+  [1:v] setpts=PTS-STARTPTS, scale=1280x720 [left];
+  [2:v] setpts=PTS-STARTPTS, transpose=3,scale=255x360 [right];
+  [background][left]       overlay=shortest=1    [background+left];
+  [background+left][right] overlay=shortest=1:x=0:y=0,format=yuv420p
+  " -r 30 -g 100 -x265-params keyint=48:min-keyint=48:scenecut=-1 -b:v 2500k -b:a 128k -ar 44100 -acodec aac -vcodec libx264 -preset superfast -bufsize 1500k -crf 28 -f flv "rtmp://a.rtmp.youtube.com/live2/$key"
+  #" -r 30 -g 48 -pix_fmt yuvj420p -x264-params keyint=48:min-keyint=48:scenecut=-1 -b:v 1000k -b:a 128k -ar 44100 -acodec aac -vcodec libx264 -preset superfast -bufsize 961k -crf 28 -f flv "rtmp://a.rtmp.youtube.com/live2/$key"
+}
+
+mic() {
+  # I think it can be done entirely with this
+  pacmd load-module module-null-sink sink_name=yt
+  pacmd update-sink-proplist yt device.description=yt
+  pacmd load-module module-loopback 
+
+}
+
+cams1
