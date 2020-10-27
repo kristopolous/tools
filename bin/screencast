@@ -4,6 +4,8 @@
 # v4l2-ctl --list-devices
 #   --set-fmt-video=width=1920,height=1080
 # -vf 'scale=iw*.5:ih*.5' could be useful
+#"nullsrc=size=1280x720 [background];
+# camera is 16:9 or 4:3 depending on resolution
 # sudo modprobe v4l2loopback devices=2
 # modprobe v4l2loopback width=1920 height=1080 exclusive_caps=1
 
@@ -14,7 +16,7 @@ virtual_composite=/dev/video3
 yt_out=( -r 30 -g 100 -x265-params keyint=48:min-keyint=48:scenecut=-1 -b:v 2500k -b:a 128k -ar 44100 -acodec aac -vcodec libx264 -preset superfast -bufsize 1500k -crf 28 -f flv "rtmp://a.rtmp.youtube.com/live2/$key" )
 v_out=( -f v4l2 $virtual_composite )
 
-out=$v_out
+out=${yt_out[@]}
 
 mic() {
   # I think it can be done entirely with this
@@ -24,30 +26,27 @@ mic() {
 }
 
 cams1() {
-  #"nullsrc=size=1280x720 [background];
-  # camera is 16:9 or 4:3 depending on resolution
-  # -framerate
-
   comp_width=1920
   comp_height=1080
   comp_size="${comp_width}x${comp_height}"
+
   v4l2-ctl --set-fmt-video=width=640,height=480
+
   cam_height=$(( comp_height / 2 ))
   cam_width=$(( cam_height * 3/4 ))
+  cam_size="${cam_width}x${cam_height}"
 
-  set -x
   ffmpeg \
     -f pulse -i default \
     -f x11grab -video_size 4320x2430 -framerate 12 -i :0.0+0,0 \
     -i $camera -filter_complex \
-  "color=s=${comp_size}:c=black [background];
-    [1:v] setpts=PTS-STARTPTS, scale=${comp_size}          [screen];
-    [2:v] setpts=PTS-STARTPTS, transpose=3,scale=${cam_width}x${cam_height} [cam];
-    [background][screen]       overlay=shortest=1    [background+screen];
+  " color=s=${comp_size}:c=black                             [background];
+    [1:v] setpts=PTS-STARTPTS, scale=${comp_size}            [screen];
+    [2:v] setpts=PTS-STARTPTS, transpose=3,scale=${cam_size} [cam];
+    [background][screen]       overlay=shortest=1            [background+screen];
     [background+screen][cam]   overlay=shortest=1,format=yuv420p
-  " ${v_out[@]}
+  " ${out[@]}
 
 }
-
 
 cams1
