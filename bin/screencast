@@ -28,19 +28,23 @@ cams1() {
   # camera is 16:9 or 4:3 depending on resolution
   # -framerate
 
-  composite_height=720
-  cam_height=$(( composite_height / 2 ))
+  comp_width=1920
+  comp_height=1080
+  comp_size="${comp_width}x${comp_height}"
+  v4l2-ctl --set-fmt-video=width=640,height=480
+  cam_height=$(( comp_height / 2 ))
   cam_width=$(( cam_height * 3/4 ))
 
+  set -x
   ffmpeg \
     -f pulse -i default \
     -f x11grab -video_size 4320x2430 -framerate 12 -i :0.0+0,0 \
     -i $camera -filter_complex \
-  "color=s=1280x720:c=black [background];
-  [1:v] setpts=PTS-STARTPTS, scale=1280x720           [screen];
-  [2:v] setpts=PTS-STARTPTS, transpose=3,scale=${cam_width}x${cam_height} [cam];
-  [background][screen]         overlay=shortest=1    [background+screen];
-  [background+screen][cam]   overlay=shortest=1,hflip,format=yuv420p
+  "color=s=${comp_size}:c=black [background];
+    [1:v] setpts=PTS-STARTPTS, scale=${comp_size}          [screen];
+    [2:v] setpts=PTS-STARTPTS, transpose=3,scale=${cam_width}x${cam_height} [cam];
+    [background][screen]       overlay=shortest=1    [background+screen];
+    [background+screen][cam]   overlay=shortest=1,format=yuv420p
   " ${v_out[@]}
 
 }
