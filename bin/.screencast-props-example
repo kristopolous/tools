@@ -1,0 +1,15 @@
+#!/bin/sh
+_cam_width=640
+_cam_height=480
+_cam_rotate=0
+_cam_ratio=$(( _cam_height * 1000 / _cam_width ))
+_comp_width=1080
+_comp_height=720
+_dest=virtual
+_use_phone=0
+_camera=/dev/video2
+_virtual_composite=/dev/video0
+_grabwidth=1365
+_grabheight=768
+#_camopts="transpose=1,lenscorrection=cx=0.5:cy=0.5:k1=-0.015:k2=-0.072"
+_camopts=""
