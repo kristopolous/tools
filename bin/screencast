@@ -10,13 +10,32 @@
 # modprobe v4l2loopback width=1920 height=1080 exclusive_caps=1
 
 . .screencast-secrets
-camera=/dev/video0
+
+camera=/dev/video5
+phone=/dev/video4
 virtual_composite=/dev/video3
 
 yt_out=( -r 30 -g 100 -x265-params keyint=48:min-keyint=48:scenecut=-1 -b:v 2500k -b:a 128k -ar 44100 -acodec aac -vcodec libx264 -preset superfast -bufsize 1500k -crf 28 -f flv "rtmp://a.rtmp.youtube.com/live2/$key" )
 v_out=( -f v4l2 $virtual_composite )
 
 out=${yt_out[@]}
+
+use_phone=0
+parse() {
+  options=$(getopt -o pl)
+  eval set -- "$options"
+  while true; do
+    case "$1" in
+    -p)
+        use_phone=1
+        ;;
+    -l)
+        out=${v_out[@]}
+        ;;
+    esac
+    shift
+  done
+}
 
 mic() {
   # I think it can be done entirely with this
@@ -25,28 +44,47 @@ mic() {
   pacmd load-module module-loopback 
 }
 
-cams1() {
+cams() {
   comp_width=1920
   comp_height=1080
   comp_size="${comp_width}x${comp_height}"
 
-  v4l2-ctl --set-fmt-video=width=640,height=480
+  v4l2-ctl --set-fmt-video=width=640,height=480 -d $camera
 
   cam_height=$(( comp_height / 2 ))
-  cam_width=$(( cam_height * 3/4 ))
+  cam_width=$(( cam_height * 9/16 ))
   cam_size="${cam_width}x${cam_height}"
 
-  ffmpeg \
-    -f pulse -i default \
-    -f x11grab -video_size 4320x2430 -framerate 12 -i :0.0+0,0 \
-    -i $camera -filter_complex \
+  ff_audio=( -f pulse -i default )
+  ff_screen=( -f x11grab -video_size 4320x2430 -framerate 12 -i :0.0+0,0 )
+  ff_camera=( -i $camera )
+  ff_phone=( -i $phone )
+  ff_nothing=( -f lavfi -i color=s=200x200:c=blue )
+
+  ff_next=screen
+  if [[ $use_phone == 1 ]]; then
+    ff_bottom_setting="[3:v] setpts=PTS-STARTPTS, transpose=1,scale=${cam_size} [phone];"
+    ff_bottom_overlay="[background+screen][phone] overlay=shortest=1:x=0:y=540      [background+phone];"
+    ff_bottom=${ff_phone[@]}
+    ff_last="phone"
+  else
+    ff_bottom_setting=""
+    ff_bottom_overlay=""
+    ff_bottom=()
+    ff_last="screen"
+  fi
+
+  ffmpeg ${ff_audio[@]} ${ff_screen[@]} ${ff_camera[@]} ${ff_bottom[@]} -filter_complex \
   " color=s=${comp_size}:c=black                             [background];
     [1:v] setpts=PTS-STARTPTS, scale=${comp_size}            [screen];
-    [2:v] setpts=PTS-STARTPTS, transpose=3,scale=${cam_size} [cam];
+    [2:v] setpts=PTS-STARTPTS, transpose=1,scale=${cam_size},lenscorrection=cx=0.5:cy=0.5:k1=-0.015:k2=-0.072 [cam];
+    ${ff_bottom_setting}
+
     [background][screen]       overlay=shortest=1            [background+screen];
-    [background+screen][cam]   overlay=shortest=1,format=yuv420p
+    ${ff_bottom_overlay}
+    [background+$ff_last][cam]   overlay=shortest=1,format=yuv420p
   " ${out[@]}
 
 }
 
-cams1
+cams
