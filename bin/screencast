@@ -12,13 +12,15 @@
 
 phone=/dev/video4
 
-yt_out=( -r 30 -g 100 -x265-params keyint=48:min-keyint=48:scenecut=-1 -b:v 2500k -b:a 128k -ar 44100 -acodec aac -vcodec libx264 -preset superfast -bufsize 1500k -crf 28 -f flv "rtmp://a.rtmp.youtube.com/live2/$key" )
+yt_url=rtmp://a.rtmp.youtube.com/live2
+twitch_url=rtmp://live.twitch.tv/app
+stream_out=( -map "[final]" -map 0:a -r 15 -g 90 -b:v 800k -maxrate 1200k -b:a 160k -ar 44100 -acodec aac -vcodec libx264 -preset ultrafast -bufsize 3000k -crf 28 -flags +global_header -f tee "[f=flv:onfail=ignore]$twitch_url/$_twitch_key|[f=flv:onfail=ignore]$yt_url/$_yt_key" )
 v_out=( -f v4l2 $_virtual_composite )
 
 if [[ $_dest == "virtual" ]]; then
   out=${v_out[@]}
 else
-  out=${yt_out[@]}
+  out=${stream_out[@]}
 fi
 
 mic() {
@@ -42,7 +44,7 @@ cams() {
   cam_size="${cam_width}x${cam_height}"
 
   ff_audio=( -f pulse -i default )
-  ff_screen=( -f x11grab -video_size ${_grabwidth}x${_grabheight} -framerate 12 -i :0.0+0,0 )
+  ff_screen=( -f x11grab -video_size ${_grabwidth}x${_grabheight} -framerate 15 -i :0.0+0,0 )
   ff_camera=( -i $_camera )
   ff_phone=( -i $phone )
   ff_nothing=( -f lavfi -i color=s=200x200:c=blue )
@@ -62,17 +64,14 @@ cams() {
 
   [[ -n "$_camopts" ]] && _camopts+=','
 
-  #_camopts="transpose=1,lenscorrection=cx=0.5:cy=0.5:k1=-0.015:k2=-0.072"
-  set -x
   ffmpeg ${ff_audio[@]} ${ff_screen[@]} ${ff_camera[@]} ${ff_bottom[@]} -filter_complex \
   " color=s=${comp_size}:c=black                             [background];
     [1:v] setpts=PTS-STARTPTS, scale=${comp_size}            [screen];
     [2:v] setpts=PTS-STARTPTS, ${_camopts}scale=${cam_size} [cam];
     ${ff_bottom_setting}
-
     [background][screen]       overlay=shortest=1            [background+screen];
     ${ff_bottom_overlay}
-    [background+$ff_last][cam]   overlay=shortest=1,format=yuv420p
+    [background+$ff_last][cam]   overlay=shortest=1,format=yuv420p [final]
   " ${out[@]}
 
 }
