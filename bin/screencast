@@ -1,16 +1,21 @@
 #!/bin/bash
 #
-# v4l2-ctl --list-formats-ext 
-# v4l2-ctl --list-devices
-#   --set-fmt-video=width=1920,height=1080
-# -vf 'scale=iw*.5:ih*.5' could be useful
-#"nullsrc=size=1280x720 [background];
 # camera is 16:9 or 4:3 depending on resolution
-# sudo modprobe v4l2loopback devices=2 width=1920 height=1080 exclusive_caps=1
+# v4l2-ctl --list-formats-ext 
+#   --list-devices
+#   --set-fmt-video=width=1920,height=1080
+#
+# ffmpeg cheats
+#   -vf 'scale=iw*.5:ih*.5' could be useful
+#   "nullsrc=size=1280x720 [background];
+#
+# modprobe v4l2loopback devices=1 width=1920 height=1080 exclusive_caps=1
 
 . $HOME/.screencast-props
 
-phone=/dev/video4
+if [[ $_exclusive == 1 ]]; then
+  pkill screencast
+fi
 
 yt_url=rtmp://a.rtmp.youtube.com/live2
 twitch_url=rtmp://live.twitch.tv/app
@@ -23,7 +28,7 @@ else
   out=${stream_out[@]}
 fi
 
-mic() {
+setup() {
   # I think it can be done entirely with this
   pacmd load-module module-null-sink sink_name=yt
   pacmd update-sink-proplist yt device.description=yt
@@ -46,7 +51,7 @@ cams() {
   ff_audio=( -f pulse -i default )
   ff_screen=( -f x11grab -video_size ${_grabwidth}x${_grabheight} -framerate 15 -i :0.0+0,0 )
   ff_camera=( -i $_camera )
-  ff_phone=( -i $phone )
+  ff_phone=( -i $_phone )
   ff_nothing=( -f lavfi -i color=s=200x200:c=blue )
 
   ff_next=screen
@@ -62,9 +67,16 @@ cams() {
     ff_last="screen"
   fi
 
+  if [[ $_use_camera == 0 ]]; then
+    ff_top=${ff_nothing[@]}
+  else
+    ff_top=${ff_camera[@]}
+  fi
+
+
   [[ -n "$_camopts" ]] && _camopts+=','
 
-  ffmpeg ${ff_audio[@]} ${ff_screen[@]} ${ff_camera[@]} ${ff_bottom[@]} -filter_complex \
+  ffmpeg ${ff_audio[@]} ${ff_screen[@]} ${ff_top[@]} ${ff_bottom[@]} -filter_complex \
   " color=s=${comp_size}:c=black                             [background];
     [1:v] setpts=PTS-STARTPTS, scale=${comp_size}            [screen];
     [2:v] setpts=PTS-STARTPTS, ${_camopts}scale=${cam_size} [cam];
