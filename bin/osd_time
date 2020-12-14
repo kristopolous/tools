@@ -3,10 +3,16 @@ if [ ! -e /usr/bin/osd_cat ]; then
   echo "need osd_cat, probably apt install xosd-bin"
   exit 1
 fi
+has_sensors=`sensors coretemp-isa-0000 --no-adapter -u | grep -Po '(?<=temp1_input: )(\d*)'`
+
 while [ 0 ]; do
-  acpi=`acpi`
-  temp=`sensors coretemp-isa-0000 --no-adapter -u | grep -Po '(?<=temp1_input: )(\d*)'`
-  [ -n "$temp" ] && tempstr=${temp}C || tempstr=
+  if [ -n "$has_sensors" ]; then
+    acpi=`acpi`
+    temp=`sensors coretemp-isa-0000 --no-adapter -u | grep -Po '(?<=temp1_input: )(\d*)'`
+    tempstr=${temp}C
+  else
+    tempstr=
+  fi
 
   line="${tempstr} `date +%m%d' '%H%M``echo $acpi | awk -F , ' { print $2 } '`"
   
