@@ -64,13 +64,14 @@ xterm*color15: #ffffff
 
 xterm*faceName:*-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1
 !xterm*faceName: Ac437 IBM VGA 9x16
-xterm*faceSize: 6.0
+xterm*faceSize: 7.0
 xterm*faceSize1: 4.0
 xterm*faceSize2: 5.0
 xterm*faceSize3: 7.0
 xterm*faceSize4: 8.0
-xterm*faceSize5: 9.0
-xterm*faceSize6: 10.0
+xterm*faceSize5: 13.0
+xterm*faceSize6: 16.0
+xterm*faceSize7: 15.0
 
 xterm*cutNewLine: false
 xterm*cutToBeginningOfLine: false

@@ -1,4 +1,3 @@
---pager=$HOME/bin/mypage
 --ignore-ack-defaults
 # This is the default ackrc for ack version 2.24.
 

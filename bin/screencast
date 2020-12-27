@@ -40,7 +40,8 @@ cams() {
 
   v4l2-ctl --set-fmt-video=width=$_cam_width,height=$_cam_height -d $_camera
 
-  cam_height=$(( _comp_height / 2 ))
+  cam_height=$(( 4 * _comp_height / 5 ))
+  cam_top=$(( -cam_height / 3 ))
   if [[ $_cam_rotate == 0 ]]; then
     cam_width=$(( cam_height * 1000 / _cam_ratio ))
   else
@@ -83,7 +84,7 @@ cams() {
     ${ff_bottom_setting}
     [background][screen]       overlay=shortest=1            [background+screen];
     ${ff_bottom_overlay}
-    [background+$ff_last][cam]   overlay=shortest=1,format=yuv420p [final]
+    [background+$ff_last][cam]   overlay=shortest=1:y=${cam_top},format=yuv420p [final]
   " ${out[@]}
 
 }
