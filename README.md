@@ -23,12 +23,13 @@ Most scripts are further commented if you click through the link.
  * [internal](https://github.com/kristopolous/tools/blob/master/bin/internal): A script I use when undocking my laptop. This is the companion script to external.
  * [inotify](https://github.com/kristopolous/tools/blob/master/src/inotify.c): A way to see when a collection of files is accessed. Also see the [sysdig](https://github.com/draios/sysdig) project I contribute to.
  * [laptop-power-saving](https://github.com/kristopolous/tools/blob/master/bin/laptop-power-saving): The various tricks I've learned to make the most of my laptop battery
+ * [meta-rotate](https://github.com/kristopolous/tools/blob/master/bin/meta-rotate): A simple almost reminder tool that quickly and losslessly rotates a video using the meta-information with ffmpeg.
  * [minimal](https://github.com/kristopolous/tools/blob/master/bin/minimal): A minimal-level battery saving setting (used in conjunction with the prior script)
  * [my_xterm](https://github.com/kristopolous/tools/blob/master/bin/my_xterm): Just a dumb xterm wrapper in [acidx](https://github.com/kristopolous/acidx) for [notion](http://notion.sourceforge.net/).
  * [nvmsh](https://github.com/kristopolous/tools/blob/master/bin/nvmsh): Starts [nvm](https://github.com/creationix/nvm) (which has a multi-second load time, so it's not in .zshrc)
  * [osd_time](https://github.com/kristopolous/tools/blob/master/bin/osd_time): Puts a tiny clock in the top right. Needs osd_cat.
  * [reassoc](https://github.com/kristopolous/tools/blob/master/bin/reassoc): A tool that agressively gets a new ip address because sometimes dhclient just isn't enough. It also brings down eth0 just so the networking stack doesn't get confused on how to route packets.
- * [screencast](https://github.com/kristopolous/tools/blob/master/bin/sshot): A tool for piping multiple video streams and routing pulseaudio for multi-streaming to platforms like youtube and twitch
+ * [screencast](https://github.com/kristopolous/tools/blob/master/bin/screencast): A tool for piping multiple video streams and routing pulseaudio for multi-streaming to platforms like youtube and twitch
  * [sshot](https://github.com/kristopolous/tools/blob/master/bin/sshot): A poor man's screen sharing application. Note: the imgur cli tool it's using is broken as of 2016-03-31. [See issue #1](https://github.com/kristopolous/tools/issues/1)
  * [strace-all](https://github.com/kristopolous/tools/blob/master/bin/strace-all): This will do a ps and grep for the string that is the last argument, then it will strace the pids of all of them simultaneously with parallelized xargs, following vforks
  * [transfer-and-delete](https://github.com/kristopolous/tools/blob/master/bin/transfer-and-delete): For android phones connected over adb, this will recursively transfer entire directory trees off a phone on to the local machine and then delete the phone's copy.
