@@ -21,12 +21,14 @@ if [[ $_exclusive == 1 ]]; then
   pkill screencast
 fi
 
+set -f
+set -o noglob
 yt_url=rtmp://a.rtmp.youtube.com/live2
 twitch_url=rtmp://live.twitch.tv/app
 
 # The two output methods
 stream_out=( -map "[final]" -map 0:a -r 15 -g 90 -b:v 800k -maxrate 1200k -b:a 160k -ar 44100 -acodec aac -vcodec libx264 -preset ultrafast -bufsize 3000k -crf 28 -flags +global_header -f tee "[f=flv:onfail=ignore]$twitch_url/$_twitch_key|[f=flv:onfail=ignore]$yt_url/$_yt_key" )
-v_out=( -f v4l2 $_virtual_composite )
+v_out=( -map "[final]" -f v4l2 $_virtual_composite )
 
 # Picking one
 if [[ $_dest == "virtual" ]]; then
