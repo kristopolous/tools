@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import uuid
 import binascii
 import random
 import sys
 
-hex = uuid.uuid4().hex.decode('hex')
+hex = bytes.fromhex(uuid.uuid4().hex) 
 
 # None of those silly equal signs
-base = binascii.b2a_base64(hex).replace('=', '')
+base = binascii.b2a_base64(hex).decode('utf-8').replace('=', '')
 
 specials = '`!@#$%^&*()_+-=[]\;,~./<>?'
 specials_count = random.randint(1,8)
