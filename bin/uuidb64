@@ -1,12 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import uuid
 import binascii
 import sys
 
-hex = uuid.uuid4().hex.decode('hex')
+hex = bytes.fromhex(uuid.uuid4().hex) 
 
 # None of those silly equal signs
-base = binascii.b2a_base64(hex).replace('=', '')
+base = binascii.b2a_base64(hex).decode('utf-8').replace('=', '')
 
 # Also I want to use this in the shell so we take slashes
 # and +s and swap them out with alphabet letters .. random enough. 
