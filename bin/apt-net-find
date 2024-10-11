@@ -1,0 +1,4 @@
+#!/bin/bash
+curl -sL "https://packages.debian.org/file:$1" | \
+  sed -ne '/./{H;$!d} ; x ; /\/table/p; /<tr/p' | \
+  html2text -width $(tput cols) 

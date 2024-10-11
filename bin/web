@@ -1,7 +1,7 @@
 #!/bin/sh
 
 host="9ol.es"
-url="http://$host"
+url="https://$host"
 
 if [ $# -lt 1 ]; then
   tmp=`mktemp`
@@ -10,15 +10,15 @@ if [ $# -lt 1 ]; then
   done
   fname=tmp/`date +%Y%m%d%H%M`.txt
 
-  scp -Cq $tmp $host:www/$fname
+  scp -Cq $tmp $host:www/tmp/$fname
   echo $url/$fname
   rm $tmp
   exit
 fi
 
 if [ -e $1 ]; then
-  scp -C "$1" $host:www
-  echo $url/`basename "$1"`
+  scp -C "$1" $host:www/tmp/
+  echo $url/tmp/`basename "$1"`
   echo $url/l.htm#`basename "$1"`
 else
   echo "Couldn't find $1 ... trying to retrieve it"

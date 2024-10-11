@@ -1,0 +1,3 @@
+#!/bin/bash
+dir=${2:-90}
+ffmpeg -i $1 -metadata:s:v rotate="$dir" -codec copy "${1%.*}-rotated.${1##*.}"

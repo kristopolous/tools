@@ -2,10 +2,12 @@
 #
 # Forcefully reassociate DEV on different networks
 #
-. /home/chris/bin/wpa.info
+. ./wpa.info
 set -x
 
 down() {
+  sudo ip route flush table main
+  sudo iptables -F
   sudo ip link set $1 down
   sudo ifconfig $1 0.0.0.0
 }

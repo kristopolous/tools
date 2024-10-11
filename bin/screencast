@@ -1,0 +1,102 @@
+#!/bin/bash
+#
+# A screencasting script for both virtual loopbacks and streaming services such as twitch/youtube
+# Use in conjunction with .screencast-props
+#
+# Here's just some notes for me to help me remember
+#
+# v4l2-ctl --list-formats-ext 
+#   --list-devices
+#   --set-fmt-video=width=1920,height=1080
+#
+# ffmpeg cheats
+#   -vf 'scale=iw*.5:ih*.5' could be useful
+#   "nullsrc=size=1280x720 [background];
+#
+# modprobe v4l2loopback devices=1 width=1920 height=1080 exclusive_caps=1
+
+. $HOME/.screencast-props
+
+if [[ $_exclusive == 1 ]]; then
+  pkill screencast
+fi
+
+set -f
+set -o noglob
+yt_url=rtmp://a.rtmp.youtube.com/live2
+twitch_url=rtmp://live.twitch.tv/app
+
+# The two output methods
+stream_out=( -map "[final]" -map 0:a -r 15 -g 90 -b:v 800k -maxrate 1200k -b:a 160k -ar 44100 -acodec aac -vcodec libx264 -preset ultrafast -bufsize 3000k -crf 28 -flags +global_header -f tee "[f=flv:onfail=ignore]$twitch_url/$_twitch_key|[f=flv:onfail=ignore]$yt_url/$_yt_key" )
+v_out=( -map "[final]" -f v4l2 $_virtual_composite )
+
+# Picking one
+if [[ $_dest == "virtual" ]]; then
+  out=${v_out[@]}
+else
+  out=${stream_out[@]}
+fi
+
+# This is not run directly
+setup() {
+  # I think it can be done entirely with this
+  pacmd load-module module-null-sink sink_name=yt
+  pacmd update-sink-proplist yt device.description=yt
+  pacmd load-module module-loopback 
+}
+
+cams() {
+  comp_size="${_comp_width}x${_comp_height}"
+
+  v4l2-ctl --set-fmt-video=width=$_cam_width,height=$_cam_height -d $_camera
+
+  cam_height=$(( 4 * _comp_height / 5 ))
+  cam_top=$(( -cam_height / 3 ))
+  if [[ $_cam_rotate == 0 ]]; then
+    cam_width=$(( cam_height * 1000 / _cam_ratio ))
+  else
+    cam_width=$(( ( cam_height * _cam_ratio ) / 1000 ))
+  fi
+  cam_size="${cam_width}x${cam_height}"
+
+  ff_audio=( -f pulse -i default )
+  ff_screen=( -f x11grab -video_size ${_grabwidth}x${_grabheight} -framerate 15 -i :0.0+0,0 )
+  ff_camera=( -i $_camera )
+  ff_phone=( -i $_phone )
+  ff_nothing=( -f lavfi -i color=s=200x200:c=blue )
+
+  ff_next=screen
+  if [[ $_use_phone == 1 ]]; then
+    ff_bottom_setting="[3:v] setpts=PTS-STARTPTS, transpose=1,scale=${cam_size} [phone];"
+    ff_bottom_overlay="[background+screen][phone] overlay=shortest=1:x=0:y=540      [background+phone];"
+    ff_bottom=${ff_phone[@]}
+    ff_last="phone"
+  else
+    ff_bottom_setting=""
+    ff_bottom_overlay=""
+    ff_bottom=()
+    ff_last="screen"
+  fi
+
+  if [[ $_use_camera == 0 ]]; then
+    ff_top=${ff_nothing[@]}
+  else
+    ff_top=${ff_camera[@]}
+  fi
+
+
+  [[ -n "$_camopts" ]] && _camopts+=','
+
+  ffmpeg ${ff_audio[@]} ${ff_screen[@]} ${ff_top[@]} ${ff_bottom[@]} -filter_complex \
+  " color=s=${comp_size}:c=black                             [background];
+    [1:v] setpts=PTS-STARTPTS, scale=${comp_size}            [screen];
+    [2:v] setpts=PTS-STARTPTS, ${_camopts}scale=${cam_size} [cam];
+    ${ff_bottom_setting}
+    [background][screen]       overlay=shortest=1            [background+screen];
+    ${ff_bottom_overlay}
+    [background+$ff_last][cam]   overlay=shortest=1:y=${cam_top},format=yuv420p [final]
+  " ${out[@]}
+
+}
+
+cams

@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+import uuid
+import binascii
+import random
+import sys
+
+hex = bytes.fromhex(uuid.uuid4().hex) 
+
+# None of those silly equal signs
+base = binascii.b2a_base64(hex).decode('utf-8').replace('=', '')
+
+specials = '`!@#$%^&*()_+-=[]\;,~./<>?'
+specials_count = random.randint(1,8)
+for i in range(specials_count):
+  off = random.randint(0, len(base) - 1)
+  base = base[:off] + specials[random.randint(0, len(specials) - 1)] + base[off+1:]
+
+sys.stdout.write(base)

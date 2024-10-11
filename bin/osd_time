@@ -1,9 +1,20 @@
 #!/bin/sh
-[ ! -e /usr/bin/osd_cat ] && exit 1
+if [ ! -e /usr/bin/osd_cat ]; then
+  echo "need osd_cat, probably apt install xosd-bin"
+  exit 1
+fi
+has_sensors=`sensors coretemp-isa-0000 --no-adapter -u | grep -Po '(?<=temp1_input: )(\d*)'`
+
 while [ 0 ]; do
-  acpi=`acpi`
-  temp=`sensors coretemp-isa-0000 --no-adapter -u | grep -Po '(?<=temp1_input: )(\d*)'`
-  line="${temp}C `date +%m%d' '%H%M``echo $acpi | awk -F , ' { print $2 } '`"
+  if [ -n "$has_sensors" ]; then
+    acpi=`acpi`
+    temp=`sensors coretemp-isa-0000 --no-adapter -u | grep -Po '(?<=temp1_input: )(\d*)'`
+    tempstr=${temp}C
+  else
+    tempstr=
+  fi
+
+  line="${tempstr} `date +%m%d' '%H%M``echo $acpi | awk -F , ' { print $2 } '`"
   
   if [ `echo $acpi | grep Discharg | wc -l` -eq 1 ]; then 
     line=${line}V
@@ -11,31 +22,36 @@ while [ 0 ]; do
   if [ `echo $acpi | grep Charg | wc -l` -eq 1 ]; then 
     line=${line}^
   fi
+  size=12
+  color=white
+  delay=30
 
-  if [ $temp -lt 59 ]; then
-    size=12
-    color=white
-    delay=30
-  elif [ $temp -lt 68 ]; then
-    size=12
-    color=yellow
-    delay=10
-  elif [ $temp -lt 77 ]; then
-    size=16
-    color=orange
-    delay=5
-  elif [ $temp -lt 82 ]; then
-    size=24
-    color=red
-    delay=3
-  elif [ $temp -lt 86 ]; then
-    size=32
-    color=pink
-    delay=3
-  else
-    size=72
-    color=pink
-    delay=3
+  if [ -n "$temp" ]; then
+    if [ $temp -lt 59 ]; then
+      size=12
+      color=white
+      delay=30
+    elif [ $temp -lt 68 ]; then
+      size=12
+      color=yellow
+      delay=10
+    elif [ $temp -lt 77 ]; then
+      size=16
+      color=orange
+      delay=5
+    elif [ $temp -lt 82 ]; then
+      size=24
+      color=red
+      delay=3
+    elif [ $temp -lt 86 ]; then
+      size=32
+      color=pink
+      delay=3
+    else
+      size=72
+      color=pink
+      delay=3
+    fi
   fi
 
   echo $line | osd_cat -f '-*-lucida-*-r-*-*-'$size'-*-*-*-*-*-*-*' --color=$color -O 1 -d $delay -A right

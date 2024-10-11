@@ -53,6 +53,9 @@ install() {
 
 compile
 
+[[ -d $HOME/bin ]] || mkdir $HOME/bin
+[[ -d $HOME/bin ]] || exit 
+
 cd bin
 if [ $# -gt 0 ]; then
   while [ $# -gt 0 ]; do

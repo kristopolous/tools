@@ -1,11 +1,20 @@
 #!/bin/bash
 . /home/chris/bin/wpa.info
-wpa=$(pgrep wpa_supplicant)
-[ -n "$wpa" ] && kill -9 $wpa
-sleep 0.5
-pkill -9 wpa_supplicant
-sleep 0.5
-service network-manager stop
-while [ 0 ]; do
-  wpa_supplicant -d -Dnl80211,wext -i$DEV -c/etc/wpa_supplicant.conf 
-done
+DEV=${1:-$DEV}
+
+ctrl=/var/run/wpa_supplicant.1
+opts='-d'
+if [ -z "$1" ]; then
+  ctrl=/var/run/wpa_supplicant
+  wpa=$(pgrep wpa_supplicant)
+  [ -n "$wpa" ] && kill -9 $wpa
+  sleep 0.5
+  opts='-ud'
+  pkill -9 wpa_supplicant
+  sleep 0.5
+fi
+
+#service network-manager stop
+#while [ 0 ]; do
+wpa_supplicant $opts -T -d -Dwext -i$DEV -c/etc/wpa_supplicant.conf -C$ctrl
+#done

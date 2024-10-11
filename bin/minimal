@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bin/laptop.sh
+$HOME/bin/laptop-power-saving
 
 for i in \
   apache2 avahi-daemon bluetooth      \
