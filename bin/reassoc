@@ -2,7 +2,7 @@
 #
 # Forcefully reassociate DEV on different networks
 #
-. $HOME/bin/wpa.info
+. /home/chris/bin/wpa.info
 set -x
 
 down() {
@@ -14,5 +14,6 @@ if [ $# -eq 0 ]; then
   down $DEV
 fi
 
+sudo dhclient -r $DEV
 sudo pkill dhclient
 sudo dhclient -v $DEV

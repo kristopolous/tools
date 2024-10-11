@@ -1,0 +1,2 @@
+#!/bin/bash
+cut -d$'\t' -f 1 | cut -d ' ' -f 1 | paste -sd+ - | bc
