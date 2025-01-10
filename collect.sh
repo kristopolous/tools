@@ -2,9 +2,11 @@
 branch=$(hostname)
 files=".zshrc .tmux .Xresources .vimrc .tmux.conf"
 here=$(pwd)
-set -xe
+set -x
 
-git checkout -b $branch
+gitdo() {
+  git checkout -b $branch
+}
 
 mover() {
     # We want to avoid doing this incrementally which could
@@ -22,6 +24,7 @@ linker() {
     done
 }
 
-mover
+#gitdo
+#mover
 linker
 git commit -am "initial commit for $branch"
