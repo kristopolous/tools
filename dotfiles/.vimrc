@@ -1,4 +1,4 @@
-execute pathogen#infect()
+" execute pathogen#infect()
 function FoldBrace()
 	if getline(v:lnum+1)[0] == '{'
 		return '>1'
@@ -11,14 +11,6 @@ function FoldBrace()
 	return foldlevel(v:lnum-1)
 endfunction
 
-" Try to get sensible omni complete that shows up when you want it to.
-"function! Mosh_Tab_Or_Complete()
-"	if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^[:.\>]'
-"		return "\<C-X>\<C-O>"
-"	else
-"		return "\<Tab>"
-"endfunction
-
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 set showmatch
@@ -29,9 +21,13 @@ set title
 " From http://www.reddit.com/r/vim/comments/2as7uu/how_to_remove_all_vim_swap_files_from_a_project/ciyahw0N
 set backup		" keep a backup file
 set backupcopy=yes 
-set backupdir=/tmp/
-set directory=/tmp/
+set backupdir=/home/chris/tmp/
+set directory=/home/chris/tmp/
 
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+filetype indent on
 filetype plugin indent on
 
 set tags+=~/.vim/systags;../;../../;../../../;
@@ -81,10 +77,9 @@ endif
 " Try to be aggressively 2 spaces.
 " From
 " http://stackoverflow.com/questions/3938596/vim-autoindent-not-working/4191625#4191625
-set smartindent
 set number
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 set foldexpr=FoldBrace()
 set cmdheight=1
@@ -104,10 +99,10 @@ set foldlevel=10
 " mouse level things ... 
 " try to use the scroll wheel and mouse focus magically
 " only when it makes sense.  This is a hard thing to get right.
-set ttymouse=xterm2
-set mouse=n
-set scrolloff=2
-set scrolljump=1
+"set ttymouse=xterm2
+set mouse=a
+"set scrolloff=2
+"set scrolljump=1
 set t_Co=256
 set hlsearch
 syntax on
@@ -301,7 +296,7 @@ autocmd BufReadPost *
 
 augroup END
 
-colorscheme kristopolous
+colorscheme koehler
 
 "au FileType ruby,eruby set omnifunc=rubycomplete#Complete
 au FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
@@ -357,9 +352,20 @@ set breakindent
 " Add a hyphen as a keyword symbol (see
 " http://vi.stackexchange.com/questions/4009/include-symbols-in-cword)
 set iskeyword+=-
-autocmd FileType python setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " Reset the cursor during git commits to not be the last place it was.
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 map <F1> <Esc>
 imap <F1> <Esc>
+Plugin 'chemzqm/vim-jsx-improve'
+Plugin 'taglist'
+
+if has("gui_running")
+  colorscheme koehler  " or your preferred color scheme
+endif
+
+nnoremap <C-S-Up>    :resize +2<CR>
+nnoremap <C-S-Down>  :resize -2<CR>
+nnoremap <C-S-Left>  :vertical resize -2<CR>
+nnoremap <C-S-Right> :vertical resize +2<CR>

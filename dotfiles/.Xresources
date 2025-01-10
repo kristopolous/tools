@@ -6,10 +6,26 @@ Xft*hintstyle: hintfull
 xmessage*international: true
 Xcursor.size: 24
 Xcursor.theme: redglass
-Xterm*selectToClipboard: true
+Xterm*selectToClipboard: false
+Xterm*altIsNotMeta: true
 xterm*VT100.geometry: 80x30
 xterm*background: #000000
 xterm*foreground: #ffffff
+
+! This means that alt btn2 / win btn2 will do primary which is cray-cray
+! select copy -> alt/win btn2 paste
+! Regular button2 up, primary
+! shift button2 up, clipboard
+*VT100*translations:    #override \n\
+  ~Shift~Ctrl<Btn2Up>: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+  Shift <Btn2Up>: insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
+  Ctrl Shift <Key>V:  insert-selection(PRIMARY, CUT_BUFFER1) \n\
+  Ctrl <Key>V:  insert-selection(CLIPBOARD, CUT_BUFFER0) \n\
+  ~Shift     <BtnUp> : select-end(PRIMARY, CUT_BUFFER0) \n\
+  Shift     <BtnUp> : select-end(CLIPBOARD, CUT_BUFFER1) \n\
+        Ctrl <Key>+:       larger-vt-font() \n\
+        Ctrl <Key>-:       smaller-vt-font()
+
 
 ! --- standard colors ---
 
@@ -62,16 +78,16 @@ xterm*color7: #cecece
 xterm*color15: #ffffff
 
 
-xterm*faceName:*-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1
+xterm*faceName: Liberation Mono
+!xterm*faceName:*-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1
 !xterm*faceName: Ac437 IBM VGA 9x16
-xterm*faceSize: 7.0
-xterm*faceSize1: 4.0
-xterm*faceSize2: 5.0
-xterm*faceSize3: 7.0
-xterm*faceSize4: 8.0
-xterm*faceSize5: 13.0
-xterm*faceSize6: 16.0
-xterm*faceSize7: 15.0
+xterm*faceSize1: 7.0
+xterm*faceSize2: 8.0
+xterm*faceSize: 9.0
+xterm*faceSize3: 10.0
+xterm*faceSize4: 11.0
+xterm*faceSize5: 12.0
+xterm*faceSize6: 13.0
 
 xterm*cutNewLine: false
 xterm*cutToBeginningOfLine: false
@@ -79,11 +95,14 @@ xterm*charClass: 33:48,35:48,37-38:48,43-47:48,58:48,61:48,63-64:48,95:48,126:48
 !! XTerm*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48
 !
 ! from https://github.com/majutsushi/urxvt-font-size
-URxvt.font: xft:cousine:size=10
+URxvt.font: xft:RecMonoDuotone Nerd Font Mono:size=10
 URxvt.perl-ext-common: font-size
 URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
 URxvt.keysym.C-S-Up:   perl:font-size:incglobal
 URxvt.keysym.C-S-Down: perl:font-size:decglobal
 xterm*allowWindowOps      : False
+XTerm*selectToClipboard: true
 xterm*disallowedWindowOps : 1,2,3,4,5,6,7,8,9,11,13,18,19,20,21,GetSelection,SetSelection,SetWinLines,SetXprop
+XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
+
